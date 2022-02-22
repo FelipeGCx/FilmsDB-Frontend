@@ -1,10 +1,10 @@
 <template>
+<h1>Todo El Contenido</h1>
   <Loading v-show="!filmsStatus" />
   <FilmsView :FilmsDetail="filmsInPage" v-show="filmsStatus" />
-  <Paginationn
+  <Pagination
     :dataOriginal="FilmsDetail"
-    :nameTo="'Home'"
-    :type="filmType"
+    :nameTo="'All'"
     :actualP="actualPage"
     @listToShow="loadList"
     v-show="filmsStatus"
@@ -13,14 +13,14 @@
 
 <script>
 import gql from "graphql-tag";
-import FilmsView from "../components/FilmsView.vue";
-import Paginationn from "../components/Paginationn.vue";
-import Loading from "../components/Loading.vue";
+import FilmsView from "@/components/FilmsView.vue";
+import Pagination from "@/components/Pagination.vue";
+import Loading from "@/components/Loading.vue";
 export default {
-  name: "Home",
+  name: "All",
   components: {
     FilmsView,
-    Paginationn,
+    Pagination,
     Loading,
   },
   data() {
@@ -29,7 +29,6 @@ export default {
       filmsInPage: [],
       filmsStatus: false,
       actualPage: 1,
-      filmType: this.$route.params.type,
     };
   },
   apollo: {
@@ -62,14 +61,15 @@ export default {
           }
         }
       `,
-      variables() {
-        return {
-          filmsType: this.filmType,
-        };
+      variables: {
+        filmsType: "all",
       },
       update: (data) => data.getFilmsByType,
       result() {
         this.filmsStatus = true;
+      },
+      error() {
+        this.$apollo.queries.GetFilmsByType.refetch();
       },
     },
   },
@@ -79,12 +79,10 @@ export default {
     },
   },
   mounted() {
-    this.actualPage = parseInt(this.$route.params.page);
-    this.filmType = this.$route.params.type;
+    this.actualPage = parseInt(this.$route.query.page) || 1;
   },
   beforeUpdate() {
-    this.actualPage = parseInt(this.$route.params.page);
-    this.filmType = this.$route.params.type;
+    this.actualPage = parseInt(this.$route.query.page) || 1;
   },
 };
 </script>

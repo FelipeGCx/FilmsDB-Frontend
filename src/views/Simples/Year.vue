@@ -1,10 +1,10 @@
 <template>
+<h1>Resultados año: {{year}}</h1>
   <Loading v-show="!filmsStatus" />
   <FilmsView :FilmsDetail="filmsInPage" v-show="filmsStatus" />
-  <Paginationn
+  <Pagination
     :dataOriginal="FilmsDetail"
-    :nameTo="'Home'"
-    :type="filmType"
+    :nameTo="'Year'"
     :actualP="actualPage"
     @listToShow="loadList"
     v-show="filmsStatus"
@@ -13,14 +13,14 @@
 
 <script>
 import gql from "graphql-tag";
-import FilmsView from "../components/FilmsView.vue";
-import Paginationn from "../components/Paginationn.vue";
-import Loading from "../components/Loading.vue";
+import FilmsView from "@/components/FilmsView.vue";
+import Pagination from "@/components/Pagination.vue";
+import Loading from "@/components/Loading.vue";
 export default {
-  name: "Home",
+  name: "Year",
   components: {
     FilmsView,
-    Paginationn,
+    Pagination,
     Loading,
   },
   data() {
@@ -29,14 +29,14 @@ export default {
       filmsInPage: [],
       filmsStatus: false,
       actualPage: 1,
-      filmType: this.$route.params.type,
+      year: parseInt(this.$route.query.year),
     };
   },
   apollo: {
     FilmsDetail: {
       query: gql`
-        query GetFilmsByType($filmsType: String) {
-          getFilmsByType(filmsType: $filmsType) {
+        query GetFilmsByYear($filmsYear: Int, $filmsOrder: String) {
+          getFilmsByYear(filmsYear: $filmsYear, filmsOrder: $filmsOrder) {
             id
             type
             titleOG
@@ -50,8 +50,8 @@ export default {
               category
               svg
             }
-            poster
             info
+            poster
             season
             link
             saga {
@@ -64,10 +64,11 @@ export default {
       `,
       variables() {
         return {
-          filmsType: this.filmType,
+          filmsYear: this.year,
+        filmsOrder: "desc",
         };
       },
-      update: (data) => data.getFilmsByType,
+      update: (data) => data.getFilmsByYear,
       result() {
         this.filmsStatus = true;
       },
@@ -79,15 +80,14 @@ export default {
     },
   },
   mounted() {
-    this.actualPage = parseInt(this.$route.params.page);
-    this.filmType = this.$route.params.type;
+    this.year = parseInt(this.$route.params.year);
+    this.actualPage = parseInt(this.$route.query.page) || 1;
   },
   beforeUpdate() {
-    this.actualPage = parseInt(this.$route.params.page);
-    this.filmType = this.$route.params.type;
+    this.actualPage = parseInt(this.$route.query.page) || 1;
   },
 };
 </script>
 
-<style>
+<style scoped>
 </style>

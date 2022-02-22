@@ -1,10 +1,10 @@
 <template>
+  <h1>{{ toTitleCase(saga) }}</h1>
   <Loading v-show="!filmsStatus" />
   <FilmsView :FilmsDetail="filmsInPage" v-show="filmsStatus" />
-  <Paginationn
+  <Pagination
     :dataOriginal="FilmsDetail"
-    :nameTo="'Home'"
-    :type="filmType"
+    :nameTo="'Saga'"
     :actualP="actualPage"
     @listToShow="loadList"
     v-show="filmsStatus"
@@ -13,14 +13,14 @@
 
 <script>
 import gql from "graphql-tag";
-import FilmsView from "../components/FilmsView.vue";
-import Paginationn from "../components/Paginationn.vue";
-import Loading from "../components/Loading.vue";
+import FilmsView from "@/components/FilmsView.vue";
+import Pagination from "@/components/Pagination.vue";
+import Loading from "@/components/Loading.vue";
 export default {
-  name: "Home",
+  name: "Saga",
   components: {
     FilmsView,
-    Paginationn,
+    Pagination,
     Loading,
   },
   data() {
@@ -29,14 +29,14 @@ export default {
       filmsInPage: [],
       filmsStatus: false,
       actualPage: 1,
-      filmType: this.$route.params.type,
+      saga: this.$route.params.id,
     };
   },
   apollo: {
     FilmsDetail: {
       query: gql`
-        query GetFilmsByType($filmsType: String) {
-          getFilmsByType(filmsType: $filmsType) {
+        query GetFilmsBySaga($filmsSaga: String) {
+          getFilmsBySaga(filmsSaga: $filmsSaga) {
             id
             type
             titleOG
@@ -50,8 +50,8 @@ export default {
               category
               svg
             }
-            poster
             info
+            poster
             season
             link
             saga {
@@ -64,10 +64,10 @@ export default {
       `,
       variables() {
         return {
-          filmsType: this.filmType,
+          filmsSaga: this.saga,
         };
       },
-      update: (data) => data.getFilmsByType,
+      update: (data) => data.getFilmsBySaga,
       result() {
         this.filmsStatus = true;
       },
@@ -77,17 +77,26 @@ export default {
     loadList(data) {
       this.filmsInPage = data;
     },
+    toTitleCase(str) {
+      return str
+        .toLowerCase()
+        .split(" ")
+        .map(function (word) {
+          return word.charAt(0).toUpperCase() + word.slice(1);
+        })
+        .join(" ");
+    },
   },
   mounted() {
-    this.actualPage = parseInt(this.$route.params.page);
-    this.filmType = this.$route.params.type;
+        this.actualPage = parseInt(this.$route.query.page) || 1;
   },
   beforeUpdate() {
-    this.actualPage = parseInt(this.$route.params.page);
-    this.filmType = this.$route.params.type;
+        this.actualPage = parseInt(this.$route.query.page) || 1;
   },
 };
 </script>
 
-<style>
+<style scoped>
 </style>
+
+        

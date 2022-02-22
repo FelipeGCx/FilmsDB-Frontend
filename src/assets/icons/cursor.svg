@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;}
+	.st1{fill:#303030;stroke:#FFFFFF;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:10;}
+</style>
+<symbol  id="material_x5F_system_x5F_icon_x5F_border" viewBox="0 -48 48 48">
+	<rect y="-48" class="st0" width="48" height="48"/>
+</symbol>
+<g id="Capa_11">
+	<polygon class="st1" points="6.5,3.5 6.5,20.5 11,15 18,15 	"/>
+</g>
+<g id="border">
+	
+		<use xlink:href="#material_x5F_system_x5F_icon_x5F_border"  width="48" height="48" id="XMLID_2_" y="-48" transform="matrix(0.5 0 0 -0.5 -1.144415e-04 -8.010902e-05)" style="overflow:visible;"/>
+</g>
+</svg>

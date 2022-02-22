@@ -1,10 +1,9 @@
 <template>
   <Loading v-show="!filmsStatus" />
   <FilmsView :FilmsDetail="filmsInPage" v-show="filmsStatus" />
-  <Paginationn
+  <Pagination
     :dataOriginal="FilmsDetail"
-    :nameTo="'Home'"
-    :type="filmType"
+    :nameTo="'Note'"
     :actualP="actualPage"
     @listToShow="loadList"
     v-show="filmsStatus"
@@ -13,30 +12,28 @@
 
 <script>
 import gql from "graphql-tag";
-import FilmsView from "../components/FilmsView.vue";
-import Paginationn from "../components/Paginationn.vue";
-import Loading from "../components/Loading.vue";
+import FilmsView from "@/components/FilmsView.vue";
+import Pagination from "@/components/Pagination.vue";
+import Loading from "@/components/Loading.vue";
 export default {
-  name: "Home",
+  name: "Note",
   components: {
     FilmsView,
-    Paginationn,
+    Pagination,
     Loading,
   },
   data() {
     return {
-      FilmsDetail: [],
-      filmsInPage: [],
+      FilmsDetail: "",
       filmsStatus: false,
-      actualPage: 1,
-      filmType: this.$route.params.type,
+      note: 2003,
     };
   },
   apollo: {
     FilmsDetail: {
       query: gql`
-        query GetFilmsByType($filmsType: String) {
-          getFilmsByType(filmsType: $filmsType) {
+        query GetFilmsByNote($filmsNote: Float, $filmsOrder: String) {
+          getFilmsByNote(filmsNote: $filmsNote, filmsOrder: $filmsOrder) {
             id
             type
             titleOG
@@ -62,32 +59,22 @@ export default {
           }
         }
       `,
-      variables() {
-        return {
-          filmsType: this.filmType,
-        };
+      variables: {
+        filmsNote: this.note,
+        filmsOrder: "desc",
       },
-      update: (data) => data.getFilmsByType,
+      update: (data) => data.getFilmsByNote,
       result() {
         this.filmsStatus = true;
       },
     },
   },
   methods: {
-    loadList(data) {
-      this.filmsInPage = data;
-    },
-  },
-  mounted() {
-    this.actualPage = parseInt(this.$route.params.page);
-    this.filmType = this.$route.params.type;
-  },
-  beforeUpdate() {
-    this.actualPage = parseInt(this.$route.params.page);
-    this.filmType = this.$route.params.type;
+    getData() {},
   },
 };
 </script>
 
-<style>
+<style scoped>
 </style>
+
