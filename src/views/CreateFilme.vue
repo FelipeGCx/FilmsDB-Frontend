@@ -1,4 +1,5 @@
 <template>
+  <!-- modal for create -->
   <Modal
     v-show="modal.visible"
     :questionText="modal.questionText"
@@ -13,6 +14,7 @@
     @authRequest="authRequest"
     @request="request"
   />
+  <!-- form for create  -->
   <div class="new-register">
     <h1>Nuevo Registro</h1>
     <form @submit.prevent="showModal">
@@ -248,10 +250,12 @@
 </template>
 
 <script>
-import { app } from "../utils/firebaseConfig";
-import { fileToBase64, base64ToFile } from "@/utils/base64Manager.js";
+// import apollo library, firebase storage for the images, base64 library for tranform images and componets required
 import gql from "graphql-tag";
-import Modal from "../components/Modal.vue";
+import { app } from "@/utils/firebaseConfig";
+import { fileToBase64, base64ToFile } from "@/utils/base64Manager.js";
+import Modal from "@/components/Modal.vue";
+import { blob } from "stream/consumers";
 
 export default {
   components: { Modal },
@@ -299,6 +303,7 @@ export default {
       },
     };
   },
+  // get queries
   apollo: {
     Sagas: {
       query: gql`
@@ -326,8 +331,19 @@ export default {
     },
   },
   methods: {
+    // get the image that user upload and create blob
+    async fileSelected(e) {
+      this.invalidImage = true;
+      this.iconImage.first = true;
+      this.file = e.target.files[0];
+      this.filme.poster = URL.createObjectURL(this.file);
+      this.resizeImage();
+    },
+    // convert the image to base64 and resize it to 467x700 in format .webp
     async resizeImage() {
+      // parse file to base64
       this.base64 = await fileToBase64(this.file);
+      // set the image params
       const image = {
         name: "image",
         size_x: 467,
@@ -335,6 +351,7 @@ export default {
         type_format: ".webp",
         base64: this.base64,
       };
+      // make the mutation to resize the image passing the image object
       await this.$apollo
         .mutate({
           mutation: gql`
@@ -356,28 +373,26 @@ export default {
           console.log(error);
         });
     },
-    async fileSelected(e) {
-      this.invalidImage = true;
-      this.iconImage.first = true;
-      this.file = e.target.files[0];
-      this.filme.poster = URL.createObjectURL(this.file);
-      this.resizeImage();
-    },
+    // transform the base64 image to blob
     async loadImageB64() {
+      // parse base64 to blob
       this.file = await base64ToFile(
         this.base64,
         `${this.filme.titleOG} (${this.filme.year})`,
         "webp"
       );
       this.filme.poster = URL.createObjectURL(this.file);
+      // change the value for show the success of process
       this.invalidImage = false;
       setTimeout(() => {
         this.iconImage.second = false;
       }, 1000);
     },
+    // show the modal to confirm the save process
     showModal() {
       this.modal.visible = true;
     },
+    // continue the save process if the aswr is positive else close the modal
     questionRequest(aswr) {
       if (aswr) {
         this.modal.question = false;
@@ -386,6 +401,7 @@ export default {
         this.modal.visible = false;
       }
     },
+    // call the fucntion to save the film if the user auth is correct else show the modal error message
     authRequest(aswr) {
       if (aswr) {
         this.modal.auth = false;
@@ -397,6 +413,7 @@ export default {
         this.modal.error = true;
       }
     },
+    // close the modal and redirect to Home
     request(aswr) {
       this.modal.visible = false;
       if (aswr) {
@@ -406,18 +423,12 @@ export default {
         });
       }
     },
-    async saveImage() {
-      const storageRef = app.storage().ref();
-      const filePath = storageRef.child(
-        `/assets/${this.filme.titleOG} (${this.filme.year})`
-      );
-      await filePath.put(this.file);
-      this.filme.poster = await filePath.getDownloadURL();
-    },
+    // save the film in the database
     async saveFilme() {
       this.filme.title = this.toTitleCase(this.filme.title);
       this.filme.titleOG = this.toTitleCase(this.filme.titleOG);
       this.filme.note = parseFloat(this.filme.note);
+      // save image in the firebase storage
       await this.saveImage();
       await this.$apollo
         .mutate({
@@ -443,6 +454,20 @@ export default {
           this.modal.error = true;
         });
     },
+    // save the image in the firebase storage
+    async saveImage() {
+      // create a storage ref
+      const storageRef = app.storage().ref();
+      // create a child ref (define the path and set the name of the file, in this case => "movieTitle (movieYear)")
+      const filePath = storageRef.child(
+        `/assets/${this.filme.titleOG} (${this.filme.year})`
+      );
+      // upload the file
+      await filePath.put(this.file);
+      // get the url of the file for save it in the database
+      this.filme.poster = await filePath.getDownloadURL();
+    },
+    // parse to Title Case
     toTitleCase(str) {
       return str
         .toLowerCase()
@@ -460,81 +485,6 @@ export default {
 </script>
 
 <style scoped>
-label {
-  color: var(--color-clear);
-}
-input {
-  border-radius: var(--radius);
-  padding: 0.5rem 1rem;
-}
-.type,
-.language {
-  display: flex;
-  gap: 1rem;
-}
-.container {
-  background-color: var(--bg-loading);
-  padding: 0.5rem 1rem;
-  border-radius: var(--radius);
-  cursor: pointer;
-  width: 100%;
-}
-.checkmark {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-}
-.active {
-  background-color: var(--border-serie);
-}
-.note {
-  -webkit-appearance: none;
-  width: 100%;
-  background-color: transparent;
-  padding: 0;
-}
-.note:focus {
-  outline: none;
-}
-.note::-webkit-slider-runnable-track {
-  width: 100%;
-  height: 13px;
-  cursor: pointer;
-  background: var(--border-serie);
-  border-radius: 25px;
-}
-.note::-webkit-slider-thumb {
-  height: 1.3rem;
-  width: 1.3rem;
-  border-radius: 27px;
-  background: var(--bg-loading);
-  cursor: pointer;
-  -webkit-appearance: none;
-  margin-top: -3.5px;
-}
-.note:focus::-webkit-slider-runnable-track {
-  background: var(--border-serie);
-}
-.note-container {
-  display: flex;
-  gap: 1rem;
-}
-.note-number {
-  color: var(--color-clear);
-  min-width: 3rem;
-  background-color: var(--bg-loading);
-  text-align: center;
-  border-radius: var(--radius);
-  padding: 0.3rem 0.5rem;
-  font-weight: 600;
-}
-
-.radios {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-}
 /* ////////////////////////// */
 @media only screen and (min-width: 1024px) {
   .new-register {
@@ -567,9 +517,80 @@ input {
     width: 100%;
     justify-content: space-around;
   }
-  .buttons button {
+  .buttons button,
+  a {
     width: 50%;
   }
+}
+label {
+  color: var(--color-clear);
+}
+input {
+  border-radius: var(--radius);
+  padding: 0.5rem 1rem;
+}
+.type,
+.language {
+  display: flex;
+  gap: 1rem;
+}
+.container {
+  background-color: var(--bg-btn-header);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  width: 100%;
+}
+.checkmark {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+.note {
+  -webkit-appearance: none;
+  width: 100%;
+  background-color: transparent;
+  padding: 0;
+}
+.note:focus {
+  outline: none;
+}
+.note::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 13px;
+  cursor: pointer;
+  background: var(--bg-btn-header);
+  border-radius: 25px;
+}
+.note::-webkit-slider-thumb {
+  height: 1.3rem;
+  width: 1.3rem;
+  border-radius: 27px;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -3.5px;
+}
+.note:focus::-webkit-slider-runnable-track {
+  background: var(--bg-btn-header);
+}
+.note-container {
+  display: flex;
+  gap: 1rem;
+}
+.note-number {
+  color: var(--color-clear);
+  min-width: 3rem;
+  text-align: center;
+  border-radius: var(--radius);
+  padding: 0.3rem 0.5rem;
+  font-weight: 600;
+}
+
+.radios {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
 }
 form {
   display: flex;
@@ -654,6 +675,7 @@ textarea::-webkit-scrollbar-thumb {
 }
 a {
   text-decoration: underline;
+  text-align: center;
 }
 .container-input {
   display: flex;
@@ -692,7 +714,6 @@ i {
 }
 .selector {
   padding: 0.2rem 1rem;
-  background-color: var(--bg-loading);
   color: var(--color-clear);
 }
 .name-file {
@@ -724,7 +745,6 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 .img-done,
 .img-load {
-  fill: var(--bg-loading);
   width: 2.5rem;
   position: absolute;
   right: 0.7rem;

@@ -143,6 +143,7 @@
 </template>
 
 <script>
+// import cypto library and component neccesary
 import CryptoJS from "crypto-js";
 import Loading from "@/components/Loading.vue";
 
@@ -184,6 +185,7 @@ export default {
     };
   },
   methods: {
+    // compare the credentials encrypted
     sendCredentials() {
       this.encrypted = CryptoJS.AES.encrypt(
         this.person.password,

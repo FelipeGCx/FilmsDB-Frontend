@@ -21,13 +21,13 @@
     <div class="drop-blur" @click="hideSaga"></div>
     <div class="sagas-selector">
       <button v-for="(item, index) in Sagas" :key="index" @click="hideSaga">
-        <router-link
+        <div
           class="saga-btn"
-          :to="{ name: 'Saga', params: { id: item.saga}, query:{page: 1 } }"
+          @click="showSaga(item)"
         >
           <svg v-html="item.svg" viewBox="0 0 24 24"></svg>
           {{ item.saga }}
-        </router-link>
+        </div>
       </button>
     </div>
   </div>
@@ -39,13 +39,13 @@
         :key="index"
         @click="hideCategory"
       >
-        <router-link
+        <div
           class="saga-btn"
-          :to="{ name: 'Category', params: { id: item.category},query:{ page: 1 } }"
+          @click="showCategory(item)"
         >
           <svg v-html="item.svg" viewBox="0 0 24 24"></svg>
           {{ item.category }}
-        </router-link>
+        </div>
       </button>
     </div>
   </div>
@@ -71,7 +71,7 @@
           typeContainer = true;
         "
       >
-        Type
+        Tipo
       </button>
       <button
         class="btn4"
@@ -103,13 +103,14 @@
       :style="positionSearch"
     />
   </div>
-  <div class="menu">
+  <div class="menu" v-show="visible">
     <router-link
       class="icon"
       :to="{
         name: 'All',
         query: { page: 1 },
       }"
+      @click="hideAll"
     >
       <svg viewBox="0 0 24 24">
         <path
@@ -131,7 +132,7 @@
         />
       </svg>
     </div>
-    <router-link class="icon" to="/create">
+    <router-link class="icon" to="/create" @click="hideAll">
       <svg viewBox="0 0 24 24">
         <path
           d="M18 13h-5v5c0 .55-.45 1-1 1s-1-.45-1-1v-5H6c-.55 0-1-.45-1-1s.45-1 1-1h5V6c0-.55.45-1 1-1s1 .45 1 1v5h5c.55 0 1 .45 1 1s-.45 1-1 1z"
@@ -144,6 +145,7 @@
         name: 'Favorite',
         query: { page: 1 },
       }"
+      @click="hideAll"
     >
       <svg viewBox="0 0 24 24">
         <path
@@ -155,13 +157,20 @@
 </template>
 
 <script>
+// import apollo library and some components
+import gql from "graphql-tag";
 import Search from "./Search.vue";
 import YearSelector from "./YearSelector.vue";
-import gql from "graphql-tag";
 
 export default {
   components: { Search, YearSelector },
   name: "Menu",
+  props:{
+    visible: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       menuFilter: false,
@@ -193,6 +202,7 @@ export default {
       ],
     };
   },
+  // get queries
   apollo: {
     Sagas: {
       query: gql`
@@ -258,6 +268,35 @@ export default {
       this.menuFilter = false;
       this.positionFilter = "transform: translateX(-16rem)";
     },
+    hideAll() {
+      this.hideSearch();
+      this.hideFilter();
+      this.hideYear();
+      this.hideType();
+      this.hideSaga();
+      this.hideCategory();
+    },
+    showCategory(item){
+      this.fixReact();
+      setTimeout(() => {
+        this.$router.push({
+          name: "Category",
+          params: { title: `Categoria: ${item.category}`, id: item.category.toLowerCase() },
+          query: { page: 1 },
+        });
+      }, 20);
+
+    },
+    showSaga(item){
+      this.fixReact();
+      setTimeout(()=>{
+        this.$router.push({ name: 'Saga', params: {title: `Saga: ${item.saga}`, id: item.saga.toLowerCase() },query:{ page: 1 } });
+      },20);
+    },
+    fixReact(){
+      this.$router.push({name:"All"});
+    }
+
   },
 };
 </script>

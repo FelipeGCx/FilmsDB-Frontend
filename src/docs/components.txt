@@ -1,0 +1,109 @@
+componentes
+
+ChartCircle
+este componente solo tiene 3 propiedades y es usado como una clase, se puede mejorar modificando los estilos para pasar el color por props
+
+:quantity (se debe pasar un numero con la cantidad que representa)
+:title (se debe pasar un titulo)
+:percentage (se debe pasar un porcentaje para que este se calcule)
+
+DataCharts
+este componente hace uso de otro componente para agrupar la informacion a mostrara, no se debe pasar nada.
+
+DropdownChart
+este componente es un dropdown para visualizar el componente DataCharts, si bien es un dropdown la mecanica se simula más a la de un tooltip
+
+DropdownLong
+este componente hace uso de 3 propiedades y es usado como clase
+
+:name (se debe pasar el nombre que se mostrara)
+:values (se debe pasar una lista de esta manera
+[
+    {
+        name:"string",
+        svg:"<path></path>",
+    }
+]
+)
+:widthSelect (se puede pasar un tamaño en caso de que el default no se ajuste bien, el formato es string "6rem" o "26px")
+@valueSelect (retorna el item que se selecciono)
+
+FilmsView
+este componente tiene 1 propiedad
+:FilmsDetail (se debe pasar una lista en este formato
+[
+    {
+        id:Integer,
+        type:String,
+        titleOG:String,
+        title:String,
+        year:Integer,
+        note:Integer,
+        language:Boolean,
+        favorite:Boolean,
+        category {
+          id:Integer,
+          category:String,
+          svg:String,
+        }
+        poster:String,
+        info:String,
+        season:Integer,
+        link:String,
+        saga {
+          id:Integer,
+          saga:String,
+          svg:String,
+        }
+    }
+]
+)
+
+Filters
+este componente es un header con algunos "filtros", no tiene props.
+
+Footer
+este componente es visual y muestra algunos iconos con vinculos para contactar conmigo
+
+Loading
+este componente es visual y muestra una animacion de carga
+
+MenuV2
+este componente es un menubar para dispositivos mobiles y solo maneja un prop
+:visible (se debe pasar un boolean)
+
+Modal
+este componente es un modal para ser usado cuando se ingresan datos, tiene 8 props y 3 emits
+:questionText (se debe pasar el texto de pregunta, ej: "¿Agregar Esto?")
+:errorText (se debe pasar el texto de error, ej: "Fallo Algo")
+:successText (se debe pasar el texto de exito, ej: "Fue Añadido")
+:question (propiedad que determina si el cuadro de pregunta es visible)
+:error (propiedad que determina si el cuadro de error es visible)
+:success (propiedad que determina si el cuadro de exito es visible)
+:auth (propiedad que determina si el autentificación es visible)
+:load (propiedad que determina si la animacion de carga se muestra)
+@questionRequest (retorna un boolean con la respuesta del cuadro de pregunta)
+@authRequest (retorna un boolean con la respuesta del cuadro de autentificación)
+@request (retorna un boolean false si esta en error, true si esta en success con el fin de redireccionar a una vista o en caso de error dejarlo donde esta)
+
+
+NoteSelector
+este componente no esta aplicado aun
+
+NotFoundImg
+este componente es visual y contiene una img svg, se hace de este modo para poder editar los valores de relleno de cada uno de los paths
+
+PaginationR
+este componente cuenta con 2 propiedades y 3 emits. se puede remplazar el atributo elementsPerPage para pasarlo por parametro si asi se desea
+:dataOriginal (se debe pasar una lista de todo el contenido)
+:actualP (se debe pasar el numero de la pagina actual)
+@listToShow (retornara una lista según la pagina elegida)
+@newPage (retornara el numero de la pagina que se mostrara)
+@loadingData (emite una señal indicando que se esta cargando la lista)
+
+Search
+este componente es de busqueda, funciona individualmente.
+
+YearSelector
+este componente de busqueda por año, funciona si props, tiene 1 emit
+@searchYear (no retorna solo envia la señal para oculatarlo de donde fue importado)

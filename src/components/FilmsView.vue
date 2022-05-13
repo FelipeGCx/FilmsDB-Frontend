@@ -8,7 +8,13 @@
     >
       <div class="information">
         <div class="data">
-          <a v-if="item.link != ' '" class="a-normal" :href="item.link" target="blank">{{ item.titleOG }}</a>
+          <a
+            v-if="item.link != ' '"
+            class="a-normal"
+            :href="item.link"
+            target="blank"
+            >{{ item.titleOG }}</a
+          >
           <span v-else>{{ item.titleOG }}</span>
           <span>{{ item.title }}</span>
         </div>
@@ -28,7 +34,11 @@
               v-show="item.category.svg != ' '"
               :to="{
                 name: 'Category',
-                params: { id: item.category.category.toLocaleLowerCase(), page:1  },
+                params: {
+                  title: `Categoria: ${item.category.category}`,
+                  id: item.category.category.toLocaleLowerCase(),
+                },
+                query: { page: 1 },
               }"
             >
               <svg
@@ -37,13 +47,13 @@
                 data-v-fae5bece=""
               ></svg>
               <span class="tooltiptext | tooltip-category | left-two"
-                >Category</span
+                >Categoria</span
               >
             </router-link>
             <span class="year | tooltip" :class="item.type"
               >{{ item.year }}
 
-              <span class="tooltiptext | tooltip-year | left">Year</span>
+              <span class="tooltiptext | tooltip-year | left">Año</span>
             </span>
             <router-link
               class="tooltip | svg-icon"
@@ -51,7 +61,11 @@
               v-show="item.saga.svg != ' '"
               :to="{
                 name: 'Saga',
-                params: { id: item.saga.saga.toLocaleLowerCase(), page:1 },
+                params: {
+                  title: `Categoria: ${item.saga.saga}`,
+                  id: item.saga.saga.toLocaleLowerCase(),
+                },
+                query: { page: 1 },
               }"
             >
               <svg
@@ -84,15 +98,14 @@
         oncontextmenu="return false"
         :alt="item.title"
         onerror="this.onerror=null; this.src='https://firebasestorage.googleapis.com/v0/b/films-a2d18.appspot.com/o/assets%2FNot%20Found%20Image.webp?alt=media&token=8bfcfa56-b828-4db9-9c74-82e34324f673'"
-        
       />
       <div class="icons">
         <div class="tooltip" :class="item.type">
           <svg
-            @click="update(item.titleOG)"
+            @click="update(item)"
             class="edit"
             viewBox="0 0 24 24"
-            style="cursor:pointer"
+            style="cursor: pointer"
             @mouseenter="this.hover = true"
             @mouseleave="this.hover = false"
           >
@@ -105,7 +118,7 @@
               d="M3 17.46v3.04c0 .28.22.5.5.5h3.04c.13 0 .26-.05.35-.15L17.81 9.94l-3.75-3.75L3.15 17.1c-.1.1-.15.22-.15.36zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
             />
           </svg>
-          <span class="tooltiptext | tooltip-edit">Edit</span>
+          <span class="tooltiptext | tooltip-edit">Editar</span>
         </div>
         <div class="tooltip" :class="item.type">
           <svg viewBox="0 0 24 24">
@@ -119,11 +132,11 @@
               d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z"
             />
           </svg>
-          <span class="tooltiptext | tooltip-favorite">Favorite</span>
+          <span class="tooltiptext | tooltip-favorite">Favorito</span>
         </div>
         <span class="note | tooltip" :class="item.type"
           >{{ normalizeNote(item.note) }}
-          <span class="tooltiptext | tooltip-note">Note</span>
+          <span class="tooltiptext | tooltip-note">Nota</span>
         </span>
       </div>
     </div>
@@ -182,14 +195,16 @@ export default {
     },
   },
   methods: {
+    // transform the note to a string for visualize it best
     normalizeNote(note) {
       if (note % 1 == 0 && note != 10) {
         return `${note}.0`;
       }
       return note;
     },
-    update(title){
-      this.$router.push({name:'Update',params:{title:title}});
+    // change the router to update view
+    update(item) {
+      this.$router.push({ name: "Update", params: { title: item.title }, query:{s: item.season} });
     },
   },
 };
@@ -197,23 +212,74 @@ export default {
 
 <style scoped>
 @media only screen and (min-width: 1024px) {
-  .poster, .film, .films, .information, .season, .rigth-icons, .icons, .note, .year, .a-normal, .svg-icon, .tooltiptext, svg ,span{
+  .poster,
+  .film,
+  .films,
+  .information,
+  .season,
+  .rigth-icons,
+  .icons,
+  .note,
+  .year,
+  .a-normal,
+  .svg-icon,
+  .tooltiptext,
+  svg,
+  span {
     font-size: 1rem;
   }
 }
 @media only screen and (min-width: 750px) and (max-width: 1024px) {
-  .poster, .film, .films, .information, .season, .rigth-icons, .icons, .note, .year, .a-normal, .svg-icon, .tooltiptext, svg ,span{
+  .poster,
+  .film,
+  .films,
+  .information,
+  .season,
+  .rigth-icons,
+  .icons,
+  .note,
+  .year,
+  .a-normal,
+  .svg-icon,
+  .tooltiptext,
+  svg,
+  span {
     font-size: 1rem;
   }
 }
 @media only screen and (max-width: 750px) {
-  .poster, .film, .films, .information, .season, .rigth-icons, .icons, .note, .year, .a-normal, .svg-icon, .tooltiptext, svg ,span{
+  .poster,
+  .film,
+  .films,
+  .information,
+  .season,
+  .rigth-icons,
+  .icons,
+  .note,
+  .year,
+  .a-normal,
+  .svg-icon,
+  .tooltiptext,
+  svg,
+  span {
     font-size: 1rem;
   }
 }
 @media only screen and (max-width: 550px) {
-
-  .poster, .film, .films, .information, .season, .rigth-icons, .icons, .note, .year, .a-normal, .svg-icon, .tooltiptext, svg ,span{
+  .poster,
+  .film,
+  .films,
+  .information,
+  .season,
+  .rigth-icons,
+  .icons,
+  .note,
+  .year,
+  .a-normal,
+  .svg-icon,
+  .tooltiptext,
+  svg,
+  span {
     /* font-size: .6rem; */
     font-size: 1rem;
   }
@@ -240,7 +306,8 @@ span {
 .film {
   border: 0.2em solid transparent;
   border-radius: 1em;
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpolygon style='fill:%23FFFFFF;stroke:%23303030;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:10;' points='6.5,3.5 6.5,20.5 11,15 18,15 '/%3E%3C/svg%3E"), pointer;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpolygon style='fill:%23FFFFFF;stroke:%23303030;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:10;' points='6.5,3.5 6.5,20.5 11,15 18,15 '/%3E%3C/svg%3E"),
+    pointer;
   position: relative;
   overflow: hidden !important;
   overflow-y: hidden !important;
@@ -469,7 +536,7 @@ svg {
 .svg-icon {
   height: 2.5em;
 }
-.a-normal{
+.a-normal {
   color: inherit;
   text-decoration: inherit;
   font-size: 1.1em;

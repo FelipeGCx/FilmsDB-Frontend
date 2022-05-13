@@ -1,4 +1,5 @@
 <script>
+// all queries and mutations 
 export default {
   // All
   apollo: {

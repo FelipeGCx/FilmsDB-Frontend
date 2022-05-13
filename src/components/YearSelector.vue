@@ -82,7 +82,7 @@
         </button>
       </div>
     </div>
-    <router-link class="btn-search" @click="this.$emit('searchYear')" :to="{ name: 'Year', params:{year:this.year, page:1} }">Buscar</router-link>
+    <div class="btn-search" @click="searchYear">Buscar</div>
   </div>
 </template>
 
@@ -112,7 +112,21 @@ export default {
       this.year = parseInt(
         `${this.year1}${this.year2}${this.year3}${this.year4}`
       );
-      console.log(this.year);
+    },
+    searchYear() {
+      // this is for fix the bug of reactivity in vue
+      this.fixReact();
+      this.$emit("searchYear");
+      setTimeout(() => {
+        this.$router.push({
+          name: "Year",
+          params: { title: `Resultados: ${this.year}` },
+          query: { year: this.year, page: 1 },
+        });
+      }, 20);
+    },
+    fixReact() {
+      this.$router.push({ name: "All", params: { page: 1 } });
     },
   },
   mounted() {

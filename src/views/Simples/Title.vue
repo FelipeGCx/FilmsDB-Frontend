@@ -1,35 +1,41 @@
 <template>
-<h1>Resultados para: {{title}}</h1>
+<h1 class="h1-titles">Resultados para: {{toTitleCase(title)}}</h1>
+ <!-- animation of loading -->
   <Loading v-show="!filmsStatus" />
+  <!-- list of films -->
   <FilmsView :FilmsDetail="filmsInPage" v-show="filmsStatus" />
-  <Pagination
+  <!-- pagination -->
+  <PaginationR
     :dataOriginal="FilmsDetail"
-    :nameTo="'Title'"
     :actualP="actualPage"
     @listToShow="loadList"
+    @newPage="newPage"
+    @loadingData="loadingData"
     v-show="filmsStatus"
   />
 </template>
 
 <script>
+// import apollo library and componets required
 import gql from "graphql-tag";
-import FilmsView from "@/components/FilmsView.vue";
-import Pagination from "@/components/Pagination.vue";
 import Loading from "@/components/Loading.vue";
+import FilmsView from "@/components/FilmsView.vue";
+import PaginationR from "@/components/PaginationR.vue";
+
 export default {
   name: "Title",
   components: {
-    FilmsView,
-    Pagination,
     Loading,
+    FilmsView,
+    PaginationR,
   },
   data() {
     return {
       FilmsDetail: [],
       filmsInPage: [],
       filmsStatus: false,
-      actualPage: 1,
-      title: this.$route.params.title,
+      actualPage: parseInt(this.$route.query.page) || 1,
+      title: this.$route.query.title,
     };
   },
   apollo: {
@@ -69,20 +75,49 @@ export default {
       },
       update: (data) => data.getFilmByTitle,
       result() {
+        // change the status for hide the loading
         this.filmsStatus = true;
       },
     },
   },
   methods: {
+    // load the list of films in the page
     loadList(data) {
       this.filmsInPage = data;
     },
+    // change the page
+    newPage(numPage) {
+      this.actualPage = numPage;
+      let title = this.$route.query.title;
+      this.$router.push({
+        query: {
+          title: title,
+          page: numPage,
+        },
+      });
+    },
+    // change the status for create animation of loading while the data is loading
+    loadingData() {
+      this.filmsStatus = false;
+      setTimeout(() => {
+        this.filmsStatus = true;
+      }, 500);
+    },
+    // parse to title case
+    toTitleCase(str) {
+      return str.replace(/\w\S*/g, function (txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      }
+      );
+    }
   },
   mounted() {
     this.actualPage = parseInt(this.$route.query.page) || 1;
+    this.title = this.$route.query.title;
   },
   beforeUpdate() {
     this.actualPage = parseInt(this.$route.query.page) || 1;
+    this.title = this.$route.query.title;
   },
 };
 </script>

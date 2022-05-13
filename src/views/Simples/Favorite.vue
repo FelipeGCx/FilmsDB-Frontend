@@ -1,36 +1,43 @@
 <template>
-  <h1>Favoritos</h1>
-  <Loading v-show="!filmsStatus"/>
+  <h1 class="h1-titles">Favoritos</h1>
+  <!-- animation of loading -->
+  <Loading v-show="!filmsStatus" />
+  <!-- list of films -->
   <FilmsView :FilmsDetail="filmsInPage" v-show="filmsStatus" />
-  <Pagination
+  <!-- pagination -->
+  <PaginationR
     :dataOriginal="FilmsDetail"
-    :nameTo="'Anime'"
     :actualP="actualPage"
     @listToShow="loadList"
+    @newPage="newPage"
+    @loadingData="loadingData"
     v-show="filmsStatus"
   />
 </template>
 
 <script>
-import gql from 'graphql-tag';
-import FilmsView from "@/components/FilmsView.vue";
-import Pagination from "@/components/Pagination.vue";
+// import apollo library and componets required
+import gql from "graphql-tag";
 import Loading from "@/components/Loading.vue";
+import FilmsView from "@/components/FilmsView.vue";
+import PaginationR from "@/components/PaginationR.vue";
+
 export default {
-  name: "Anime",
-  components:{
-      FilmsView,
-      Pagination,
-      Loading
+  name: "Favorite",
+  components: {
+    Loading,
+    FilmsView,
+    PaginationR,
   },
   data() {
     return {
       FilmsDetail: [],
       filmsInPage: [],
       filmsStatus: false,
-      actualPage:1,
+      actualPage: parseInt(this.$route.query.page) || 1,
     };
   },
+  // get the query to apollo server
   apollo: {
     FilmsDetail: {
       query: gql`
@@ -66,24 +73,41 @@ export default {
       },
       update: (data) => data.getFilmsByFavorite,
       result() {
+        // change the status for hide the loading
         this.filmsStatus = true;
       },
     },
   },
   methods: {
+    // load the list of films in the page
     loadList(data) {
       this.filmsInPage = data;
     },
+    // change the page
+    newPage(numPage) {
+      this.actualPage = numPage;
+      this.$router.push({
+        query: {
+          page: numPage,
+        },
+      });
+    },
+    // change the status for create animation of loading while the data is loading
+    loadingData() {
+      this.filmsStatus = false;
+      setTimeout(() => {
+        this.filmsStatus = true;
+      }, 500);
+    },
   },
   mounted() {
-        this.actualPage = parseInt(this.$route.query.page) || 1;
+    this.actualPage = parseInt(this.$route.query.page) || 1;
   },
   beforeUpdate() {
-        this.actualPage = parseInt(this.$route.query.page) || 1;
+    this.actualPage = parseInt(this.$route.query.page) || 1;
   },
 };
 </script>
 
 <style scoped>
-
 </style>

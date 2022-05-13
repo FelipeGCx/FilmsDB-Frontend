@@ -1,0 +1,86 @@
+{
+    "short_name": "FilmsDB",
+    "name": "FilmsDB",
+    "manifest_version": 2,
+    "description": "Database of multimedia content visualized for the creator Felipe Gomez",
+    "version": "1.0.0",
+    "icons": [
+      {
+        "src": "./IconsFilms/icon_svg_x150.svg",
+        "type": "image/svg+xml",
+        "sizes": "150x150"
+      },
+      {
+        "src": "./IconsFilms/maskable_icon_mb_x128.png",
+        "type": "image/png",
+        "sizes": "128x128",
+        "purpose": "any"
+      },
+      {
+        "src": "./IconsFilms/maskable_icon_mb_x192.png",
+        "type": "image/png",
+        "sizes": "192x192",
+        "purpose": "maskable"
+      },
+      {
+        "src": "./IconsFilms/maskable_icon_mb_x512.png",
+        "type": "image/png",
+        "sizes": "512x512",
+        "purpose": "maskable"
+      },
+      {
+        "src": "./IconsFilms/maskable_icon_dk_x128.png",
+        "type": "image/png",
+        "sizes": "128x128",
+        "purpose": "any"
+      },
+      {
+        "src": "./IconsFilms/maskable_icon_dk_x192.png",
+        "type": "image/png",
+        "sizes": "192x192",
+        "purpose": "maskable"
+      },
+      {
+        "src": "./IconsFilms/maskable_icon_dk_x512.png",
+        "type": "image/png",
+        "sizes": "512x512",
+        "purpose": "maskable"
+      },
+      {
+        "src": "./IconsFilms/maskable_icon_pc_x128.png",
+        "type": "image/png",
+        "sizes": "128x128",
+        "purpose": "any"
+      },
+      {
+        "src": "./IconsFilms/maskable_icon_pc_x192.png",
+        "type": "image/png",
+        "sizes": "192x192",
+        "purpose": "maskable"
+      },
+      {
+        "src": "./IconsFilms/maskable_icon_pc_x512.png",
+        "type": "image/png",
+        "sizes": "512x512",
+        "purpose": "maskable"
+      }
+    ],
+    "start_url": "/all",
+    "background_color": "#030118",
+    "display": "standalone",
+    "scope": "/",
+    "theme_color": "#00BCD4",
+    "color_scheme": "dark",
+    "prymary_icon": "./IconsFilms/icon_svg_x150.svg",
+    "prymary_icon_sizes": "150x150",
+    "shortcuts": [
+      {
+        "name": "FilmsDB",
+        "short_name": "FilmsDB",
+        "description": "Inicio",
+        "url": "/all",
+        "icons": [{ "src": "./IconsFilms/maskable_icon_pc_x512.png", "sizes": "512x512" }]
+      }
+    ],
+    "lang": "es-CO"
+  }

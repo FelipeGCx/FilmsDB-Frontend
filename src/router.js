@@ -10,64 +10,55 @@ const routes = [
 		redirect: { name: 'All', query: { page: 1 } }
 	},
 	{
-		path: '/type/:type/',
-		name: 'Home',
-		component: () => import('@/views/Home.vue')
-	},
-	{
 		path: '/all/',
 		name: 'All',
-		component: () => import('@/views/Simples/All.vue')
+		component: () => import('@/views/Simples/All.vue'),
+		meta: { title: 'Inicio' }
 	},
 	{
-		path: '/anime/',
+		path: '/animes/',
 		name: 'Anime',
-		component: () => import('@/views/Simples/Anime.vue')
+		component: () => import('@/views/Simples/Anime.vue'),
+		meta: { title: 'Animes' }
 	},
 	{
-		path: '/movie/',
+		path: '/movies/',
 		name: 'Movie',
-		component: () => import('@/views/Simples/Movie.vue')
+		component: () => import('@/views/Simples/Movie.vue'),
+		meta: { title: 'Películas' }
 	},
 	{
-		path: '/serie/',
+		path: '/series/',
 		name: 'Serie',
-		component: () => import('@/views/Simples/Serie.vue')
+		component: () => import('@/views/Simples/Serie.vue'),
+		meta: { title: 'Series' }
 	},
 	{
 		path: '/create',
 		name: 'Create',
-		component: () => import('@/views/CreateFilme.vue')
+		component: () => import('@/views/CreateFilme.vue'),
+		meta: { title: 'Añadir Contenido' }
+	},
+	{
+		path: '/add/:type',
+		name: 'Add',
+		component: () => import('@/views/AddSoC.vue')
 	},
 	{
 		path: '/update/:title',
 		name: 'Update',
 		component: () => import('@/views/UpdateFilme.vue')
 	},
-	// {
-	// 	path: '/search/:title',
-	// 	redirect: {
-	// 		name: 'Title',
-	// 		params: {
-	// 			title: 'cora',
-	// 			page: 1
-	// 		}
-	// 	}
-	// },
-	// {
-	// 	path: '/search/:title/',
-	// 	name: 'Title',
-	// 	component: () => import('@/views/Simples/Title.vue')
-	// },
 	{
-		path: '/search/:title/',
+		path: '/search/',
 		name: 'Title',
-		component: () => import('@/views/Simples/Title.vue'),
+		component: () => import('@/views/Simples/Title.vue')
 	},
 	{
 		path: '/category/:id/',
 		name: 'Category',
 		component: () => import('@/views/Simples/Category.vue')
+		// beforeEnter: [ removeQueryParams ]
 	},
 	{
 		path: '/saga/:id/',
@@ -77,12 +68,18 @@ const routes = [
 	{
 		path: '/favorities/',
 		name: 'Favorite',
-		component: () => import('@/views/Simples/Favorite.vue')
+		component: () => import('@/views/Simples/Favorite.vue'),
+		meta: { title: 'Favoritos' }
 	},
 	{
-		path: '/year/:year/',
+		path: '/year/',
 		name: 'Year',
 		component: () => import('@/views/Simples/Year.vue')
+	},
+	{
+		path: '/note/',
+		name: 'Note',
+		component: () => import('@/views/Simples/Note.vue')
 	},
 	{
 		path: '/test/',
@@ -102,7 +99,8 @@ const routes = [
 	{
 		path: '/:catchAll(.*)',
 		name: 'NotFound',
-		component: () => import('@/views/NotFound.vue')
+		component: () => import('@/views/NotFound.vue'),
+		meta: { title: 'Página No Encontrada' }
 	}
 ];
 
@@ -110,16 +108,27 @@ const router = createRouter({
 	history: createWebHistory(process.env.BASE_URL),
 	routes
 });
-// router.beforeEach((to, from, next) => {
-// 	// if (to.name == from.name) {
-// 	// 	window.location = to.fullPath;
-// 	// }
-// 	// if (to.meta.title == undefined) {
-// 	// 	document.title = 'Shared-P - ' + to.params.title;
-// 	// }else {
-// 	// 	document.title = 'Shared-P - ' + to.meta.title;
-// 	// }
-// 	next();
-// });
+function toTitleCase(str) {
+	return str.replace(/\w\S*/g, function(txt) {
+		return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+	});
+}
+
+router.beforeEach((to, from, next) => {
+	if (to.meta.title == undefined) {
+		if (to.name == 'Title' && to.params.title == undefined) {
+			document.title = `FilmsDB - Resultados: ${to.query.title}`;
+		} else if (to.name == 'Category' && to.params.title == undefined) {
+			document.title = `FilmsDB - Categoria: ${toTitleCase(to.params.id)}`;
+		} else if (to.name == 'Saga' && to.params.title == undefined) {
+			document.title = `FilmsDB - Saga: ${toTitleCase(to.params.id)}`;
+		} else {
+			document.title = 'FilmsDB - ' + to.params.title;
+		}
+	} else {
+		document.title = 'FilmsDB - ' + to.meta.title;
+	}
+	next();
+});
 
 export default router;

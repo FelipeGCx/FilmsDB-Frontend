@@ -55,7 +55,7 @@ export default {
 <style scoped>
 @media only screen and (min-width: 1024px) {
   .footer-main{
-    margin: 0 12vw;
+    margin: -6vh 12vw;
     flex-direction: column-reverse;
     align-items: flex-start!important;
   }
