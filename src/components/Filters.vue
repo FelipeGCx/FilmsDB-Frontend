@@ -72,7 +72,6 @@
 <script>
 // import apollo library and components required
 import gql from "graphql-tag";
-import Dropdown from "@/components/Dropdown.vue";
 import DropdownLong from "@/components/DropdownLong.vue";
 import DropdownChart from "@/components/DropdownChart.vue";
 import Search from "@/components/Search.vue";
@@ -80,7 +79,6 @@ import Search from "@/components/Search.vue";
 export default {
   name: "Filters",
   components: {
-    Dropdown,
     DropdownLong,
     DropdownChart,
     Search,
