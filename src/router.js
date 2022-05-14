@@ -81,11 +81,6 @@ const routes = [
 		name: 'Note',
 		component: () => import('@/views/Simples/Note.vue')
 	},
-	{
-		path: '/test/',
-		name: 'test',
-		component: () => import('@/views/test.vue')
-	},
 	// {
 	// 	path: '/loading',
 	// 	name: 'Loading',
