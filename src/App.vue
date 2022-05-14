@@ -5,10 +5,10 @@
   <main>
     <router-view />
   </main>
-  <!-- menu mobile  -->
-  <MenuV2 :visible="menuMobile" />
   <!-- footer  -->
   <Footer />
+  <!-- menu mobile  -->
+  <MenuV2 :visible="menuMobile" />
 </template>
 
 <script>
