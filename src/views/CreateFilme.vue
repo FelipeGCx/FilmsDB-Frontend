@@ -255,7 +255,6 @@ import gql from "graphql-tag";
 import { app } from "@/utils/firebaseConfig";
 import { fileToBase64, base64ToFile } from "@/utils/base64Manager.js";
 import Modal from "@/components/Modal.vue";
-import { blob } from "stream/consumers";
 
 export default {
   components: { Modal },
