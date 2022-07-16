@@ -1,4 +1,7 @@
-# filmsdb
+# FilmsDB
+
+[Website](https://ffilmsdb.herokuapp.com/all/?page=1)
+- note: actually have some optimization problems
 
 ## Project setup
 ```
