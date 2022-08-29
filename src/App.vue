@@ -7,18 +7,15 @@
       </div>
     </transition>
   </router-view>
-  <!-- <transition name="fade" mode="out-in">
-    <main>
-      <the-header />
-      <router-view />
-    </main>
-  </transition> -->
 </template>
 
 <script>
 import TheHeader from "@/components/TheHeader.vue";
 export default {
   components: { TheHeader },
+  // created() {
+  //   this.$isAdmin = false;
+  // },
 };
 </script>
 

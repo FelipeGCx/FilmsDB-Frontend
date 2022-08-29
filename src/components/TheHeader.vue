@@ -12,10 +12,19 @@
     </div>
     <nav>
       <ul>
+        <li>
+          <the-search :isClicked="isClicked" />
+        </li>
         <li v-for="(item, idx) in navBtns" :key="idx">
-          <button :id="item.id">
+          <!-- v-show="
+            item.access == this.$isAdmin
+              ? true
+              : this.$isAdmin & item.access
+              ? true
+              : false
+          " -->
+          <button :id="item.id" @click="btnClicked(item.id)">
             <img :src="item.svg" :alt="item.alt" draggable="false" />
-            <!-- <img :src="item.svg" :alt="item.alt" /> -->
           </button>
         </li>
       </ul>
@@ -24,37 +33,66 @@
 </template>
 
 <script>
+import TheSearch from "./TheSearch.vue";
 export default {
+  components: { TheSearch },
   data() {
     return {
+      isClicked: false,
       navBtns: [
         {
           id: "search-button",
           alt: "search button",
           svg: require("@/assets/icons/search.svg"),
+          access: false,
         },
         {
           id: "sagas-button",
           alt: "sagas button",
           svg: require("@/assets/icons/sagas.svg"),
+          access: false,
         },
         {
           id: "categories-button",
           alt: "categories button",
           svg: require("@/assets/icons/categories.svg"),
+          access: false,
         },
         {
           id: "chart-button",
           alt: "chart button",
           svg: require("@/assets/icons/chart-outline.svg"),
+          access: false,
+        },
+        {
+          id: "add-button",
+          alt: "add button",
+          svg: require("@/assets/icons/add.svg"),
+          access: true,
         },
         {
           id: "auth-button",
           alt: "auth button",
           svg: require("@/assets/icons/login.svg"),
+          access: false,
         },
       ],
     };
+  },
+  methods: {
+    btnClicked(id) {
+      switch (id) {
+        case "search-button":
+          this.isClicked = !this.isClicked;
+          break;
+
+        default:
+          break;
+      }
+    },
+  },
+  mounted() {
+    console.log(this.$isAdmin);
   },
 };
 </script>

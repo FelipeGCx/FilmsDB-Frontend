@@ -15,6 +15,11 @@ const routes = [
     component: () => import("@/views/AllView.vue"),
     meta: { title: "Inicio" },
   },
+  {
+		path: '/search/',
+		name: 'Title',
+		component: () => import('@/views/TitleView.vue')
+	},
 ];
 
 const router = createRouter({
