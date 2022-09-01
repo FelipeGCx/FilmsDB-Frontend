@@ -7,12 +7,15 @@
       </div>
     </transition>
   </router-view>
+  <the-menu-mobile />
 </template>
 
 <script>
 import TheHeader from "@/components/TheHeader.vue";
+import TheMenuMobile from "@/components/TheMenuMobile.vue";
+
 export default {
-  components: { TheHeader },
+  components: { TheHeader, TheMenuMobile },
   // created() {
   //   this.$isAdmin = false;
   // },
@@ -34,6 +37,9 @@ export default {
 body {
   overflow-x: hidden;
   background-color: $base-color;
+  width: 100vw;
+}
+#app {
   width: 100vw;
 }
 ul {

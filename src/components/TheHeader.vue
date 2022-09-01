@@ -96,15 +96,41 @@ export default {
   },
 };
 </script>
-
 <style lang="scss" scoped>
+@media only screen and (min-width: 0px) and (max-width: 460px) {
+  .logo {
+    h1 {
+      display: none;
+    }
+  }
+}
+@media only screen and (min-width: 0px) and (max-width: 620px) {
+  header {
+    nav {
+      ul {
+        gap: 0 !important;
+        #sagas-button,
+        #categories-button,
+        #chart-button,
+        #add-button {
+          display: none;
+        }
+        #search-button {
+          padding-right: 0.5rem;
+        }
+      }
+    }
+  }
+}
 header {
   background-color: $neutral-color;
   height: 8vh;
   display: flex;
   justify-content: space-between;
-  padding: 0 7rem;
+  padding: 0 7vw;
   align-items: center;
+  position: sticky;
+  top: 0;
   .logo {
     a {
       display: inline-flex;
@@ -120,11 +146,13 @@ header {
         font-weight: 700;
         font-style: italic;
         user-select: none;
+        transition: all ease 1s;
       }
     }
   }
   nav {
     ul {
+      transition: all ease 1s;
       display: flex;
       gap: 0.5rem;
       li {

@@ -1,5 +1,9 @@
 <template>
-  <main></main>
+  <main>
+    <div v-for="i in 20" :key="i">
+      {{ i }}
+    </div>
+  </main>
 </template>
 
 <script>
@@ -8,4 +12,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+div {
+  font-size: 6rem;
+}
+</style>

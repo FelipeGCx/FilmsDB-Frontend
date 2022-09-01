@@ -1,0 +1,110 @@
+<template>
+  <nav class="filters">
+    <ul>
+      <li v-for="(item, idx) in navBtns" :key="idx">
+        <button :id="item.id" @click="btnClicked(idx)">
+          <img
+            :src="eActive == item.e ? item.svgTwo : item.svg"
+            :alt="item.alt"
+            draggable="false"
+          />
+        </button>
+      </li>
+    </ul>
+  </nav>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      navBtns: [
+        {
+          id: "type-button",
+          alt: "type button",
+          svg: require("@/assets/icons/type.svg"),
+          svgTwo: require("@/assets/icons/type-fill.svg"),
+          e: "type",
+        },
+        {
+          id: "sagas-button",
+          alt: "sagas button",
+          svg: require("@/assets/icons/sagas.svg"),
+          svgTwo: require("@/assets/icons/sagas-fill.svg"),
+          e: "sagas",
+        },
+        {
+          id: "categories-button",
+          alt: "categories button",
+          svg: require("@/assets/icons/categories.svg"),
+          svgTwo: require("@/assets/icons/categories-fill.svg"),
+          e: "categories",
+        },
+        {
+          id: "year-button",
+          alt: "year button",
+          svg: require("@/assets/icons/year.svg"),
+          svgTwo: require("@/assets/icons/year-fill.svg"),
+          e: "year",
+        },
+        {
+          id: "note-button",
+          alt: "note button",
+          svg: require("@/assets/icons/note.svg"),
+          svgTwo: require("@/assets/icons/note-fill.svg"),
+          e: "note",
+        },
+      ],
+    };
+  },
+  computed: {
+    eActive() {
+      return this.$route.query.active || "type";
+    },
+  },
+  methods: {
+    btnClicked(idx) {
+      let element = this.navBtns[idx];
+      this.$router.push({
+        query: {
+          active: element.e,
+        },
+      });
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.filters {
+  height: 6.5vh;
+  width: 100vw;
+  background-color: $neutral-color;
+  position: fixed;
+  left: 0;
+  bottom: 7vh;
+  transition: display ease 0.5s;
+  ul {
+    height: 100%;
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 0 5vw;
+    li {
+      button {
+        cursor: pointer;
+        img {
+          filter: contrast(2) invert(1);
+          width: 2.5rem;
+          height: 2.5rem;
+          opacity: 75%;
+          &:hover {
+            opacity: 95%;
+          }
+        }
+      }
+    }
+  }
+}
+</style>

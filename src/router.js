@@ -10,16 +10,16 @@ const routes = [
     redirect: { name: "All", query: { page: 1 } },
   },
   {
-    path: "/all/",
+    path: "/all",
     name: "All",
     component: () => import("@/views/AllView.vue"),
     meta: { title: "Inicio" },
   },
   {
-		path: '/search/',
-		name: 'Title',
-		component: () => import('@/views/TitleView.vue')
-	},
+    path: "/search",
+    name: "Title",
+    component: () => import("@/views/TitleView.vue"),
+  },
 ];
 
 const router = createRouter({
