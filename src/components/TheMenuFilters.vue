@@ -1,23 +1,50 @@
 <template>
-  <nav class="filters">
-    <ul>
-      <li v-for="(item, idx) in navBtns" :key="idx">
-        <button :id="item.id" @click="btnClicked(idx)">
-          <img
-            :src="eActive == item.e ? item.svgTwo : item.svg"
-            :alt="item.alt"
-            draggable="false"
-          />
-        </button>
-      </li>
-    </ul>
-  </nav>
+  <div>
+    <nav class="filters">
+      <ul>
+        <li v-for="(item, idx) in navBtns" :key="idx">
+          <button :id="item.id" @click="btnClicked(idx)">
+            <img
+              :src="eActive == item.e ? item.svgTwo : item.svg"
+              :alt="item.alt"
+              draggable="false"
+            />
+          </button>
+        </li>
+      </ul>
+    </nav>
+    <the-type-selector @clicked="hideComponent()" v-show="typeVisibility" />
+    <the-sagas-selector @clicked="hideComponent()" v-show="sagasVisibility" />
+    <the-categories-selector
+      @clicked="hideComponent()"
+      v-show="categoriesVisibility"
+    />
+    <the-year-selector @clicked="hideComponent()" v-show="yearVisibility" />
+    <the-note-selector @clicked="hideComponent()" v-show="noteVisibility" />
+  </div>
 </template>
 
 <script>
+import TheTypeSelector from "@/components/TheTypeSelector.vue";
+import TheSagasSelector from "./TheSagasSelector.vue";
+import TheCategoriesSelector from "./TheCategoriesSelector.vue";
+import TheYearSelector from "./TheYearSelector.vue";
+import TheNoteSelector from "./TheNoteSelector.vue";
 export default {
+  components: {
+    TheTypeSelector,
+    TheSagasSelector,
+    TheCategoriesSelector,
+    TheYearSelector,
+    TheNoteSelector,
+  },
   data() {
     return {
+      typeVisibility: true,
+      sagasVisibility: false,
+      categoriesVisibility: false,
+      yearVisibility: false,
+      noteVisibility: false,
       navBtns: [
         {
           id: "type-button",
@@ -70,6 +97,42 @@ export default {
           active: element.e,
         },
       });
+      this.hideAll();
+      this.show(element.e);
+    },
+    hideAll() {
+      this.typeVisibility = false;
+      this.sagasVisibility = false;
+      this.categoriesVisibility = false;
+      this.yearVisibility = false;
+      this.noteVisibility = false;
+    },
+    show(e) {
+      switch (e) {
+        case "type":
+          this.typeVisibility = true;
+          break;
+        case "sagas":
+          this.sagasVisibility = true;
+          break;
+        case "categories":
+          this.categoriesVisibility = true;
+          break;
+        case "year":
+          this.yearVisibility = true;
+          break;
+        case "note":
+          this.noteVisibility = true;
+          break;
+
+        default:
+          break;
+      }
+    },
+    hideComponent() {
+      this.$emit("changeVisibility");
+      this.hideAll();
+      this.show("type");
     },
   },
 };
@@ -77,12 +140,13 @@ export default {
 
 <style lang="scss" scoped>
 .filters {
-  height: 6.5vh;
+  z-index: 4;
+  height: 4.7rem;
   width: 100vw;
   background-color: $neutral-color;
   position: fixed;
   left: 0;
-  bottom: 7vh;
+  bottom: 4.7rem;
   transition: display ease 0.5s;
   ul {
     height: 100%;
