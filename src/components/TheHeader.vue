@@ -106,6 +106,7 @@ export default {
 }
 @media only screen and (min-width: 0px) and (max-width: 620px) {
   header {
+    z-index: 5;
     nav {
       ul {
         gap: 0 !important;
@@ -124,7 +125,8 @@ export default {
 }
 header {
   background-color: $neutral-color;
-  height: 8vh;
+  height: 5.4rem;
+  // height: 8vh;
   display: flex;
   justify-content: space-between;
   padding: 0 7vw;

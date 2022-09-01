@@ -61,6 +61,10 @@ button {
   background-color: transparent;
   border: none;
 }
+.blur {
+  backdrop-filter: blur(7px);
+}
+
 ::-webkit-scrollbar {
   height: 1rem;
   width: 0.5rem;

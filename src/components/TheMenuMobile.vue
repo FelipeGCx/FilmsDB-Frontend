@@ -46,7 +46,10 @@
       </li>
     </ul>
   </nav>
-  <the-menu-filters v-show="filtersVisibility" />
+  <the-menu-filters
+    v-show="filtersVisibility"
+    @changeVisibility="filtersVisibility = false"
+  />
 </template>
 
 <script>
@@ -81,8 +84,9 @@ export default {
   }
 }
 .menu {
+  z-index: 5;
   display: none;
-  height: 7vh;
+  height: 4.7rem;
   width: 100vw;
   background-color: $primary-color;
   position: fixed;
