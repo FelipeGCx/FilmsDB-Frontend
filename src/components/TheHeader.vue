@@ -85,6 +85,9 @@ export default {
         case "search-button":
           this.isClicked = !this.isClicked;
           break;
+        case "auth-button":
+          this.$router.push({ name: "Login" });
+          break;
 
         default:
           break;
