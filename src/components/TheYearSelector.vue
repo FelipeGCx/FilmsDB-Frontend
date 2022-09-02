@@ -74,6 +74,9 @@ export default {
       flex-direction: column;
       align-items: center;
       gap: 1.5rem;
+      height: 100%;
+      width: 100%;
+      justify-content: center;
       li {
         button {
           background-color: $base-color;

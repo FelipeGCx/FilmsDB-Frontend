@@ -7,15 +7,17 @@
       </div>
     </transition>
   </router-view>
+  <the-footer />
   <the-menu-mobile />
 </template>
 
 <script>
 import TheHeader from "@/components/TheHeader.vue";
+import TheFooter from "@/components/TheFooter.vue";
 import TheMenuMobile from "@/components/TheMenuMobile.vue";
 
 export default {
-  components: { TheHeader, TheMenuMobile },
+  components: { TheHeader, TheFooter, TheMenuMobile },
   // created() {
   //   this.$isAdmin = false;
   // },
@@ -33,6 +35,7 @@ export default {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
 }
 body {
   overflow-x: hidden;
@@ -57,7 +60,8 @@ svg {
   height: 3rem;
   color: $secondary-color;
 }
-button {
+button,
+input {
   background-color: transparent;
   border: none;
 }

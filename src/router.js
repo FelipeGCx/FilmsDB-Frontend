@@ -16,6 +16,12 @@ const routes = [
     meta: { title: "Inicio" },
   },
   {
+    path: "/login",
+    name: "Login",
+    component: () => import("@/views/LoginView.vue"),
+    meta: { title: "Iniciar sesion" },
+  },
+  {
     path: "/search",
     name: "Title",
     component: () => import("@/views/TitleView.vue"),

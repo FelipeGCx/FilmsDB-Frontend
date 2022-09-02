@@ -70,7 +70,7 @@ export default {
           active: "type",
         },
       });
-      this.filtersVisibility = !this.filtersVisibility;
+      this.filtersVisibility = true;
     },
     hideAll() {},
   },
