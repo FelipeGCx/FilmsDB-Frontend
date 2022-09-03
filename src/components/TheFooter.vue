@@ -15,6 +15,7 @@ footer {
   background-repeat: no-repeat, repeat;
   background-size: cover;
   background-position: center;
-  height: 9rem;
+  height: 12rem;
+  bottom: 0;
 }
 </style>
