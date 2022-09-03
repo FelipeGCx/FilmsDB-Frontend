@@ -64,7 +64,6 @@ export default {
   },
   methods: {
     showFilters() {
-      this.hideAll();
       this.$router.push({
         query: {
           active: "type",
@@ -72,7 +71,6 @@ export default {
       });
       this.filtersVisibility = true;
     },
-    hideAll() {},
   },
 };
 </script>

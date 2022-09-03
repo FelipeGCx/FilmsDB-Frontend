@@ -103,7 +103,7 @@ export default {
   position: fixed;
   width: 100%;
   top: 5.4rem;
-  left: 0;
+  right: 0;
   bottom: 9.4rem;
   .types {
     z-index: 3;

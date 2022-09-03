@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="logo">
-      <router-link to="/" draggable="false">
+      <router-link to="/" draggable="false" @click="hideAll">
         <img
           :src="require('@/assets/icons/filmsdb.svg')"
           alt="FilmsDB Logo"
@@ -23,22 +23,47 @@
               ? true
               : false
           " -->
-          <button :id="item.id" @click="btnClicked(item.id)">
+          <button :id="item.id" @click="btnClicked(item.id, idx)">
             <img :src="item.svg" :alt="item.alt" draggable="false" />
           </button>
         </li>
       </ul>
     </nav>
+    <the-sagas-selector
+      class="sagas-c"
+      @clicked="hideAll()"
+      v-show="sagasVisibility"
+    />
+    <the-categories-selector
+      class="categories-c"
+      @clicked="hideAll()"
+      v-show="categoriesVisibility"
+    />
+    <the-charts
+      class="charts-c"
+      @clicked="hideAll()"
+      v-show="chartsVisibility"
+    />
   </header>
 </template>
 
 <script>
 import TheSearch from "./TheSearch.vue";
+import TheSagasSelector from "./TheSagasSelector.vue";
+import TheCategoriesSelector from "./TheCategoriesSelector.vue";
+import TheCharts from "./TheCharts.vue";
 export default {
-  components: { TheSearch },
+  components: { TheSearch, TheSagasSelector, TheCategoriesSelector, TheCharts },
   data() {
     return {
       isClicked: false,
+      sagasVisibility: false,
+      categoriesVisibility: false,
+      chartsVisibility: false,
+      searchColor: "0.6",
+      sagasColor: "0.6",
+      categoriesColor: "0.6",
+      chartsColor: "0.6",
       navBtns: [
         {
           id: "search-button",
@@ -50,18 +75,24 @@ export default {
           id: "sagas-button",
           alt: "sagas button",
           svg: require("@/assets/icons/sagas.svg"),
+          svgOne: require("@/assets/icons/sagas.svg"),
+          svgTwo: require("@/assets/icons/sagas-fill.svg"),
           access: false,
         },
         {
           id: "categories-button",
           alt: "categories button",
           svg: require("@/assets/icons/categories.svg"),
+          svgOne: require("@/assets/icons/categories.svg"),
+          svgTwo: require("@/assets/icons/categories-fill.svg"),
           access: false,
         },
         {
           id: "chart-button",
           alt: "chart button",
           svg: require("@/assets/icons/chart-outline.svg"),
+          svgOne: require("@/assets/icons/chart-outline.svg"),
+          svgTwo: require("@/assets/icons/chart-fill.svg"),
           access: false,
         },
         {
@@ -80,18 +111,53 @@ export default {
     };
   },
   methods: {
-    btnClicked(id) {
+    btnClicked(id, idx) {
+      let element = this.navBtns[idx];
       switch (id) {
         case "search-button":
           this.isClicked = !this.isClicked;
+          this.searchColor = this.isClicked ? "1" : "0.6";
+          break;
+        case "sagas-button":
+          this.hideAll();
+          this.sagasVisibility = !this.sagasVisibility;
+          element.svg = this.sagasVisibility ? element.svgTwo : element.svgOne;
+          this.sagasColor = this.sagasVisibility ? "1" : "0.6";
+          break;
+        case "categories-button":
+          this.hideAll();
+          this.categoriesVisibility = !this.categoriesVisibility;
+          element.svg = this.categoriesVisibility
+            ? element.svgTwo
+            : element.svgOne;
+          this.categoriesColor = this.categoriesVisibility ? "1" : "0.6";
+          break;
+        case "chart-button":
+          this.hideAll();
+          this.chartsVisibility = !this.chartsVisibility;
+          element.svg = this.chartsVisibility ? element.svgTwo : element.svgOne;
+          this.chartsColor = this.chartsVisibility ? "1" : "0.6";
           break;
         case "auth-button":
+          this.hideAll();
           this.$router.push({ name: "Login" });
           break;
 
         default:
           break;
       }
+    },
+    hideAll() {
+      this.sagasVisibility = false;
+      this.categoriesVisibility = false;
+      this.chartsVisibility = false;
+      this.sagasColor = "0.6";
+      this.categoriesColor = "0.6";
+      this.chartsColor = "0.6";
+      this.searchColor = "0.6";
+      this.navBtns.forEach((element) => {
+        element.svg = element.svgOne || element.svg;
+      });
     },
   },
   mounted() {
@@ -172,11 +238,38 @@ header {
         }
         &:hover {
           img {
-            opacity: 0.9;
+            opacity: 0.9 !important;
+          }
+        }
+
+        #search-button {
+          img {
+            opacity: v-bind(searchColor);
+          }
+        }
+        #sagas-button {
+          img {
+            opacity: v-bind(sagasColor);
+          }
+        }
+        #categories-button {
+          img {
+            opacity: v-bind(categoriesColor);
+          }
+        }
+        #chart-button {
+          img {
+            opacity: v-bind(chartsColor);
           }
         }
       }
     }
+  }
+  .sagas-c,
+  .categories-c,
+  .charts-c {
+    width: 35rem;
+    height: 100%;
   }
 }
 </style>
