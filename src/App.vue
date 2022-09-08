@@ -69,6 +69,27 @@ input {
   backdrop-filter: blur(7px);
 }
 
+$border-radius: 8px;
+.main-button {
+  padding: 0.7rem 2.6rem;
+  background-color: $primary-color;
+  color: $secondary-color;
+  border-radius: $border-radius;
+  text-transform: uppercase;
+  font-size: 1.3rem;
+  font-weight: 600;
+  width: fit-content;
+  align-self: center;
+  border: solid 0.2rem transparent;
+  margin-top: 1rem;
+  cursor: pointer;
+  &:hover {
+    border-color: $primary-color;
+    background-color: $secondary-color;
+    color: $primary-color;
+  }
+}
+
 ::-webkit-scrollbar {
   height: 1rem;
   width: 0.5rem;

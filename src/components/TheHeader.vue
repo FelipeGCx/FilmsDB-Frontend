@@ -161,6 +161,9 @@ export default {
     },
   },
   mounted() {
+    window.addEventListener("resize", () => {
+      if (document.documentElement.clientWidth < 624) this.hideAll();
+    });
     console.log(this.$isAdmin);
   },
 };
