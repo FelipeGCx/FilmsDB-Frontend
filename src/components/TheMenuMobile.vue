@@ -29,11 +29,13 @@
         </router-link>
       </li>
       <li>
-        <img
-          :src="require('@/assets/icons/chart-fill.svg')"
-          alt="Charts FilmsDB"
-          draggable="false"
-        />
+        <button @click="showCharts">
+          <img
+            :src="require('@/assets/icons/chart-fill.svg')"
+            alt="Charts FilmsDB"
+            draggable="false"
+          />
+        </button>
       </li>
       <li>
         <router-link to="/">
@@ -50,16 +52,19 @@
     v-show="filtersVisibility"
     @changeVisibility="filtersVisibility = false"
   />
+  <the-charts v-show="chartVisibility" @clicked="chartVisibility = false" />
 </template>
 
 <script>
 import TheMenuFilters from "@/components/TheMenuFilters.vue";
+import TheCharts from "@/components/TheCharts.vue";
 
 export default {
-  components: { TheMenuFilters },
+  components: { TheMenuFilters, TheCharts },
   data() {
     return {
       filtersVisibility: false,
+      chartVisibility: false,
     };
   },
   methods: {
@@ -69,7 +74,12 @@ export default {
           active: "type",
         },
       });
+      this.chartVisibility = false;
       this.filtersVisibility = true;
+    },
+    showCharts() {
+      this.filtersVisibility = false;
+      this.chartVisibility = true;
     },
   },
 };
