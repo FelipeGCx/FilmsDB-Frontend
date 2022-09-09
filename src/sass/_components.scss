@@ -1,0 +1,54 @@
+$border-radius: 8px;
+.main-button {
+  background-color: $primary-color;
+  border-radius: $border-radius;
+  color: $secondary-color;
+  text-transform: uppercase;
+  font-weight: 600;
+  width: fit-content;
+  align-self: center;
+  border: solid 0.2rem transparent;
+  margin-top: 1rem;
+  cursor: pointer;
+  &:hover {
+    border-color: $primary-color;
+    background-color: $secondary-color;
+    color: $primary-color;
+  }
+}
+.img-button {
+  padding: 0rem 1.6rem;
+  background-color: $base-color;
+  border-radius: $border-radius;
+  border: 0.2rem solid $primary-color;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: $secondary-color;
+  font-weight: 500;
+  svg {
+    color: $secondary-color;
+    width: 2.4rem;
+  }
+  &:hover {
+    border-color: $neutral-second-color;
+    background-color: $secondary-color;
+    color: $base-color;
+    svg {
+      color: $base-color;
+    }
+  }
+}
+
+.input {
+  background-color: $base-color;
+  border-radius: $border-radius;
+  border: 0.2rem solid $primary-color;
+  text-align: center;
+  font-weight: 500;
+  color: $secondary-color;
+}
+
+.blur {
+  backdrop-filter: blur(7px);
+}

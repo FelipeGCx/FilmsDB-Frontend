@@ -4,19 +4,15 @@
     <nav class="types | blur">
       <ul>
         <li v-for="(item, index) in types" :key="index">
-          <button @click="hideType">
-            <router-link class="saga-btn" to="/">
-              <!-- :to="{ name: item.name, query: { page: 1 } }" -->
-              <svg
-                v-html="item.svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              ></svg>
-              <h2>
-                {{ item.name }}
-              </h2>
-            </router-link>
-          </button>
+          <router-link class="img-button" to="/">
+            <!-- :to="{ name: item.name, query: { page: 1 } }" -->
+            <svg
+              v-html="item.svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            ></svg>
+            {{ item.name }}
+          </router-link>
         </li>
       </ul>
     </nav>
@@ -24,7 +20,7 @@
 </template>
 
 <script>
-import TheButtonClose from "./TheButtonClose.vue";
+import TheButtonClose from "@/components/TheButtonClose.vue";
 export default {
   components: { TheButtonClose },
   data() {
@@ -79,34 +75,7 @@ export default {
       gap: 1.5rem;
       height: 100%;
       width: 100%;
-      li {
-        button {
-          background-color: $base-color;
-          border: 0.2rem solid $primary-color;
-          padding: 0.3rem 1.7rem;
-          border-radius: $border-radius;
-          //   border-radius: $border-radius;
-          a {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            svg {
-              color: $secondary-color;
-              width: 2.4rem;
-            }
-            h2 {
-              color: $secondary-color;
-              font-size: 1.7rem;
-              font-weight: 500;
-              font-family: "Montserrat", sans-serif;
-            }
-          }
-        }
-      }
     }
   }
-}
-li {
-  font-size: 3rem;
 }
 </style>

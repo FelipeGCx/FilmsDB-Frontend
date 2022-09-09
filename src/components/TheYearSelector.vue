@@ -40,42 +40,9 @@ export default {
     &::-webkit-scrollbar {
       width: 0;
     }
-    ul {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.5rem;
-      height: 100%;
-      width: 100%;
-      justify-content: center;
-      li {
-        button {
-          background-color: $base-color;
-          border: 0.2rem solid $primary-color;
-          padding: 0.3rem 1.7rem;
-          border-radius: $border-radius;
-          //   border-radius: $border-radius;
-          a {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            svg {
-              color: $secondary-color;
-              width: 2.4rem;
-            }
-            h2 {
-              color: $secondary-color;
-              font-size: 1.7rem;
-              font-weight: 500;
-              font-family: "Montserrat", sans-serif;
-            }
-          }
-        }
-      }
+    button {
+      width: 11rem !important;
     }
   }
-}
-li {
-  font-size: 3rem;
 }
 </style>
