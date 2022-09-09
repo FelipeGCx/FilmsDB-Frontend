@@ -1,6 +1,6 @@
 <template>
   <input
-    type="text"
+    type="search"
     autocomplete="false"
     v-model="value"
     v-on:keyup.enter="searchContent"
@@ -53,12 +53,12 @@ export default {
 <style lang="scss" scoped>
 $border-radius: 10px;
 input {
-  background-color: $base-third-color;
+  background-color: $base-third-color !important;
   color: $neutral-second-color;
   border-radius: $border-radius;
   border: none;
   height: 3rem;
-  padding: v-bind(padding);
+  padding: v-bind(padding) !important;
   font-size: 1.3rem;
   font-style: italic;
   width: v-bind(width);

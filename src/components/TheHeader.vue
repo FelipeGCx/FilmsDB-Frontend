@@ -116,6 +116,7 @@ export default {
       switch (id) {
         case "search-button":
           this.isClicked = !this.isClicked;
+          console.log("hola", this.isClicked);
           this.searchColor = this.isClicked ? "1" : "0.6";
           break;
         case "sagas-button":
@@ -231,6 +232,7 @@ header {
       gap: 0.5rem;
       li {
         button {
+          padding: 0;
           img {
             filter: invert(1);
             opacity: 0.6;

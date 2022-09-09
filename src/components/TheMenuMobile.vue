@@ -113,10 +113,6 @@ export default {
         filter: contrast(2) invert(1);
         width: 2.7rem;
         height: 2.7rem;
-        opacity: 75%;
-        &:hover {
-          opacity: 95%;
-        }
       }
     }
   }

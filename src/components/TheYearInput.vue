@@ -1,27 +1,20 @@
 <template>
-  <div class="year-input">
-    <div class="input-container">
-      <button @click="nOne = adding(nOne)">
-        <img
-          :src="require('@/assets/icons/arrow-down.svg')"
-          draggable="false"
-        />
-      </button>
-      <input
-        type="number"
-        v-model="nOne"
-        min="1896"
-        max="9999"
-        maxlength="4"
-        minlength="4"
-      />
-      <button @click="nOne = subtracting(nOne)">
-        <img
-          :src="require('@/assets/icons/arrow-down.svg')"
-          draggable="false"
-        />
-      </button>
-    </div>
+  <div class="input-container">
+    <button @click="nOne = adding(nOne)">
+      <img :src="require('@/assets/icons/arrow-up.svg')" draggable="false" />
+    </button>
+    <input
+      class="input"
+      type="number"
+      v-model="nOne"
+      :min="lOne"
+      :max="date"
+      maxlength="4"
+      minlength="4"
+    />
+    <button @click="nOne = subtracting(nOne)">
+      <img :src="require('@/assets/icons/arrow-down.svg')" draggable="false" />
+    </button>
   </div>
 </template>
 
@@ -30,64 +23,56 @@ export default {
   data() {
     return {
       nOne: 2022,
+      date: 0,
+      lOne: 1896,
     };
   },
   methods: {
     adding(n) {
-      return n + 1 > 9999 ? 0 : n + 1;
+      return n + 1 > this.date ? this.lOne : n + 1;
     },
     subtracting(n) {
-      return n - 1 < 1896 ? 9999 : n - 1;
+      return n - 1 < this.lOne ? this.date : n - 1;
     },
+  },
+  mounted() {
+    let d = new Date();
+    this.date = d.getFullYear();
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.year-input {
+.input-container {
   display: flex;
-  gap: 1rem;
-  .input-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.8rem;
-    button {
-      border: 2px solid $primary-color;
-      width: 100%;
-      filter: contrast(0.7);
-      img {
-        width: 2rem;
-        filter: contrast(1) invert(1);
-      }
-      &:first-child {
-        border-top-left-radius: $border-radius;
-        border-top-right-radius: $border-radius;
-        img {
-          rotate: 180deg;
-        }
-      }
-      &:last-child {
-        border-bottom-left-radius: $border-radius;
-        border-bottom-right-radius: $border-radius;
-      }
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  button {
+    border: 2px solid $primary-color;
+    width: 100% !important;
+    filter: contrast(0.7);
+    padding: 0;
+    border-radius: 4px;
+    img {
+      width: 2rem;
+      filter: contrast(1) invert(1);
     }
-    $border-radius: 8px;
-    input {
-      border-radius: $border-radius;
-      background-color: $base-color;
-      border: 0.2rem solid $primary-color;
-      padding: 0.7rem 0;
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: $secondary-color;
-      width: 11rem;
-      text-align: center;
-      &::-webkit-inner-spin-button {
-        visibility: hidden;
-        width: 0;
-        position: absolute;
-      }
+    &:first-child {
+      border-top-left-radius: $border-radius;
+      border-top-right-radius: $border-radius;
+    }
+    &:last-child {
+      border-bottom-left-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+    }
+  }
+  input {
+    width: 11rem;
+    &::-webkit-inner-spin-button {
+      visibility: hidden;
+      width: 0;
+      position: absolute;
     }
   }
 }
