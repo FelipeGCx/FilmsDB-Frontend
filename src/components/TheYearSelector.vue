@@ -1,10 +1,10 @@
 <template>
   <div class="year">
     <the-button-close @btnClicked="$emit('clicked')" />
-    <div class="year-div | blur">
+    <form class="year-form | blur">
       <the-year-input />
       <button class="main-button">Search</button>
-    </div>
+    </form>
   </div>
 </template>
 
@@ -26,7 +26,7 @@ export default {
   top: 5.4rem;
   left: 0;
   bottom: 9.4rem;
-  .year-div {
+  .year-form {
     z-index: 3;
     overflow-y: scroll;
     width: 100%;
