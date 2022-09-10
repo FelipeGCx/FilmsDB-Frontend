@@ -3,6 +3,7 @@
     <the-button-close @btnClicked="$emit('clicked')" />
     <nav class="types | blur">
       <ul>
+        <h2 class="simple-title">Categories</h2>
         <li v-for="(item, index) in types" :key="index">
           <router-link class="img-button" to="/" @click="hideType">
             <!-- :to="{ name: item.name, query: { page: 1 } }" -->

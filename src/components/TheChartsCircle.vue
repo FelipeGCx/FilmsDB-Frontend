@@ -49,7 +49,7 @@ export default {
   width: 11rem;
   height: 11rem;
   .back {
-    stroke: #3c3b405e;
+    stroke: $base-third-color;
     stroke-width: 1rem;
   }
   .front {

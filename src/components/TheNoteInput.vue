@@ -9,8 +9,9 @@
       v-model="nOne"
       :min="lOne"
       :max="date"
-      maxlength="4"
-      minlength="4"
+      maxlength="3"
+      minlength="3"
+      step="0.1"
     />
     <button @click="nOne = subtracting(nOne)">
       <img :src="require('@/assets/icons/arrow-down.svg')" draggable="false" />
@@ -22,22 +23,18 @@
 export default {
   data() {
     return {
-      nOne: 2022,
-      date: 0,
-      lOne: 1896,
+      nOne: 10.0,
+      date: 10.0,
+      lOne: 0,
     };
   },
   methods: {
     adding(n) {
-      return n + 1 > this.date ? this.lOne : n + 1;
+      return n + 0.1 > this.date ? this.lOne : n + 0.1;
     },
     subtracting(n) {
-      return n - 1 < this.lOne ? this.date : n - 1;
+      return n - 0.1 < this.lOne ? this.date : n - 0.1;
     },
-  },
-  mounted() {
-    let d = new Date();
-    this.date = d.getFullYear();
   },
 };
 </script>
