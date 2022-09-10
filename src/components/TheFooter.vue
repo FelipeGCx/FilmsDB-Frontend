@@ -15,7 +15,17 @@ footer {
   background-repeat: no-repeat, repeat;
   background-size: cover;
   background-position: center;
-  height: 12rem;
+  // height: 12rem;
   bottom: 0;
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  justify-content: center;
+  padding: 7rem 2rem 6rem 2rem;
+  img {
+    filter: invert(1);
+    width: 2.5rem;
+    height: 2.5rem;
+  }
 }
 </style>

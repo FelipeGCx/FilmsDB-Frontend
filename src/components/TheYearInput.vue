@@ -50,8 +50,8 @@ export default {
   gap: 0.8rem;
   button {
     border: 2px solid $primary-color;
+    background-color: $base-color;
     width: 100% !important;
-    filter: contrast(0.7);
     padding: 0;
     border-radius: 4px;
     img {
