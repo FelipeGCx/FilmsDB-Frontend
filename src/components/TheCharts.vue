@@ -5,12 +5,15 @@
       <ul>
         <li>
           <the-charts-circle :percentage="60" :color="'#E91E63'" />
+          <h2>766 Movies</h2>
         </li>
         <li>
           <the-charts-circle :percentage="40" :color="'#00C2FF'" />
+          <h2>766 Animes</h2>
         </li>
         <li>
           <the-charts-circle :percentage="50" :color="'#9820C2'" />
+          <h2>766 Series</h2>
         </li>
       </ul>
     </nav>
