@@ -3,12 +3,15 @@
     <div v-for="i in 20" :key="i">
       {{ i }}
     </div>
-  </main>
+    <the-pagination/>
+    </main>
 </template>
 
 <script>
+import ThePagination from '@/components/ThePagination.vue';
 export default {
   name: "AllView",
+  components:{ThePagination}
 };
 </script>
 
