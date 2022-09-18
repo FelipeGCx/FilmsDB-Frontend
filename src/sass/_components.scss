@@ -76,3 +76,26 @@ $w: 5rem;
     height: 0.2rem;
   }
 }
+$w: 50%;
+.main-title {
+  text-transform: uppercase;
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    top:50%;
+    right: ($w + 2rem) * -1;;
+    background-color: $secondary-color;
+    width: $w;
+    height: 0.2rem;
+  }
+  &::before {
+    content: "";
+    position: absolute;
+    left: ($w + 2rem) * -1;
+    top:50%;
+    background-color: $secondary-color;
+    width: $w;
+    height: 0.2rem;
+  }
+}

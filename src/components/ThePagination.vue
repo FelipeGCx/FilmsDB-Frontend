@@ -1,65 +1,67 @@
 <template>
   <nav class="pagination">
-    <div
-      class="page-item | previuos"
-      @click="getDataPage(1)"
-      :class="isActive(actualPage - 1)"
-      v-show="actualPage > numPages / 2 + 1"
-    >
-      <svg viewBox="0 0 24 24">
-        <title>First Page</title>
-        <path
-          d="M17.7 15.89L13.82 12l3.89-3.89c.39-.39.39-1.02 0-1.41-.39-.39-1.02-.39-1.41 0l-4.59 4.59c-.39.39-.39 1.02 0 1.41l4.59 4.59c.39.39 1.02.39 1.41 0 .38-.38.38-1.02-.01-1.4zM7 6c.55 0 1 .45 1 1v10c0 .55-.45 1-1 1s-1-.45-1-1V7c0-.55.45-1 1-1z"
-        />
-      </svg>
-    </div>
-    <div
-      class="page-item | previuos"
-      @click="getDataPage(actualPage == 1 ? 1 : actualPage - 1)"
-      :class="isActive(actualPage - 1)"
-      v-show="actualPage > 1"
-    >
-      <svg viewBox="0 0 24 24">
-        <title>Previuos</title>
-        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12l4.58-4.59z" />
-      </svg>
-    </div>
-    <div
-      v-for="(page, index) in totalPages()"
-      :key="index"
-      class="page-item"
-      @click="getDataPage(page)"
-      :class="isActive(page)"
-      v-show="page >= min() && page <= max() && pages != 1"
-    >
-      <span class="page-container">
-        {{ page }}
-      </span>
-    </div>
-    <div
-      class="page-item | next"
-      @click="getDataPage(actualPage == pages ? actualPage : actualPage + 1)"
-      v-show="actualPage < pages"
-      :class="isActive(actualPage + 1)"
-    >
-      <svg viewBox="0 0 24 24">
-        <title>Nexto</title>
-        <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z" />
-      </svg>
-    </div>
-    <div
-      class="page-item | next"
-      @click="getDataPage(totalPages())"
-      :class="isActive(actualPage + 1)"
-      v-show="pages - actualPage > numPages / 2"
-    >
-      <svg viewBox="0 0 24 24">
-        <title>Last Page</title>
-        <path
-          d="M6.29 8.11L10.18 12l-3.89 3.89c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l4.59-4.59c.39-.39.39-1.02 0-1.41L7.7 6.7c-.39-.39-1.02-.39-1.41 0-.38.39-.38 1.03 0 1.41zM17 6c.55 0 1 .45 1 1v10c0 .55-.45 1-1 1s-1-.45-1-1V7c0-.55.45-1 1-1z"
-        />
-      </svg>
-    </div>
+    <ol>
+      <li
+        class="page-item | previuos"
+        @click="getDataPage(1)"
+        :class="isActive(actualPage - 1)"
+        v-show="actualPage > numPages / 2 + 1"
+      >
+        <svg viewBox="0 0 24 24">
+          <title>First Page</title>
+          <path
+            d="M17.7 15.89L13.82 12l3.89-3.89c.39-.39.39-1.02 0-1.41-.39-.39-1.02-.39-1.41 0l-4.59 4.59c-.39.39-.39 1.02 0 1.41l4.59 4.59c.39.39 1.02.39 1.41 0 .38-.38.38-1.02-.01-1.4zM7 6c.55 0 1 .45 1 1v10c0 .55-.45 1-1 1s-1-.45-1-1V7c0-.55.45-1 1-1z"
+          />
+        </svg>
+      </li>
+      <li
+        class="page-item | previuos"
+        @click="getDataPage(actualPage == 1 ? 1 : actualPage - 1)"
+        :class="isActive(actualPage - 1)"
+        v-show="actualPage > 1"
+      >
+        <svg viewBox="0 0 24 24">
+          <title>Previuos</title>
+          <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12l4.58-4.59z" />
+        </svg>
+      </li>
+      <li
+        v-for="(page, index) in totalPages()"
+        :key="index"
+        class="page-item"
+        @click="getDataPage(page)"
+        :class="isActive(page)"
+        v-show="page >= min() && page <= max() && pages != 1"
+      >
+        <span class="page-container">
+          {{ page }}
+        </span>
+      </li>
+      <li
+        class="page-item | next"
+        @click="getDataPage(actualPage == pages ? actualPage : actualPage + 1)"
+        v-show="actualPage < pages"
+        :class="isActive(actualPage + 1)"
+      >
+        <svg viewBox="0 0 24 24">
+          <title>Next</title>
+          <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z" />
+        </svg>
+      </li>
+      <li
+        class="page-item | next"
+        @click="getDataPage(totalPages())"
+        :class="isActive(actualPage + 1)"
+        v-show="pages - actualPage > numPages / 2"
+      >
+        <svg viewBox="0 0 24 24">
+          <title>Last Page</title>
+          <path
+            d="M6.29 8.11L10.18 12l-3.89 3.89c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l4.59-4.59c.39-.39.39-1.02 0-1.41L7.7 6.7c-.39-.39-1.02-.39-1.41 0-.38.39-.38 1.03 0 1.41zM17 6c.55 0 1 .45 1 1v10c0 .55-.45 1-1 1s-1-.45-1-1V7c0-.55.45-1 1-1z"
+          />
+        </svg>
+      </li>
+    </ol>
   </nav>
 </template>
 
@@ -147,7 +149,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 @media only screen and (min-width: 1024px) {
   .page-item {
     width: 3rem;
