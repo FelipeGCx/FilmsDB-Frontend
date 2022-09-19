@@ -76,27 +76,3 @@ $w: 5rem;
     height: 0.2rem;
   }
 }
-$wt: 30vw;
-.main-title {
-  text-transform: uppercase;
-  position: relative;
-  text-align: center;
-  &::after {
-    content: "";
-    position: absolute;
-    top:50%;
-    right: 2rem;
-    background-color: $secondary-color;
-    width: $wt;
-    height: 0.2rem;
-  }
-  &::before {
-    content: "";
-    position: absolute;
-    left: 2rem;
-    top:50%;
-    background-color: $secondary-color;
-    width: $wt * 1.2;
-    height: 0.2rem;
-  }
-}

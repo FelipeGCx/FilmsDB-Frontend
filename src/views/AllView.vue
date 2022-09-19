@@ -1,6 +1,7 @@
 <template>
   <main>
-    <h1 class="main-title">All Content</h1>
+    <the-main-title :title="'All Content'" />
+    <the-filters />
     <div v-for="i in 20" :key="i">
       {{ i }}
     </div>
@@ -8,8 +9,11 @@
 </template>
 
 <script>
+import TheMainTitle from "@/components/TheMainTitle.vue";
+import TheFilters from "@/components/TheFilters.vue";
 export default {
   name: "AllView",
+  components: { TheMainTitle, TheFilters },
 };
 </script>
 
