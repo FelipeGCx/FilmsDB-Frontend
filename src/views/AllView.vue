@@ -1,17 +1,15 @@
 <template>
   <main>
+    <h1 class="main-title">All Content</h1>
     <div v-for="i in 20" :key="i">
       {{ i }}
     </div>
-    <the-pagination/>
-    </main>
+  </main>
 </template>
 
 <script>
-import ThePagination from '@/components/ThePagination.vue';
 export default {
   name: "AllView",
-  components:{ThePagination}
 };
 </script>
 
