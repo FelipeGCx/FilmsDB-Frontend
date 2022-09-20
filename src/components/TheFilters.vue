@@ -1,7 +1,7 @@
 <template>
-  <form action="">
+  <form @submit.prevent="doFilter" id="formFilter">
     <label for="type">Type</label>
-    <select name="type" id="type">
+    <select name="type" id="type" v-model="filter.type">
       <option value="All">All</option>
       <option value="Movie">Movie</option>
       <option value="Anime">Anime</option>
@@ -16,10 +16,10 @@
       minlength="4"
       step="1"
       name="year"
+      v-model="filter.year"
     />
     <label for="note">Note</label>
     <input
-      class="input"
       type="number"
       min="0"
       max="10.0"
@@ -27,6 +27,7 @@
       minlength="3"
       step="0.1"
       name="note"
+      v-model="filter.note"
     />
     <button type="submit">Filter</button>
   </form>
@@ -35,7 +36,13 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      filter: {
+        type: "All",
+        year: null,
+        note: null,
+      },
+    };
   },
   methods: {
     checkYear(e) {
@@ -43,6 +50,9 @@ export default {
       if (e.target.value.length > 3) {
         e.target.value = "1000";
       }
+    },
+    doFilter() {
+      console.log(this.filter);
     },
   },
 };
