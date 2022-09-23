@@ -8,12 +8,32 @@ $border-radius: 8px;
   width: fit-content;
   align-self: center;
   border: solid 0.2rem transparent;
-  margin-top: 1rem;
   cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0.7rem 1.6rem;
   &:hover {
     border-color: $primary-color;
     background-color: $secondary-color;
     color: $primary-color;
+  }
+}
+$border-radius: 8px;
+.sub-button {
+  background-color: $neutral-color;
+  border-radius: $border-radius;
+  color: $neutral-second-color;
+  text-transform: uppercase;
+  font-weight: 600;
+  width: fit-content;
+  align-self: center;
+  border: solid 0.2rem transparent;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0.7rem 1.6rem;
+  &:hover {
+    border-color: $secondary-color;
+    background-color: $base-color;
+    color: $secondary-color;
   }
 }
 .img-button {
@@ -75,4 +95,14 @@ $w: 5rem;
     width: $w;
     height: 0.2rem;
   }
+}
+
+.check{
+  background-color: $neutral-color;
+  border-radius: $border-radius;
+  border: 0.2rem solid transparent;
+  text-align: center;
+  font-weight: 500;
+  color: $neutral-second-color;
+  padding: 0.5rem 1rem;
 }

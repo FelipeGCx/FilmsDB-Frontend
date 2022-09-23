@@ -63,6 +63,8 @@ form {
   display: flex;
   gap: 1rem;
   align-items: center;
+  justify-content: flex-end;
+  padding-right: 2rem;
   select {
     background-color: $base-third-color;
     border: none;

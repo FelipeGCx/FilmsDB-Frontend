@@ -23,7 +23,7 @@ export default {
   data() {
     return {
       nOne: 2022,
-      date: 0,
+      date: new Date().getFullYear(),
       lOne: 1896,
     };
   },
@@ -34,10 +34,6 @@ export default {
     subtracting(n) {
       return n - 1 < this.lOne ? this.date : n - 1;
     },
-  },
-  mounted() {
-    let d = new Date();
-    this.date = d.getFullYear();
   },
 };
 </script>
