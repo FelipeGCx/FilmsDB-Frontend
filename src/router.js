@@ -13,13 +13,19 @@ const routes = [
     path: "/all",
     name: "All",
     component: () => import("@/views/AllView.vue"),
-    meta: { title: "Inicio" },
+    meta: { title: "Home" },
   },
   {
     path: "/login",
     name: "Login",
     component: () => import("@/views/LoginView.vue"),
-    meta: { title: "Iniciar sesion" },
+    meta: { title: "Login" },
+  },
+  {
+    path: "/create/content",
+    name: "CreateContent",
+    component: () => import("@/views/CreatContentView.vue"),
+    meta: { title: "Create Content" },
   },
   {
     path: "/search",

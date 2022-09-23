@@ -28,11 +28,13 @@ h3 {
 p,
 span,
 a,
-input {
+input,
+label,
+select {
   font-size: 1.3rem;
 }
 a {
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 svg {
@@ -43,6 +45,7 @@ svg {
 button,
 a {
   cursor: default;
+  appearance: none;
 }
 button,
 input {
