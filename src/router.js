@@ -24,7 +24,7 @@ const routes = [
   {
     path: "/create/content",
     name: "CreateContent",
-    component: () => import("@/views/CreatContentView.vue"),
+    component: () => import("@/views/CreateContentView.vue"),
     meta: { title: "Create Content" },
   },
   {
@@ -42,9 +42,9 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   //   if (to.meta.title == undefined) {
   //     if (to.name == "Title" && to.params.title == undefined) {
-  //       document.title = `FilmsDB - Resultados: ${to.query.title}`;
+  //       document.title = `FilmsDB - Results: ${to.query.title}`;
   //     } else if (to.name == "Category" && to.params.title == undefined) {
-  //       document.title = `FilmsDB - Categoria: ${toTitleCase(to.params.id)}`;
+  //       document.title = `FilmsDB - Category: ${toTitleCase(to.params.id)}`;
   //     } else if (to.name == "Saga" && to.params.title == undefined) {
   //       document.title = `FilmsDB - Saga: ${toTitleCase(to.params.id)}`;
   //     } else {
