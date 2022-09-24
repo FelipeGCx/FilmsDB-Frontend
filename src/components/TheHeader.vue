@@ -16,14 +16,12 @@
           <the-search :isClicked="isClicked" />
         </li>
         <li v-for="(item, idx) in navBtns" :key="idx">
-          <!-- v-show="
-            item.access == this.$isAdmin
-              ? true
-              : this.$isAdmin & item.access
-              ? true
-              : false
-          " -->
-          <button :id="item.id" @click="btnClicked(item.id, idx)">
+          <the-dropdown-image
+            v-if="item.id == 'add-button'"
+            :id="item.id"
+            :obj="item"
+          />
+          <button v-else :id="item.id" @click="btnClicked(item.id, idx)">
             <img :src="item.svg" :alt="item.alt" draggable="false" />
           </button>
         </li>
@@ -52,8 +50,15 @@ import TheSearch from "./TheSearch.vue";
 import TheSagasSelector from "./TheSagasSelector.vue";
 import TheCategoriesSelector from "./TheCategoriesSelector.vue";
 import TheCharts from "./TheCharts.vue";
+import TheDropdownImage from "./TheDropdownImage.vue";
 export default {
-  components: { TheSearch, TheSagasSelector, TheCategoriesSelector, TheCharts },
+  components: {
+    TheSearch,
+    TheSagasSelector,
+    TheCategoriesSelector,
+    TheCharts,
+    TheDropdownImage,
+  },
   data() {
     return {
       isClicked: false,
@@ -100,6 +105,26 @@ export default {
           alt: "add button",
           svg: require("@/assets/icons/add.svg"),
           access: true,
+          options: [
+            {
+              name: "Add Content",
+              alt: "add content",
+              svg: require("@/assets/icons/add.svg"),
+              route: "/create/content",
+            },
+            {
+              name: "Add Saga",
+              alt: "add saga",
+              svg: require("@/assets/icons/add.svg"),
+              route: "/all",
+            },
+            {
+              name: "Add Category",
+              alt: "add category",
+              svg: require("@/assets/icons/add.svg"),
+              route: "/all",
+            },
+          ],
         },
         {
           id: "auth-button",
@@ -206,6 +231,7 @@ header {
   align-items: center;
   position: sticky;
   top: 0;
+  z-index: 10;
   .logo {
     a {
       display: inline-flex;

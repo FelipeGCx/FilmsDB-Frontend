@@ -5,7 +5,7 @@
       <ul>
         <h2 class="simple-title">Sagas</h2>
         <li v-for="(item, index) in sagas" :key="index">
-          <router-link class="img-button" to="/" @click="hideType">
+          <router-link class="img-button" to="/">
             <!-- :to="{ name: item.name, query: { page: 1 } }" -->
             <svg
               v-html="item.svg"

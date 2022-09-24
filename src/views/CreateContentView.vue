@@ -20,6 +20,7 @@
                   checked="checked"
                   @click="
                     filme.type = 'Movie';
+                    filme.season = 0;
                     seasonVisible = false;
                   "
               /></label>
@@ -34,6 +35,7 @@
                   value="Anime"
                   @click="
                     filme.type = 'Anime';
+                    filme.season = 1;
                     seasonVisible = true;
                   "
               /></label>
@@ -48,6 +50,7 @@
                   value="Serie"
                   @click="
                     filme.type = 'Serie';
+                    filme.season = 1;
                     seasonVisible = true;
                   "
               /></label>
@@ -166,7 +169,7 @@
             />
             <label for="select-image" class="selector">Image</label>
             <label for="select-image" class="name-file">
-              {{ this.file.name }}
+              <p>{{ this.file.name }}</p>
             </label>
           </div>
           <label for="select-image" class="image-container">
@@ -216,11 +219,10 @@
               </label>
             </div>
           </div>
-          <div class="field">
-            <label v-show="seasonVisible" for="season">Season</label>
+          <div class="field || season">
+            <label for="season">Season</label>
             <input
               class="input"
-              v-show="seasonVisible"
               name="season"
               type="number"
               v-model="filme.season"
@@ -302,6 +304,14 @@ export default {
       },
     };
   },
+  computed: {
+    seasonOp() {
+      return this.seasonVisible ? 1 : 0;
+    },
+    seasonDp() {
+      return this.seasonVisible ? "flex" : "none";
+    },
+  },
   mounted() {
     window.scrollTo(0, 0);
   },
@@ -309,44 +319,61 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/* ////////////////////////// */
 @media only screen and (min-width: 1024px) {
   .new-register {
     margin: 0 20vw;
-  }
-  h1 {
-    display: flex;
   }
 }
 @media only screen and (min-width: 750px) and (max-width: 1024px) {
   .new-register {
     margin: 0 16vw;
   }
-  h1 {
-    display: flex;
-  }
 }
 @media only screen and (max-width: 750px) {
-  .first-container {
-    flex-direction: column;
-  }
   .new-register {
     margin: 0 13vw;
-  }
-}
-@media only screen and (max-width: 550px) {
-  .buttons {
-    align-self: center;
-    width: 100%;
-    justify-content: space-around;
-  }
-  .buttons button,
-  a {
-    width: 50%;
+    align-items: center;
+    form {
+      width: 100%;
+      align-items: center;
+      .first-container {
+        flex-direction: column;
+        gap: 1rem;
+        width: 100%;
+        .fields-container,
+        .picture-container {
+          width: 100% !important;
+        }
+        .checkbox {
+          justify-content: space-between;
+          label {
+            width: 100%;
+          }
+        }
+        .season {
+          display: v-bind(seasonDp);
+        }
+      }
+      .second-container {
+        width: 100%;
+        .buttons {
+          justify-content: space-between !important;
+          a,
+          button {
+            width: 100%;
+          }
+        }
+      }
+    }
   }
 }
 
 .new-register {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
   form {
     display: flex;
     flex-direction: column;
@@ -355,8 +382,11 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 1rem;
       .fields-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        width: 50%;
         .note-container {
           display: flex;
           gap: 1rem;
@@ -395,20 +425,21 @@ export default {
         }
       }
       .picture-container {
-        padding-top: 1rem;
+        // padding-top: 1rem;
         display: flex;
         flex-direction: column;
         align-items: center;
+        gap: 1rem;
+        width: 23rem;
         .selector-container {
           position: relative;
           display: flex;
           flex-direction: row;
-          margin: 1rem 0;
           border-radius: $border-radius;
           border: 0.2rem solid $primary-color;
           overflow: hidden;
           height: 2.8rem;
-          width: 17rem;
+          width: 100%;
           input {
             display: none;
           }
@@ -419,23 +450,32 @@ export default {
           }
           .name-file {
             display: flex;
-            text-indent: 0.5rem;
             width: 100%;
             height: 100%;
             border: none;
             background-color: $secondary-color;
-            align-items: center;
+            // align-items: center;
             color: $base-color;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            p {
+              color: $base-color;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              // text-indent: 0.5rem;
+              padding: 0 0.5rem;
+              align-self: center;
+            }
           }
         }
         .image-container {
           position: relative;
+          align-self: center;
           img {
-            height: 26rem;
-            width: 17rem;
+            height: 28rem;
+            width: 19rem;
             border-radius: 1.6rem;
           }
           .img-done,
@@ -453,12 +493,21 @@ export default {
             animation: load 2s infinite linear;
           }
         }
+        .season {
+          opacity: v-bind(seasonOp);
+        }
       }
     }
     .second-container {
       display: flex;
       flex-direction: column;
       gap: 1rem;
+      .buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: flex-end;
+        margin-top: 2rem;
+      }
     }
     .multi-select {
       .checkbox {
@@ -480,11 +529,18 @@ export default {
           }
         }
       }
+      .favorite {
+        justify-content: space-between;
+        label {
+          width: 50%;
+        }
+      }
     }
     .field {
       display: flex;
       flex-direction: column;
       gap: 0.7rem;
+      width: 100%;
     }
     input {
       text-align: start;
