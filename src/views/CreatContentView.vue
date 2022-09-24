@@ -8,27 +8,48 @@
           <div class="field || multi-select">
             <label>Type</label>
             <div class="checkbox">
-              <label class="check" for="movie"
+              <label
+                class="check"
+                for="movie"
+                :class="filme.type == 'Movie' ? 'active' : ''"
                 >Movie<input
                   type="radio"
                   id="movie"
                   name="type_content"
                   value="Movie"
                   checked="checked"
+                  @click="
+                    filme.type = 'Movie';
+                    seasonVisible = false;
+                  "
               /></label>
-              <label class="check" for="anime"
+              <label
+                class="check"
+                for="anime"
+                :class="filme.type == 'Anime' ? 'active' : ''"
                 >Anime<input
                   type="radio"
                   id="anime"
                   name="type_content"
                   value="Anime"
+                  @click="
+                    filme.type = 'Anime';
+                    seasonVisible = true;
+                  "
               /></label>
-              <label class="check" for="serie"
+              <label
+                class="check"
+                for="serie"
+                :class="filme.type == 'Serie' ? 'active' : ''"
                 >Serie<input
                   type="radio"
                   id="serie"
                   name="type_content"
                   value="Serie"
+                  @click="
+                    filme.type = 'Serie';
+                    seasonVisible = true;
+                  "
               /></label>
             </div>
           </div>
@@ -78,7 +99,7 @@
                 name="note"
                 v-model="filme.note"
               />
-              <span class="note-number">{{ filme.note }}</span>
+              <span class="note-number || input">{{ filme.note }}</span>
             </div>
           </div>
           <div class="field">
@@ -107,33 +128,36 @@
               </option>
             </select>
           </div>
-          <div class="field">
+          <div class="field || multi-select">
             <label for="language">Language</label>
-            <div class="language || radios">
-              <label class="container" :class="!filme.language ? 'active' : ''"
-                >dddd
+            <div class="language || checkbox">
+              <label class="check" :class="!filme.language ? 'active' : ''"
+                >Dubbing
                 <input
-                  class="checkmark"
                   type="radio"
                   checked="checked"
                   @click="filme.language = false"
-                  name="radio"
+                  name="language"
+                  id="dubbing"
                 />
               </label>
-              <label class="container" :class="filme.language ? 'active' : ''"
+              <label
+                for="original"
+                class="check"
+                :class="filme.language ? 'active' : ''"
                 >Original
                 <input
-                  class="checkmark"
                   type="radio"
                   @click="filme.language = true"
-                  name="radio"
+                  name="language"
+                  id="original"
                 />
               </label>
             </div>
           </div>
         </div>
-        <div class="image-container">
-          <div class="container-selector">
+        <div class="picture-container">
+          <div class="selector-container">
             <input
               type="file"
               id="select-image"
@@ -142,51 +166,60 @@
             />
             <label for="select-image" class="selector">Image</label>
             <label for="select-image" class="name-file">
-              <p class="img-parraf">{{ this.file.name }}</p>
+              {{ this.file.name }}
             </label>
           </div>
-          <label for="select-image" class="cont-image">
+          <label for="select-image" class="image-container">
             <img :src="filme.poster" />
             <svg
               class="img-load"
               viewBox="0 0 24 24"
               v-show="iconImage.first"
               v-html="iconImage.load"
+              fill="currentColor"
             ></svg>
             <svg
               class="img-done"
               viewBox="0 0 24 24"
               v-show="iconImage.second"
               v-html="iconImage.done"
+              fill="currentColor"
             ></svg>
           </label>
-          <div class="field">
+          <div class="field || multi-select">
             <label for="favorite">Favorite</label>
-            <div class="favorite || radios">
-              <label for="normal"
+            <div class="favorite || checkbox">
+              <label
+                class="check"
+                for="normal"
+                :class="!filme.favorite ? 'active' : ''"
                 >Normal
                 <input
-                  class="checkmark"
                   type="radio"
                   checked="checked"
                   id="normal"
                   name="favorite"
+                  @click="filme.favorite = false"
                 />
               </label>
-              <label for="favorite"
+              <label
+                class="check"
+                for="favorite"
+                :class="filme.favorite ? 'active' : ''"
                 >Favorite
                 <input
-                  class="checkmark"
                   type="radio"
                   id="favorite"
                   name="favorite"
+                  @click="filme.favorite = true"
                 />
               </label>
             </div>
           </div>
-          <div class="fields">
+          <div class="field">
             <label v-show="seasonVisible" for="season">Season</label>
             <input
+              class="input"
               v-show="seasonVisible"
               name="season"
               type="number"
@@ -198,11 +231,11 @@
       <div class="second-container">
         <div class="field">
           <label for="info">More Info</label>
-          <input name="info" v-model="filme.info" />
+          <input class="input" name="info" v-model="filme.info" />
         </div>
         <div class="field">
           <label for="link">Link</label>
-          <input name="link" v-model="filme.link" />
+          <input class="input" name="link" v-model="filme.link" />
         </div>
         <div class="buttons">
           <router-link
@@ -324,70 +357,100 @@ export default {
       align-items: center;
       gap: 1rem;
       .fields-container {
-        .multi-select {
-          .checkbox {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            gap: 1rem;
-            label {
-              $lab: &;
-              cursor: pointer;
-              position: relative;
-              user-select: none;
-              &:has(input:checked) {
-                background-color: $primary-color;
-                color: $secondary-color;
-              }
-              input {
-                opacity: 0;
-                position: absolute;
-                &:checked #{$lab} {
-                  background-color: $primary-color;
-                  color: $secondary-color;
-                }
-              }
-            }
-          }
-        }
         .note-container {
           display: flex;
           gap: 1rem;
+          align-items: center;
           .note {
             -webkit-appearance: none;
             appearance: none;
             width: 100%;
-            background-color: transparent;
+            height: 1rem;
+            background: $base-second-color;
             padding: 0;
-            &:focus {
-              outline: none;
-            }
-            &::-webkit-slider-runnable-track {
-              width: 100%;
-              height: 13px;
-              cursor: pointer;
-              background: $primary-color;
-              border-radius: 25px;
-            }
             &::-webkit-slider-thumb {
-              height: 1.3rem;
-              width: 1.3rem;
-              border-radius: 27px;
-              cursor: pointer;
               -webkit-appearance: none;
               appearance: none;
-              margin-top: -3.5px;
-            }
-            &:focus::-webkit-slider-runnable-track {
+              height: 1.5rem;
+              width: 1.5rem;
+              border-radius: 50%;
               background: $primary-color;
+              cursor: ew-resize;
+              transition: background 0.3s ease-in-out;
+            }
+            &::-webkit-slider-runnable-track {
+              -webkit-appearance: none;
+              appearance: none;
+              box-shadow: none;
+              border: none;
+              background: transparent;
             }
           }
           .note-number {
-            min-width: 3rem;
+            min-width: 4.5rem;
             text-align: center;
             border-radius: $border-radius;
-            padding: 0.3rem 0.5rem;
             font-weight: 600;
+          }
+        }
+      }
+      .picture-container {
+        padding-top: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .selector-container {
+          position: relative;
+          display: flex;
+          flex-direction: row;
+          margin: 1rem 0;
+          border-radius: $border-radius;
+          border: 0.2rem solid $primary-color;
+          overflow: hidden;
+          height: 2.8rem;
+          width: 17rem;
+          input {
+            display: none;
+          }
+          .selector {
+            padding: 0.2rem 1rem;
+            height: 100%;
+            color: $secondary-color;
+          }
+          .name-file {
+            display: flex;
+            text-indent: 0.5rem;
+            width: 100%;
+            height: 100%;
+            border: none;
+            background-color: $secondary-color;
+            align-items: center;
+            color: $base-color;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+        .image-container {
+          position: relative;
+          img {
+            height: 26rem;
+            width: 17rem;
+            border-radius: 1.6rem;
+          }
+          .img-done,
+          .img-load {
+            width: 2.5rem;
+            position: absolute;
+            right: 0.7rem;
+            bottom: 1rem;
+            background: $secondary-color;
+            border-radius: 50%;
+            padding: 0.3rem;
+            color: $primary-color;
+          }
+          .img-load {
+            animation: load 2s infinite linear;
           }
         }
       }
@@ -396,6 +459,27 @@ export default {
       display: flex;
       flex-direction: column;
       gap: 1rem;
+    }
+    .multi-select {
+      .checkbox {
+        width: 100%;
+        display: flex;
+        gap: 1rem;
+        label {
+          cursor: pointer;
+          position: relative;
+          user-select: none;
+          &:has(input:checked),
+          .active {
+            background-color: $primary-color;
+            color: $secondary-color;
+          }
+          input {
+            opacity: 0;
+            position: absolute;
+          }
+        }
+      }
     }
     .field {
       display: flex;
@@ -409,171 +493,20 @@ export default {
       align-self: flex-start;
       color: $secondary-color;
     }
+    input,
+    select,
+    .note-number {
+      padding: 0.5rem 1rem;
+    }
   }
 }
 
-// .type,
-// .language {
-//   display: flex;
-//   gap: 1rem;
-// }
-// .container {
-//   background-color: var(--bg-btn-header);
-//   padding: 0.5rem 1rem;
-//   border-radius: var(--radius);
-//   cursor: pointer;
-//   width: 100%;
-// }
-// .checkmark {
-//   position: absolute;
-//   opacity: 0;
-//   cursor: pointer;
-// }
-
-// .radios {
-//   width: 100%;
-//   display: flex;
-//   justify-content: space-between;
-//   gap: 1rem;
-// }
-
-// .category {
-//   display: flex;
-//   width: 100%;
-//   justify-content: space-between;
-// }
-
-img {
-  height: 26rem;
-  width: 17rem;
-  border-radius: 1rem;
+@keyframes load {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
 }
-// /* input {
-//     border: 0.1rem solid var(--border-input);
-//     text-align: initial;
-//     padding: 0 0.5rem;
-//   } */
-// select {
-//   height: 2rem;
-//   border: 0.1rem solid var(--border-input);
-//   border-radius: var(--radius);
-//   outline: 0;
-//   padding: 0 0.5rem;
-//   -webkit-appearance: none;
-//   -moz-appearance: none;
-//   appearance: none;
-//   /* background-image: url(../assets/icons/arrow_drop_down.svg); */
-//   background-repeat: no-repeat;
-//   background-position-x: right;
-//   background-position-y: center;
-// }
-// textarea {
-//   border: 0.1rem solid var(--border-input);
-//   border-radius: var(--radius);
-//   padding: 0.5rem;
-//   text-align: initial;
-//   resize: none;
-//   height: 30vh;
-//   outline: 0;
-// }
-// textarea::-webkit-scrollbar {
-//   height: 1rem;
-//   width: 1rem;
-// }
-// textarea::-webkit-scrollbar-corner {
-//   background-color: transparent;
-// }
-// textarea::-webkit-scrollbar-thumb {
-//   background-clip: padding-box;
-//   background-color: var(--bg-main-button);
-//   border: 0.1rem solid transparent;
-//   border-radius: 1rem;
-// }
-// .container-input {
-//   display: flex;
-//   flex-direction: column;
-//   gap: 0.3rem;
-//   padding-top: 1rem;
-// }
-// .buttons {
-//   margin-top: 2rem;
-//   display: flex;
-//   gap: 1rem;
-//   align-self: flex-end;
-// }
-// .container-image {
-//   padding-top: 1rem;
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-// }
-// .container-selector {
-//   position: relative;
-//   display: flex;
-//   flex-direction: row;
-//   margin: 1rem 0;
-//   border-radius: var(--radius);
-//   border: 0.1rem solid var(--border-input);
-//   overflow: hidden;
-//   height: 2rem;
-//   width: 17rem;
-// }
-// input[type="file"] {
-//   display: none;
-// }
-// i {
-//   color: tomato;
-// }
-// .selector {
-//   padding: 0.2rem 1rem;
-//   color: var(--color-clear);
-// }
-// .name-file {
-//   display: flex;
-//   padding-left: 0.5rem;
-//   width: 100%;
-//   height: 100%;
-//   border: none;
-//   background-color: var(--color-clear);
-//   align-items: center;
-//   white-space: nowrap;
-//   color: var(--color-dark);
-// }
-// input[type="number"] {
-//   padding-right: 0.3rem;
-//   // background-image: url(../assets/icons/arrows_scroll.svg);
-//   background-repeat: no-repeat;
-//   background-position-x: right;
-//   background-position-y: center;
-// }
-// input[type="number"]::-webkit-inner-spin-button {
-//   opacity: 0;
-// }
-// .main-button:disabled {
-//   background-color: gray;
-// }
-// .cont-image {
-//   position: relative;
-// }
-// .img-done,
-// .img-load {
-//   width: 2.5rem;
-//   position: absolute;
-//   right: 0.7rem;
-//   bottom: 1rem;
-//   background: $secondary-color;
-//   border-radius: 50%;
-//   padding: 0.3rem;
-// }
-// .img-load {
-//   animation: load 2s infinite linear;
-// }
-// @keyframes load {
-//   0% {
-//     transform: rotate(0deg);
-//   }
-//   100% {
-//     transform: rotate(-360deg);
-//   }
-// }
 </style>
