@@ -1,9 +1,9 @@
 <template>
-  <div class="films">
-    <div
+  <ul class="films">
+    <li
       class="film"
-      v-for="(item, idx) in FilmsDetail"
-      :key="idx"
+      v-for="item in contentDetails"
+      :key="item.id"
       :class="item.type"
     >
       <div class="information">
@@ -15,8 +15,8 @@
             target="blank"
             >{{ item.titleOG }}</a
           >
-          <span v-else>{{ item.titleOG }}</span>
-          <span>{{ item.title }}</span>
+          <p v-else>{{ item.titleOG }}</p>
+          <p>{{ item.title }}</p>
         </div>
         <div class="more">
           <div
@@ -139,8 +139,8 @@
           <span class="tooltiptext | tooltip-note">Nota</span>
         </span>
       </div>
-    </div>
-  </div>
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -148,7 +148,7 @@ import gql from "graphql-tag";
 export default {
   name: "FilmsView",
   props: {
-    FilmsDetail: {
+    contentDetails: {
       type: Object,
       require: true,
       default: "",

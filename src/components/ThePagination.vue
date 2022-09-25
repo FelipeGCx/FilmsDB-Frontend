@@ -3,7 +3,7 @@
     <ol>
       <li
         class="page-item | previuos"
-        @click="getDataPage(1)"
+        @click="$emit('changePage', 1)"
         :class="isActive(actualPage - 1)"
         v-show="actualPage > numPages / 2 + 1"
       >
@@ -16,7 +16,7 @@
       </li>
       <li
         class="page-item | previuos"
-        @click="getDataPage(actualPage == 1 ? 1 : actualPage - 1)"
+        @click="$emit('changePage', actualPage == 1 ? 1 : actualPage - 1)"
         :class="isActive(actualPage - 1)"
         v-show="actualPage > 1"
       >
@@ -26,10 +26,10 @@
         </svg>
       </li>
       <li
-        v-for="(page, index) in totalPages()"
-        :key="index"
+        v-for="page in pagination.totalPages"
+        :key="page"
         class="page-item"
-        @click="getDataPage(page)"
+        @click="$emit('changePage', page - 1)"
         :class="isActive(page)"
         v-show="page >= min() && page <= max() && pages != 1"
       >
@@ -39,7 +39,7 @@
       </li>
       <li
         class="page-item | next"
-        @click="getDataPage(actualPage == pages ? actualPage : actualPage + 1)"
+        @click="$emit('changePage', actualPage == pages ? actualPage : actualPage + 1)"
         v-show="actualPage < pages"
         :class="isActive(actualPage + 1)"
       >
@@ -69,22 +69,15 @@
 export default {
   name: "Pagination",
   props: {
-    dataOriginal: {
+   pagination:{
       type: Object,
-      required: true,
-    },
-    actualP: {
-      type: Number,
-      required: true,
-    },
+    required:true,
+   }
   },
   data() {
     return {
-      dataInPage: [],
-      elementsPerPage: 30,
-      pages: this.totalPages(),
-      actualPage: this.actualP,
-      intervalGet: null,
+      pages: this.pagination.totalPages + 1,
+      actualPage: this.pagination.currentPage + 1,
     };
   },
   computed: {
@@ -95,35 +88,6 @@ export default {
     },
   },
   methods: {
-    getData() {
-      if (this.dataOriginal.length > 0) {
-        clearInterval(this.intervalGet);
-        this.pages = this.totalPages();
-        if (this.actualPage > this.pages) {
-          this.$router.push({
-            name: "NotFound",
-            params: { catchAll: "NotFound" },
-          });
-        } else {
-          this.getDataPage(this.actualPage);
-        }
-      }
-    },
-    getDataPage(numPage) {
-      this.$emit("loadingData");
-      if (numPage > 0 && numPage <= this.pages) {
-        this.actualPage = numPage;
-        let start = numPage * this.elementsPerPage - this.elementsPerPage;
-        let end = numPage * this.elementsPerPage;
-        this.dataInPage = this.dataOriginal.slice(start, end);
-      }
-      window.scrollTo(0, 0);
-      this.$emit("listToShow", this.dataInPage);
-      this.$emit("newPage", this.actualPage);
-    },
-    totalPages() {
-      return Math.ceil(this.dataOriginal.length / this.elementsPerPage);
-    },
     isActive(numPage) {
       return numPage == this.actualPage ? "active" : "";
     },
@@ -141,10 +105,6 @@ export default {
         ? this.numPages + 1
         : this.actualP + this.numPages / 2;
     },
-  },
-  mounted() {
-    this.getData();
-    this.intervalGet = setInterval(this.getData, 1000);
   },
 };
 </script>

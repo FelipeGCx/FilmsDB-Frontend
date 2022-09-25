@@ -1,32 +1,49 @@
 <template>
-  <div class="saga">
+  <div class="type">
     <the-button-close @btnClicked="$emit('clicked')" />
-    <nav class="sagas | blur">
+    <nav class="types | blur">
       <ul>
-        <h2 class="simple-title">Sagas</h2>
-        <li v-for="(item, index) in sagas" :key="index">
-          <router-link class="img-button" to="/">
-            <!-- :to="{ name: item.name, query: { page: 1 } }" -->
-            <svg
-              v-html="item.svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-            ></svg>
-            {{ item.name }} Sagas
-          </router-link>
-        </li>
+        <h2 class="simple-title">Categories</h2>
+        <ApolloQuery :query="require('@/graphql/categories.gql')">
+          <template v-slot="{ result: { error, data }, isLoading }">
+            <!-- Loading -->
+            <div v-if="isLoading" class="loading apollo">Loading...</div>
+
+            <!-- Error -->
+            <div v-else-if="error" class="error apollo">An error occurred</div>
+
+            <!-- Result -->
+
+            <div v-else-if="data" class="result apollo">
+              <li v-for="item in data.getSagas.data" :key="item.id">
+                <router-link class="img-button" to="/">
+                  <!-- :to="{ name: item.name, query: { page: 1 } }" -->
+                  <svg
+                    v-html="item.svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  ></svg>
+                  {{ item.name }}
+                </router-link>
+              </li>
+            </div>
+
+            <!-- No result -->
+            <div v-else class="no-result apollo">No result :(</div>
+          </template>
+        </ApolloQuery>
       </ul>
     </nav>
   </div>
 </template>
 
 <script>
-import TheButtonClose from "@/componentsTheButtonClose.vue";
+import TheButtonClose from "@/components/TheButtonClose.vue";
 export default {
   components: { TheButtonClose },
   data() {
     return {
-      sagas: [
+      types: [
         {
           name: "All",
           svg: "<path d='M20,4H4C2.9,4,2,4.9,2,6v12c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2V6C22,4.9,21.1,4,20,4z M9.5,14.67V9.33 c0-0.79,0.88-1.27,1.54-0.84l4.15,2.67c0.61,0.39,0.61,1.29,0,1.68l-4.15,2.67C10.38,15.94,9.5,15.46,9.5,14.67z'/>",
@@ -98,13 +115,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.saga {
+.type {
   position: fixed;
   width: 100%;
   top: 5.4rem;
   right: 0;
   bottom: 9.4rem;
-  .sagas {
+  .types {
     z-index: 3;
     overflow-y: scroll;
     width: 100%;

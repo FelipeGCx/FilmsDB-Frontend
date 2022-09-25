@@ -46,11 +46,11 @@
 </template>
 
 <script>
-import TheSearch from "./TheSearch.vue";
-import TheSagasSelector from "./TheSagasSelector.vue";
-import TheCategoriesSelector from "./TheCategoriesSelector.vue";
-import TheCharts from "./TheCharts.vue";
-import TheDropdownImage from "./TheDropdownImage.vue";
+import TheSearch from "@/components/TheSearch.vue";
+import TheSagasSelector from "@/components/TheSagasSelector.vue";
+import TheCategoriesSelector from "@/components/TheCategoriesSelector.vue";
+import TheCharts from "@/components/TheCharts.vue";
+import TheDropdownImage from "@/components/TheDropdownImage.vue";
 export default {
   components: {
     TheSearch,

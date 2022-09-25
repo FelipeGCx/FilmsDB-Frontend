@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import TheButtonClose from "./TheButtonClose.vue";
-import TheNoteInput from "./TheNoteInput.vue";
+import TheButtonClose from "@/componentsTheButtonClose.vue";
+import TheNoteInput from "@/componentsTheNoteInput.vue";
 export default {
   components: { TheButtonClose, TheNoteInput },
   data() {

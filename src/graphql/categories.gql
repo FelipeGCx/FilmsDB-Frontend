@@ -1,0 +1,10 @@
+query GetCategories {
+  getCategories {
+    data {
+      id
+      category
+      svg
+    }
+    error
+  }
+}
