@@ -26,10 +26,10 @@
 
 <script>
 import TheTypeSelector from "@/components/TheTypeSelector.vue";
-import TheSagasSelector from "./TheSagasSelector.vue";
-import TheCategoriesSelector from "./TheCategoriesSelector.vue";
-import TheYearSelector from "./TheYearSelector.vue";
-import TheNoteSelector from "./TheNoteSelector.vue";
+import TheSagasSelector from "@/components/TheSagasSelector.vue";
+import TheCategoriesSelector from "@/components/TheCategoriesSelector.vue";
+import TheYearSelector from "@/components/TheYearSelector.vue";
+import TheNoteSelector from "@/components/TheNoteSelector.vue";
 export default {
   components: {
     TheTypeSelector,

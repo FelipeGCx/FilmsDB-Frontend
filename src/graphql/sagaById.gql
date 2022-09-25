@@ -1,0 +1,10 @@
+query GetSaga($sagaId: Int!) {
+  getSaga(sagaId: $sagaId) {
+    data {
+      id
+      saga
+      svg
+    }
+    error
+  }
+}

@@ -1,7 +1,7 @@
 <template>
   <ApolloQuery
     :query="require('@/graphql/type.gql')"
-    :variables="{ filmsType: 'anime', page: actualPage }"
+    :variables="{ filmsType: 'movie', page: actualPage }"
   >
     <template v-slot="{ result: { error, data }, isLoading }">
       <!-- Loading -->
@@ -12,7 +12,7 @@
 
       <!-- Result -->
       <div v-else-if="data" class="result apollo">
-        <the-main-title :title="'Anime'" />
+        <the-main-title :title="'Movie'" />
         <the-content-visualization :contentDetails="data.data" />
         <the-pagination @changePage="newPage" :pagination="data.page" />
       </div>
@@ -29,7 +29,7 @@ import TheMainTitle from "@/components/TheMainTitle.vue";
 import Pagination from "@/components/ThePagination.vue";
 import TheContentVisualization from "@/components/TheContentVisualization.vue";
 export default {
-  name: "Anime",
+  name: "Movie",
   components: {
     TheMainTitle,
     TheContentVisualization,
