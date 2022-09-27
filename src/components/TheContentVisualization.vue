@@ -25,7 +25,7 @@
             data-flow="right"
             :style="{ opacity: item.season == 0 ? 0 : 100 }"
           >
-            {{ item.season }}
+            <span class="pin">{{ item.season }}</span>
           </div>
           <div class="rigth-icons">
             <router-link
@@ -33,38 +33,40 @@
               data-tooltip="category"
               data-flow="left"
               v-show="item.category.svg != ' '"
-              :to="{
+              to="/"
+            >
+              <!-- :to="{
                 name: 'Category',
                 params: {
                   title: `Categoria: ${item.category.category}`,
-                  id: item.category.category.toLocaleLowerCase(),
+                  id: item.category.category,
                 },
-                query: { page: 1 },
-              }"
-            >
+                query: { page: 0 },
+              }" -->
               <svg
                 v-html="item.category.svg"
                 viewBox="0 0 24 24"
                 data-v-fae5bece=""
               ></svg>
             </router-link>
-            <span class="year | tooltip" data-tooltip="year" data-flow="left"
+            <span class="year || pin" data-tooltip="year" data-flow="left"
               >{{ item.year }}
             </span>
             <router-link
-              class="tooltip | svg-icon"
+              class="svg-icon"
               data-tooltip="saga"
               data-flow="left"
               v-show="item.saga.svg != ' '"
-              :to="{
+              to="/"
+            >
+              <!-- :to="{
                 name: 'Saga',
                 params: {
                   title: `Categoria: ${item.saga.saga}`,
-                  id: item.saga.saga.toLocaleLowerCase(),
+                  id: item.saga.saga,
                 },
-                query: { page: 1 },
-              }"
-            >
+                query: { page: 0 },
+              }" -->
               <svg v-html="item.saga.svg" viewBox="0 0 24 24"></svg>
             </router-link>
 
@@ -123,7 +125,7 @@
             />
           </svg>
         </div>
-        <span class="note" data-tooltip="note" data-flow="top"
+        <span class="note || pin" data-tooltip="note" data-flow="top"
           >{{ normalizeNote(item.note) }}
         </span>
       </div>
@@ -137,8 +139,7 @@ export default {
   props: {
     contentDetails: {
       type: Object,
-      require: true,
-      default: [],
+      // require: true,
     },
   },
   data() {
@@ -166,80 +167,16 @@ export default {
 };
 </script>
 
-<style scoped>
-@media only screen and (min-width: 1024px) {
-  .poster,
-  .film,
-  .films,
-  .information,
-  .season,
-  .rigth-icons,
-  .icons,
-  .note,
-  .year,
-  .a-normal,
-  .svg-icon,
-  .tooltiptext,
-  svg,
-  span {
-    font-size: 1rem;
+<style lang="scss" scoped>
+@media only screen and (min-width: 0px) and (max-width: 500px) {
+  .films {
+    .poster {
+      height: 35em !important;
+      width: 23em !important;
+    }
   }
 }
-@media only screen and (min-width: 750px) and (max-width: 1024px) {
-  .poster,
-  .film,
-  .films,
-  .information,
-  .season,
-  .rigth-icons,
-  .icons,
-  .note,
-  .year,
-  .a-normal,
-  .svg-icon,
-  .tooltiptext,
-  svg,
-  span {
-    font-size: 1rem;
-  }
-}
-@media only screen and (max-width: 750px) {
-  .poster,
-  .film,
-  .films,
-  .information,
-  .season,
-  .rigth-icons,
-  .icons,
-  .note,
-  .year,
-  .a-normal,
-  .svg-icon,
-  .tooltiptext,
-  svg,
-  span {
-    font-size: 1rem;
-  }
-}
-@media only screen and (max-width: 550px) {
-  .poster,
-  .film,
-  .films,
-  .information,
-  .season,
-  .rigth-icons,
-  .icons,
-  .note,
-  .year,
-  .a-normal,
-  .svg-icon,
-  .tooltiptext,
-  svg,
-  span {
-    /* font-size: .6rem; */
-    font-size: 1rem;
-  }
-}
+
 .films {
   gap: 1.2em;
   margin: 0 3vw;
@@ -247,254 +184,138 @@ export default {
   flex-wrap: wrap;
   justify-content: center;
   /* min-height: 70vh; */
-}
-span {
-  font-size: 1.1em;
-}
-.poster {
-  height: 26em;
-  width: 17em;
-}
-.film {
-  height: 26em;
-  width: 17em;
-}
-.film {
-  border: 0.2em solid transparent;
-  border-radius: 1em;
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpolygon style='fill:%23FFFFFF;stroke:%23303030;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:10;' points='6.5,3.5 6.5,20.5 11,15 18,15 '/%3E%3C/svg%3E"),
-    pointer;
-  position: relative;
-  overflow: hidden !important;
-  overflow-y: hidden !important;
-  overflow-x: hidden !important;
-  text-overflow: ellipsis !important;
-  transition: all 1s ease;
-  display: flex;
-  justify-content: center;
-}
-.Anime.film:hover {
-  filter: drop-shadow(0 0 1rem $anime-color);
-}
-.Movie.film:hover {
-  filter: drop-shadow(0 0 1rem $movie-color);
-}
-.Serie.film:hover {
-  filter: drop-shadow(0 0 1rem $serie-color);
-}
-.film:hover > .information {
-  transform: translate3d(0, 1rem, 0);
-}
-.film:hover > .information .more .season {
-  transform: translate3d(0em, 0, 0);
-}
-.film:hover > .information .more .rigth-icons {
-  transform: translate3d(0em, 0, 0);
-}
-.film:hover > .icons {
-  transform: translate3d(0, 22.5em, 0);
-}
-.film:hover > .poster {
-  filter: blur(0.2em) brightness(0.7);
-  transform: scale(110%);
-}
-.information {
-  align-items: flex-start;
-  color: var(--color-clear);
-  display: flex;
-  flex-direction: column;
-  grid-gap: 0.7em;
-  position: absolute;
-  transform: translate3d(0, -17rem, 0);
-  transition: all 0.5s ease;
-  z-index: 1;
-  min-width: 14em;
-  max-width: 14em;
-}
-.data {
-  display: flex;
-  flex-direction: column;
-}
-.more {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-.season {
-  height: 100%;
-  transform: translate3d(-5em, 0, 0);
-  transition: all 0.3s linear;
-  transition-delay: 0.2s;
-}
-.rigth-icons {
-  display: flex;
-  flex-direction: column;
-  grid-gap: 0.7em;
-  align-items: flex-end;
-  transform: translate3d(6em, 0, 0);
-  transition: all 0.3s linear;
-  transition-delay: 0.2s;
-}
-.poster {
-  transition: all 0.5s ease-out;
-}
-.film.Anime:hover {
-  background-color: var(--border-anime);
-  border-color: var(--border-anime);
-}
-.film.Serie:hover {
-  background-color: var(--border-serie);
-  border-color: var(--border-serie);
-}
-.film.Movie:hover {
-  background-color: var(--border-movie);
-  border-color: var(--border-movie);
-}
-svg {
-  fill: var(--color-clear);
-  width: 2.5em;
-}
-.icons {
-  position: absolute;
-  display: flex;
-  width: 14em;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
-  transform: translate3d(-22em, 22.5em, 0);
-  transition: all 0.5s ease;
-  z-index: 3;
-}
-.note {
-  margin: 0.2em;
-  min-width: 1.3em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.year,
-.note,
-.season {
-  font-weight: 600;
-  padding: 0.1em 0.4em;
-  background-color: var(--color-clear);
-  color: var(--color-dark);
-  border-radius: var(--radius);
-}
-.edit:hover {
-  filter: drop-shadow(0 0 1rem var(--bc-book));
-}
-.tooltip {
-  position: relative;
-}
-.Anime > .tooltiptext {
-  --bg-tooltip: var(--border-anime);
-}
-.Serie > .tooltiptext {
-  --bg-tooltip: var(--border-serie);
-}
-.Movie > .tooltiptext {
-  --bg-tooltip: var(--border-movie);
-}
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-}
-.tooltiptext {
-  visibility: hidden;
-  background-color: var(--bg-tooltip);
-  color: var(--color-clear);
-  text-align: center;
-  border-radius: var(--radius);
-  padding: 0.1em 0.7em;
-  position: absolute;
-  white-space: nowrap;
-  z-index: 1;
-  font-weight: 400;
-}
-.tooltiptext::after {
-  content: "";
-  position: absolute;
-  border-width: 0.4em;
-  border-style: solid;
-}
-.tooltip-season {
-  left: 158%;
-  top: -7%;
-}
-.tooltip-category {
-  left: -262%;
-  top: 8%;
-}
-.tooltip-year {
-  left: -163%;
-  top: 0%;
-}
-.tooltip-saga {
-  left: -181%;
-  top: 10%;
-}
-.tooltip-language {
-  left: -374%;
-  top: 9%;
-}
-.tooltip-note {
-  left: -34%;
-  top: -157%;
-}
-.tooltip-favorite {
-  left: -56%;
-  top: -100%;
-}
-.tooltip-edit {
-  left: -7%;
-  top: -100%;
-}
-.tooltip-season::after {
-  top: 28%;
-  right: 100%;
-  border-color: #0000 var(--bg-tooltip) #0000 #0000;
-}
-.tooltip-category::after {
-  top: 28%;
-  right: -14%;
-  border-color: #0000 #0000 #0000 var(--bg-tooltip);
-}
-.tooltip-year::after {
-  top: 28%;
-  right: -23%;
-  border-color: #0000 #0000 #0000 var(--bg-tooltip);
-}
-.tooltip-saga::after {
-  top: 28%;
-  right: -22%;
-  border-color: #0000 #0000 #0000 var(--bg-tooltip);
-}
-.tooltip-language::after {
-  top: 28%;
-  right: -9%;
-  border-color: #0000 #0000 #0000 var(--bg-tooltip);
-}
-.tooltip-note::after {
-  top: 99%;
-  right: 39%;
-  border-color: var(--bg-tooltip) #0000 #0000 #0000;
-}
-.tooltip-favorite::after {
-  top: 99%;
-  right: 39%;
-  border-color: var(--bg-tooltip) #0000 #0000 #0000;
-}
-.tooltip-edit::after {
-  top: 99%;
-  right: 39%;
-  border-color: var(--bg-tooltip) #0000 #0000 #0000;
-}
-.svg-icon {
-  height: 2.5em;
-}
-.a-normal {
-  color: inherit;
-  text-decoration: inherit;
-  font-size: 1.1em;
+  .film {
+    border: 0.2em solid transparent;
+    border-radius: 1em;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpolygon style='fill:%23FFFFFF;stroke:%23303030;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:10;' points='6.5,3.5 6.5,20.5 11,15 18,15 '/%3E%3C/svg%3E"),
+      pointer;
+    position: relative;
+    overflow: hidden !important;
+    overflow-y: hidden !important;
+    overflow-x: hidden !important;
+    text-overflow: ellipsis !important;
+    transition: all 1s ease;
+    display: flex;
+    justify-content: center;
+    &.Anime {
+      @include tooltip($anime-color);
+      &:hover {
+        filter: drop-shadow(0 0 1rem $anime-color);
+        border-color: $anime-color;
+      }
+    }
+    &.Movie {
+      @include tooltip($movie-color);
+      &:hover {
+        filter: drop-shadow(0 0 1rem $movie-color);
+        border-color: $movie-color;
+      }
+    }
+    &.Serie {
+      @include tooltip($serie-color);
+      &:hover {
+        filter: drop-shadow(0 0 1rem $serie-color);
+        border-color: $serie-color;
+      }
+    }
+    & > .poster {
+      // height: 26em;
+      height: 30em;
+      // width: 17em;
+      width: 20em;
+    }
+    .information {
+      align-items: flex-start;
+      color: $secondary-color;
+      display: flex;
+      flex-direction: column;
+      grid-gap: 0.7em;
+      position: absolute;
+      transform: translate3d(0, -100%, 0);
+      transition: all 0.5s ease;
+      z-index: 1;
+      width: 100%;
+      padding: 1rem;
+      p {
+        font-weight: 500;
+      }
+      .main-data {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding-bottom: 1rem;
+        .a-normal {
+          color: inherit;
+          text-decoration: inherit;
+          font-size: 1.1em;
+        }
+      }
+      .more-data {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        .season {
+          height: 100%;
+          transform: translateX(-100%);
+          transition: all 0.3s linear;
+          transition-delay: 0.2s;
+        }
+        .rigth-icons {
+          display: flex;
+          flex-direction: column;
+          grid-gap: 0.7em;
+          align-items: flex-end;
+          transform: translate3d(100%, -77%, 0);
+          transition: all 0.3s linear;
+          transition-delay: 0.2s;
+        }
+      }
+    }
+    .poster {
+      transition: all 0.5s ease-out;
+    }
+    .icons {
+      position: absolute;
+      display: flex;
+      width: 100%;
+      padding: 0 3rem;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      transform: translateX(-100%);
+      bottom: 1rem;
+      // transform: translate3d(-22em, 0, 0);
+      transition: all 0.5s ease;
+      z-index: 3;
+      .edit:hover {
+        filter: drop-shadow(0 0 1rem $secondary-color);
+      }
+    }
+    svg {
+      fill: $secondary-color;
+      width: 2.5em;
+    }
+    &:hover {
+      .information {
+        transform: translate3d(0, 0, 0);
+        .more-data {
+          .season {
+            transform: translateX(0);
+          }
+          .rigth-icons {
+            transform: translate3d(0, 0, 0);
+          }
+        }
+      }
+      .poster {
+        filter: blur(0.2em) brightness(0.7);
+        transform: scale(110%);
+      }
+      .icons {
+        transform: translateX(0);
+      }
+    }
+  }
 }
 </style>

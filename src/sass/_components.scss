@@ -108,7 +108,14 @@ $w: 5rem;
   padding: 0.5rem 1rem;
 }
 
-
+.pin {
+  font-weight: 600;
+  background-color: $secondary-color;
+  color: $base-color;
+  min-width: 1.3em;
+  padding: 0.4em 0.5em;
+  border-radius: $border-radius;
+}
 
 // tooltip
 
@@ -140,11 +147,13 @@ $w: 5rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    padding: 0.7rem 1.6px;
-    border-radius: 50%;
+    padding: 0.6rem 10px;
+    border-radius: 6px;
     background: $color;
     color: $secondary-color;
     z-index: 99;
+    font-weight: 600;
+    font-size: 1rem;
   }
   [data-tooltip]:hover:before,
   [data-tooltip]:hover:after {
