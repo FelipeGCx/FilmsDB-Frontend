@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import TheButtonClose from "@/componentsTheButtonClose.vue";
+import TheButtonClose from "@/components/TheButtonClose.vue";
 export default {
   components: { TheButtonClose },
   data() {
