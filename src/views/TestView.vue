@@ -1,13 +1,15 @@
 <template>
   <the-main-title :title="title" />
   <the-content-visualization :contentDetails="films" />
+  <the-pagination @changePage="newPage" :pagination="page" />
 </template>
 
 <script>
 import TheContentVisualization from "@/components/TheContentVisualization.vue";
 import TheMainTitle from "@/components/TheMainTitle.vue";
+import ThePagination from "@/components/ThePagination.vue";
 export default {
-  components: { TheContentVisualization, TheMainTitle },
+  components: { TheContentVisualization, TheMainTitle, ThePagination },
   data() {
     return {
       title: "All Content",
@@ -763,7 +765,16 @@ export default {
           },
         },
       ],
+      page: {
+        totalPages: 20,
+        currentPage: 0,
+      },
     };
+  },
+  methods: {
+    newPage(n) {
+      console.log("se cambio de pagina:", n);
+    },
   },
 };
 </script>

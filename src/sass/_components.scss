@@ -71,7 +71,7 @@ $border-radius: 8px;
 }
 
 .blur {
-  backdrop-filter: blur(7px);
+  backdrop-filter: blur(7px) brightness(0.5);
 }
 
 $w: 5rem;
@@ -112,9 +112,10 @@ $w: 5rem;
   font-weight: 600;
   background-color: $secondary-color;
   color: $base-color;
-  min-width: 1.3em;
-  padding: 0.4em 0.5em;
+  min-width: 1.3rem;
+  padding: 0.4rem 0.5rem;
   border-radius: $border-radius;
+  font-size: 1.2rem;
 }
 
 // tooltip

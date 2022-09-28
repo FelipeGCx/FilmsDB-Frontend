@@ -9,7 +9,7 @@
       <div class="information">
         <div class="main-data">
           <a
-            v-if="item.link != ' '"
+            v-if="isVoid(item.link)"
             class="a-normal"
             :href="item.link"
             target="blank"
@@ -32,7 +32,7 @@
               class="svg-icon"
               data-tooltip="category"
               data-flow="left"
-              v-show="item.category.svg != ' '"
+              v-show="isVoid(item.category.svg)"
               to="/"
             >
               <!-- :to="{
@@ -43,11 +43,7 @@
                 },
                 query: { page: 0 },
               }" -->
-              <svg
-                v-html="item.category.svg"
-                viewBox="0 0 24 24"
-                data-v-fae5bece=""
-              ></svg>
+              <svg v-html="item.category.svg" viewBox="0 0 24 24"></svg>
             </router-link>
             <span class="year || pin" data-tooltip="year" data-flow="left"
               >{{ item.year }}
@@ -56,7 +52,7 @@
               class="svg-icon"
               data-tooltip="saga"
               data-flow="left"
-              v-show="item.saga.svg != ' '"
+              v-show="isVoid(item.saga.svg)"
               to="/"
             >
               <!-- :to="{
@@ -93,37 +89,20 @@
         onerror="this.onerror=null; this.src='https://firebasestorage.googleapis.com/v0/b/films-a2d18.appspot.com/o/assets%2FNot%20Found%20Image.webp?alt=media&token=8bfcfa56-b828-4db9-9c74-82e34324f673'"
       />
       <div class="icons">
-        <div data-tooltip="edit" data-flow="top">
-          <svg
-            @click="update(item)"
-            class="edit"
-            viewBox="0 0 24 24"
-            style="cursor: pointer"
-            @mouseenter="this.hover = true"
-            @mouseleave="this.hover = false"
-          >
-            <path
-              xmlns="http://www.w3.org/2000/svg"
-              d="M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06M17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z"
-            />
-            <path
-              xmlns="http://www.w3.org/2000/svg"
-              d="M3 17.46v3.04c0 .28.22.5.5.5h3.04c.13 0 .26-.05.35-.15L17.81 9.94l-3.75-3.75L3.15 17.1c-.1.1-.15.22-.15.36zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
-            />
-          </svg>
-        </div>
+        <router-link to="/" data-tooltip="edit" data-flow="top">
+          <img :src="require('@/assets/icons/edit.svg')" alt="edit" />
+        </router-link>
         <div data-tooltip="favorite" data-flow="top">
-          <svg viewBox="0 0 24 24">
-            <path
-              v-show="item.favorite"
-              d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-            />
-            />
-            <path
-              v-show="!item.favorite"
-              d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z"
-            />
-          </svg>
+          <img
+            v-if="item.favorite"
+            :src="require('@/assets/icons/heart.svg')"
+            alt="favorite"
+          />
+          <img
+            v-else
+            :src="require('@/assets/icons/heart-outline.svg')"
+            alt="not favorite"
+          />
         </div>
         <span class="note || pin" data-tooltip="note" data-flow="top"
           >{{ normalizeNote(item.note) }}
@@ -151,6 +130,9 @@ export default {
     };
   },
   methods: {
+    isVoid(value) {
+      return value != " ";
+    },
     // transform the note to a string for visualize it best
     normalizeNote(note) {
       return note % 1 == 0 && note != 10 ? `${note}.0` : note;
@@ -171,14 +153,14 @@ export default {
 @media only screen and (min-width: 0px) and (max-width: 500px) {
   .films {
     .poster {
-      height: 35em !important;
-      width: 23em !important;
+      height: 35rem !important;
+      width: 23rem !important;
     }
   }
 }
 
 .films {
-  gap: 1.2em;
+  gap: 1.2rem;
   margin: 0 3vw;
   display: flex;
   flex-wrap: wrap;
@@ -186,7 +168,7 @@ export default {
   /* min-height: 70vh; */
   .film {
     border: 0.2em solid transparent;
-    border-radius: 1em;
+    border-radius: 1rem;
     cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpolygon style='fill:%23FFFFFF;stroke:%23303030;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:10;' points='6.5,3.5 6.5,20.5 11,15 18,15 '/%3E%3C/svg%3E"),
       pointer;
     position: relative;
@@ -219,17 +201,15 @@ export default {
       }
     }
     & > .poster {
-      // height: 26em;
-      height: 30em;
-      // width: 17em;
-      width: 20em;
+      height: 30.5rem;
+      width: 20rem;
     }
     .information {
       align-items: flex-start;
       color: $secondary-color;
       display: flex;
       flex-direction: column;
-      grid-gap: 0.7em;
+      grid-gap: 0.7rem;
       position: absolute;
       transform: translate3d(0, -100%, 0);
       transition: all 0.5s ease;
@@ -248,7 +228,7 @@ export default {
         .a-normal {
           color: inherit;
           text-decoration: inherit;
-          font-size: 1.1em;
+          font-size: 1.1rem;
         }
       }
       .more-data {
@@ -264,7 +244,7 @@ export default {
         .rigth-icons {
           display: flex;
           flex-direction: column;
-          grid-gap: 0.7em;
+          grid-gap: 0.7rem;
           align-items: flex-end;
           transform: translate3d(100%, -77%, 0);
           transition: all 0.3s linear;
@@ -291,10 +271,21 @@ export default {
       .edit:hover {
         filter: drop-shadow(0 0 1rem $secondary-color);
       }
+      a,
+      div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      img {
+        filter: invert(1);
+        width: 2.5rem;
+        height: 2.5rem;
+      }
     }
     svg {
       fill: $secondary-color;
-      width: 2.5em;
+      width: 2.5rem;
     }
     &:hover {
       .information {
@@ -309,7 +300,7 @@ export default {
         }
       }
       .poster {
-        filter: blur(0.2em) brightness(0.7);
+        filter: blur(0.2rem) brightness(0.7);
         transform: scale(110%);
       }
       .icons {
