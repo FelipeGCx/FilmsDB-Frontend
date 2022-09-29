@@ -23,20 +23,20 @@
 <script>
 // import componets required
 import TheMainTitle from "@/components/TheMainTitle.vue";
-import Pagination from "@/components/ThePagination.vue";
+import ThePagination from "@/components/ThePagination.vue";
 import TheContentVisualization from "@/components/TheContentVisualization.vue";
 
 export default {
-  name: "Anime",
+  name: "AnimeView",
   components: {
     TheMainTitle,
     TheContentVisualization,
-    Pagination,
+    ThePagination,
   },
   data() {
     return {
-      query: require("@/graphql/type.gql"),
-      variables: { filmsType: "Anime", page: actualPage },
+      query: require("@/graphql/type.graphql"),
+      variables: { filmsType: "Anime", page: 0 },
       title: "Anime",
     };
   },

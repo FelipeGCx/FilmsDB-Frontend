@@ -30,7 +30,7 @@ const routes = [
   {
     path: "/test",
     name: "Test",
-    component: () => import("@/views/TestView.vue"),
+    component: () => import("@/views/AnimeView.vue"),
     meta: { title: "Create Content" },
   },
   {
