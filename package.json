@@ -12,6 +12,7 @@
     "@vue/apollo-components": "^4.0.0-alpha.20",
     "@vue/apollo-option": "^4.0.0-alpha.20",
     "apollo-link-context": "^1.0.20",
+    "buble": "^0.20.0",
     "core-js": "^3.8.3",
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",

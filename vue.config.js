@@ -20,10 +20,23 @@ module.exports = {
     // GraphQL Loader
     config.module
       .rule("graphql")
-      .test(/\.graphql|gql$/)
+      .test(/\.(graphql|gql)$/)
       .use("graphql-tag/loader")
       .loader("graphql-tag/loader")
       .end();
+    // Tag Setup graph
+    config.module
+      .rule("vue")
+      .use("vue-loader")
+      .loader("vue-loader")
+      .tap((options) => {
+        options.transpileOptions = {
+          transforms: {
+            dangerousTaggedTemplateString: true,
+          },
+        };
+        return options;
+      });
   },
   transpileDependencies: true,
   css: {
