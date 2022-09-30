@@ -242,12 +242,21 @@ header {
         width: 3.3rem;
         height: 3.3rem;
         pointer-events: none;
+        transition: all 0.3s ease;
       }
       h1 {
         font-weight: 700;
         font-style: italic;
         user-select: none;
-        transition: all ease 1s;
+        transition: all 0.3s ease;
+      }
+    }
+    &:hover {
+      img {
+        transform: rotate(360deg) scale(1.05);
+      }
+      h1 {
+        transform: scale(1.1);
       }
     }
   }

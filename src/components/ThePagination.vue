@@ -4,10 +4,10 @@
       <li
         class="page-item | previuos"
         @click="$emit('changePage', 1)"
-        :class="isActive(actualPage - 1)"
-        v-show="actualPage > numPages / 2 + 1"
+        :class="isActive(pagination.currentPage - 1)"
+        v-show="pagination.currentPage > numPages / 2 + 1"
       >
-        <svg viewBox="0 0 24 24">
+        <svg viewBox="0 0 24 24" fill="currentColor">
           <title>First Page</title>
           <path
             d="m 17.433449,5.2495377 c -0.191925,0 -0.382847,0.074258 -0.529297,0.2207032 l -6,6.0000001 c -0.29289,0.292899 -0.29289,0.767647 0,1.060547 l 6,6 c 0.2929,0.292899 0.767647,0.292899 1.060547,0 0.2929,-0.2929 0.2929,-0.767648 0,-1.060547 l -5.470703,-5.470703 5.470703,-5.4687503 c 0.2929,-0.2928897 0.2929,-0.7676571 0,-1.0605468 -0.14645,-0.1464449 -0.339325,-0.2207032 -0.53125,-0.2207032 z m -10.9029794,0.00781 c -0.39521,8.473e-4 -0.715076,0.321589 -0.714844,0.7167994 V 18.024928 c -2.31e-4,0.395209 0.319635,0.71595 0.714844,0.716797 0.395972,2.31e-4 0.717028,-0.320825 0.716797,-0.716797 V 5.9741471 C 7.2474976,5.5781756 6.9264406,5.2571196 6.5304696,5.2573502 Z"
@@ -16,9 +16,14 @@
       </li>
       <li
         class="page-item | previuos"
-        @click="$emit('changePage', actualPage == 1 ? 1 : actualPage - 1)"
-        :class="isActive(actualPage - 1)"
-        v-show="actualPage > 1"
+        @click="
+          $emit(
+            'changePage',
+            pagination.currentPage == 1 ? 1 : pagination.currentPage - 1
+          )
+        "
+        :class="isActive(pagination.currentPage - 1)"
+        v-show="pagination.currentPage > 1"
       >
         <svg viewBox="0 0 24 24" fill="currentColor">
           <title>Previuos</title>
@@ -33,9 +38,9 @@
         v-for="page in pagination.totalPages"
         :key="page"
         class="page-item"
-        @click="$emit('changePage', page - 1)"
+        @click="$emit('changePage', page)"
         :class="isActive(page)"
-        v-show="page >= min() && page <= max() && pages != 1"
+        v-show="page >= min && page <= max && pagination.totalPages != 1"
       >
         <span class="page-container">
           {{ page }}
@@ -44,10 +49,15 @@
       <li
         class="page-item | next"
         @click="
-          $emit('changePage', actualPage == pages ? actualPage : actualPage + 1)
+          $emit(
+            'changePage',
+            pagination.currentPage == pagination.totalPages
+              ? pagination.currentPage
+              : pagination.currentPage + 1
+          )
         "
-        v-show="actualPage < pages"
-        :class="isActive(actualPage + 1)"
+        v-show="pagination.currentPage < pagination.totalPages"
+        :class="isActive(pagination.currentPage + 1)"
       >
         <svg viewBox="0 0 24 24" fill="currentColor">
           <title>Next</title>
@@ -60,9 +70,9 @@
       </li>
       <li
         class="page-item | next"
-        @click="getDataPage(totalPages())"
-        :class="isActive(actualPage + 1)"
-        v-show="pages - actualPage > numPages / 2"
+        @click="$emit('changePage', pagination.totalPages)"
+        :class="isActive(pagination.currentPage + 1)"
+        v-show="pagination.totalPages - pagination.currentPage > numPages / 2"
       >
         <svg viewBox="0 0 24 24" fill="currentColor">
           <title>Last Page</title>
@@ -85,35 +95,40 @@ export default {
   },
   data() {
     return {
-      pages: this.pagination.totalPages + 1,
-      actualPage: this.pagination.currentPage + 1,
+      windowWidth: 8000,
     };
   },
   computed: {
     // a computed getter
-    numPages: function () {
+    numPages() {
       // `this` points to the vm instance
-      return window.innerWidth > 700 ? 8 : 5;
+      return this.windowWidth > 700 ? 8 : 5;
+    },
+    // logic to align the page always in the center
+    min() {
+      let minus =
+        this.pagination.currentPage + this.numPages / 2 < 1
+          ? 1
+          : this.pagination.currentPage - this.numPages / 2;
+      return this.pagination.totalPages - minus < this.numPages
+        ? this.pagination.totalPages - this.numPages
+        : minus;
+    },
+    max() {
+      return this.pagination.currentPage + 4 <= this.numPages + 1
+        ? this.numPages + 1
+        : this.pagination.currentPage + this.numPages / 2;
     },
   },
   methods: {
     isActive(numPage) {
-      return numPage == this.actualPage ? "active" : "";
+      return numPage == this.pagination.currentPage ? "active" : "";
     },
-    min() {
-      let minus =
-        this.actualPage + this.numPages / 2 < 1
-          ? 1
-          : this.actualPage - this.numPages / 2;
-      return this.pages - minus < this.numPages
-        ? this.pages - this.numPages
-        : minus;
-    },
-    max() {
-      return this.actualPage + 4 <= this.numPages + 1
-        ? this.numPages + 1
-        : this.actualPage + this.numPages / 2;
-    },
+  },
+  mounted() {
+    window.addEventListener("resize", () => {
+      this.windowWidth = window.innerWidth;
+    });
   },
 };
 </script>

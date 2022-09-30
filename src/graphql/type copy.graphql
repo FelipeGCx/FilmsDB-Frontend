@@ -1,4 +1,4 @@
-query {
+query GetFilmsByType($filmsType: String, $page: Int) {
   getFilmsByType(filmsType: $filmsType, page: $page) {
     data {
       id
