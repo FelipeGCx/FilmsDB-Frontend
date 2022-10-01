@@ -2,10 +2,10 @@
   <form @submit.prevent="doFilter" id="formFilter">
     <label for="type">Type</label>
     <select name="type" id="type" v-model="filter.type">
-      <option value="All">All</option>
-      <option value="Movie">Movie</option>
-      <option value="Anime">Anime</option>
-      <option value="Serie">Serie</option>
+      <option value="all">All</option>
+      <option value="movie">Movie</option>
+      <option value="anime">Anime</option>
+      <option value="serie">Serie</option>
     </select>
     <label for="year">Year</label>
     <input
@@ -38,12 +38,13 @@ export default {
   data() {
     return {
       filter: {
-        type: "All",
+        type: null,
         year: null,
         note: null,
       },
     };
   },
+
   methods: {
     checkYear(e) {
       console.log(e.target.value.length);
@@ -53,7 +54,11 @@ export default {
     },
     doFilter() {
       console.log(this.filter);
+      this.$emit("doFilter", this.filter);
     },
+  },
+  mounted() {
+    this.filter.type = this.$route.query.type || "all";
   },
 };
 </script>
@@ -65,6 +70,11 @@ form {
   align-items: center;
   justify-content: flex-end;
   padding-right: 2rem;
+  @include minsize {
+    & {
+      display: none !important;
+    }
+  }
   select {
     background-color: $base-third-color;
     border: none;
@@ -94,6 +104,7 @@ form {
     appearance: none;
     &::-webkit-inner-spin-button {
       -webkit-appearance: none;
+      appearance: none;
     }
   }
   input {
@@ -104,6 +115,7 @@ form {
     background-color: $primary-color;
     border-radius: $border-radius;
     padding: 0.6rem 2rem;
+    cursor: pointer;
   }
 }
 </style>

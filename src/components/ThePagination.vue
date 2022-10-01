@@ -126,6 +126,7 @@ export default {
     },
   },
   mounted() {
+    this.windowWidth = window.innerWidth;
     window.addEventListener("resize", () => {
       this.windowWidth = window.innerWidth;
     });
@@ -137,7 +138,6 @@ export default {
 .pagination {
   ol {
     bottom: 1;
-    margin-top: 2rem;
     display: flex;
     flex-direction: row;
     justify-content: center;

@@ -46,6 +46,7 @@ module.exports = {
          @import "@/sass/_variables.scss";
          @import "@/sass/_normalize.scss";
          @import "@/sass/_components.scss";
+         @import "@/sass/_mixins.scss";
          `,
       },
     },

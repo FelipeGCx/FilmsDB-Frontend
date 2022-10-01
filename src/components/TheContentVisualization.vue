@@ -161,7 +161,7 @@ export default {
 
 .films {
   gap: 1.2rem;
-  margin: 0 3vw;
+  // margin: 0 3vw;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
