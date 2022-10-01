@@ -22,7 +22,6 @@ div {
   display: flex;
   gap: 2.5rem;
   align-items: center;
-  padding: 2rem;
   span {
     width: 100%;
     height: 0.2rem;

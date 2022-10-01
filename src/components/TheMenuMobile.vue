@@ -86,11 +86,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@media only screen and (min-width: 0px) and (max-width: 500px) {
-  .menu {
-    display: flex !important;
-  }
-}
+// @media only screen and (min-width: 0px) and (max-width: 500px) {
+//   .menu {
+//     display: flex !important;
+//   }
+// }
+
 .menu {
   z-index: 5;
   display: none;
@@ -101,6 +102,11 @@ export default {
   left: 0;
   bottom: 0;
   transition: display ease 0.5s;
+  @include minsize {
+    & {
+      display: flex !important;
+    }
+  }
   ul {
     height: 100%;
     width: 100%;
