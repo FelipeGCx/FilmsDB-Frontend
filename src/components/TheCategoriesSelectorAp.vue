@@ -5,19 +5,12 @@
       <ul>
         <h2 class="simple-title">Categories</h2>
         <ApolloQuery :query="require('@/graphql/categories.gql')">
-          <template v-slot="{ result: { error, data }, isLoading }">
-            <!-- Loading -->
-            <div v-if="isLoading" class="loading apollo">Loading...</div>
-
-            <!-- Error -->
+          <template v-slot="{ result: { loading, error, data } }">
+            <div v-if="loading" class="loading apollo">Loading...</div>
             <div v-else-if="error" class="error apollo">An error occurred</div>
-
-            <!-- Result -->
-
             <div v-else-if="data" class="result apollo">
               <li v-for="item in data.getSagas.data" :key="item.id">
                 <router-link class="img-button" to="/">
-                  <!-- :to="{ name: item.name, query: { page: 1 } }" -->
                   <svg
                     v-html="item.svg"
                     viewBox="0 0 24 24"
@@ -28,7 +21,6 @@
               </li>
             </div>
 
-            <!-- No result -->
             <div v-else class="no-result apollo">No result :(</div>
           </template>
         </ApolloQuery>
