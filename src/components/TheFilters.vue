@@ -19,21 +19,13 @@
       v-model="filter.year"
     />
     <label for="note">Note</label>
-    <input
-      type="number"
-      min="0"
-      max="10.0"
-      maxlength="3"
-      minlength="3"
-      step="0.1"
-      name="note"
-      v-model="filter.note"
-    />
+    <the-order-note @note="setNote" />
     <button type="submit">Filter</button>
   </form>
 </template>
 
 <script>
+import TheOrderNote from "./TheOrderNote.vue";
 export default {
   data() {
     return {
@@ -44,7 +36,7 @@ export default {
       },
     };
   },
-
+  components: { TheOrderNote },
   methods: {
     checkYear(e) {
       console.log(e.target.value.length);
@@ -55,6 +47,9 @@ export default {
     doFilter() {
       console.log(this.filter);
       this.$emit("doFilter", this.filter);
+    },
+    setNote(n) {
+      this.filter.note = n;
     },
   },
   mounted() {
@@ -100,7 +95,7 @@ form {
   }
   input {
     max-width: 8rem;
-    padding: 0.6rem 2rem;
+    // padding: 0.6rem 2rem;
     appearance: none;
     &::-webkit-inner-spin-button {
       -webkit-appearance: none;
