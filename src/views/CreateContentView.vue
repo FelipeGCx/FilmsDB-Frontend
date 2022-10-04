@@ -110,7 +110,7 @@
             <select class="input" id="category" v-model="filme.category">
               <option value="0" disabled selected>Select Category</option>
               <option
-                v-for="(item, index) in Categories"
+                v-for="(item, index) in categories.data"
                 :key="index"
                 :value="item.id"
               >
@@ -123,7 +123,7 @@
             <select class="input" id="saga" v-model="filme.saga">
               <option value="0" disabled selected>Select Saga</option>
               <option
-                v-for="(item, index) in Sagas"
+                v-for="(item, index) in sagas.data"
                 :key="index"
                 :value="item.id"
               >
@@ -258,6 +258,9 @@
 </template>
 
 <script>
+import Categories from "@/mixins/categories";
+import Sagas from "@/mixins/sagas";
+
 // import apollo library, firebase storage for the images, base64 library for tranform images and componets required
 export default {
   name: "CreateFilme",
@@ -304,6 +307,7 @@ export default {
       },
     };
   },
+  mixins: [Sagas, Categories],
   computed: {
     seasonOp() {
       return this.seasonVisible ? 1 : 0;

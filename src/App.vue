@@ -2,9 +2,7 @@
   <the-header />
   <router-view v-slot="{ Component, route }">
     <transition name="fade" mode="out-in">
-      <div :key="route.name">
-        <component :is="Component"></component>
-      </div>
+      <component :class="route" :is="Component" />
     </transition>
   </router-view>
   <the-footer />

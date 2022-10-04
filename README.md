@@ -1,6 +1,10 @@
-# filmsdbfrontend
+# FilmsDB
 
-## Project setup
+# ℹ️ Notes 
+- actually graphql files not return result/results response.
+- for the futures vesion improve the pattern
+
+# 🚀 Getting started
 ```
 npm install
 ```
