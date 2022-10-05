@@ -3,15 +3,15 @@ import { createRouter, createWebHistory } from "vue-router";
 const routes = [
   {
     path: "/",
-    redirect: { name: "All", query: { page: 1 } },
+    redirect: { name: "Home", query: { page: 1 } },
   },
   {
     path: "",
-    redirect: { name: "All", query: { page: 1 } },
+    redirect: { name: "Home", query: { page: 1 } },
   },
   {
-    path: "/all",
-    name: "All",
+    path: "/home",
+    name: "Home",
     component: () => import("@/views/AllView.vue"),
     meta: { title: "Home" },
   },
@@ -28,15 +28,9 @@ const routes = [
     meta: { title: "Create Content" },
   },
   {
-    path: "/test",
-    name: "Test",
-    component: () => import("@/views/AnimeView.vue"),
-    meta: { title: "Create Content" },
-  },
-  {
     path: "/search",
     name: "Title",
-    component: () => import("@/views/TitleView.vue"),
+    component: () => import("@/views/AllView.vue"),
   },
 ];
 
