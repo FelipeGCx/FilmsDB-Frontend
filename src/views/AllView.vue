@@ -1,13 +1,15 @@
 <template>
-  <div v-if="loading" class="loading-apollo">Loading...</div>
-  <div v-else-if="error" class="error-apollo">An error occurred {{ tt }}</div>
-  <section v-else-if="details">
-    <the-main-title :title="title()" />
-    <the-filters @doFilter="doFilter" />
-    <the-content-visualization :contentDetails="details.data" />
-    <the-pagination @changePage="newPage" :pagination="details.page" />
-  </section>
-  <div v-else class="no-result-apollo">No result :(</div>
+  <main>
+    <the-loading v-if="loading" />
+    <div v-else-if="error" class="error-apollo">An error occurred {{ tt }}</div>
+    <section v-else-if="details">
+      <the-main-title :title="title()" />
+      <the-filters @doFilter="doFilter" />
+      <the-content-visualization :contentDetails="details.data" />
+      <the-pagination @changePage="newPage" :pagination="details.page" />
+    </section>
+    <div v-else class="no-result-apollo">No result :(</div>
+  </main>
 </template>
 
 <script>
@@ -17,14 +19,16 @@ import ThePagination from "@/components/ThePagination.vue";
 import TheContentVisualization from "@/components/TheContentVisualization.vue";
 import TheFilters from "@/components/TheFilters.vue";
 import gql from "graphql-tag";
+import TheLoading from "@/components/TheLoading.vue";
 
 export default {
-  name: "AnimeView",
+  name: "AllView",
   components: {
     TheMainTitle,
     TheFilters,
     TheContentVisualization,
     ThePagination,
+    TheLoading,
   },
   data() {
     return {
