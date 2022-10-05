@@ -1,17 +1,16 @@
 <template>
-  <div v-if="loading" class="loading apollo">Loading...</div>
-  <div v-else-if="error" class="error apollo">An error occurred {{ tt }}</div>
+  <div v-if="loading" class="loading-apollo">Loading...</div>
+  <div v-else-if="error" class="error-apollo">An error occurred {{ tt }}</div>
   <section v-else-if="details">
     <the-main-title :title="title()" />
     <the-filters @doFilter="doFilter" />
     <the-content-visualization :contentDetails="details.data" />
     <the-pagination @changePage="newPage" :pagination="details.page" />
   </section>
-  <div v-else class="no-result apollo">No result :(</div>
+  <div v-else class="no-result-apollo">No result :(</div>
 </template>
 
 <script>
-/* eslint-disable */
 // import componets required
 import TheMainTitle from "@/components/TheMainTitle.vue";
 import ThePagination from "@/components/ThePagination.vue";
@@ -42,16 +41,22 @@ export default {
     filmsType() {
       return this.$route.query.type || "all";
     },
+    filmsYear() {
+      return parseInt(this.$route.query.year) || new Date().getFullYear();
+    },
+    filmsNote() {
+      return this.$route.query.note || "none";
+    },
   },
   methods: {
     // change the page value in the query params
     newPage(numPage) {
-      window.scrollTo(0, 1000);
+      window.scrollTo(0, 0);
       this.$router.push({
         query: {
-          type: this.$route.query.type,
-          year: this.$route.query.year,
-          note: this.$route.query.note,
+          type: this.filmsType,
+          year: this.filmsYear,
+          note: this.filmsNote,
           page: numPage,
         },
       });
@@ -61,18 +66,17 @@ export default {
         query: {
           type: data.type,
           year: data.year ?? new Date().getFullYear(),
-          note: data.note ?? 10,
+          note: data.note ?? "none",
           page: 1,
         },
       });
     },
     title() {
-      // eslint-disable-next-line
       let typos = {
-        "all": "All Content",
-        "anime": "Animes",
-        "serie": "Series",
-        "movie": "Movies",
+        all: "All Content",
+        anime: "Animes",
+        serie: "Series",
+        movie: "Movies",
       };
       return typos[this.filmsType];
     },
@@ -80,15 +84,28 @@ export default {
   mounted() {
     this.$router.push({
       query: {
-        page: this.$route.query.page ?? 1,
+        type: this.filmsType,
+        year: this.filmsYear,
+        note: this.filmsNote,
+        page: this.actualPage,
       },
     });
   },
   apollo: {
     details: {
       query: gql`
-        query GetFilmsByType($filmsType: String, $page: Int) {
-          getFilmsByType(filmsType: $filmsType, page: $page) {
+        query GetFilmsByType(
+          $filmsType: String
+          $filmsYear: Int
+          $filmsNote: String
+          $page: Int
+        ) {
+          getFilmsByType(
+            filmsType: $filmsType
+            filmsYear: $filmsYear
+            filmsNote: $filmsNote
+            page: $page
+          ) {
             data {
               id
               type
@@ -113,19 +130,21 @@ export default {
                 svg
               }
             }
+            error
             page {
               totalItems
               size
               totalPages
               currentPage
             }
-            error
           }
         }
       `,
       variables() {
         return {
           filmsType: this.filmsType,
+          filmsYear: this.filmsYear,
+          filmsNote: this.filmsNote,
           page: this.actualPage,
         };
       },
@@ -145,6 +164,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.loading-apollo {
+  color: aliceblue;
+}
 section {
   display: flex;
   flex-direction: column;

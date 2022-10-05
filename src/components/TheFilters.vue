@@ -54,6 +54,8 @@ export default {
   },
   mounted() {
     this.filter.type = this.$route.query.type || "all";
+    this.filter.year =
+      parseInt(this.$route.query.year) || new Date().getFullYear();
   },
 };
 </script>

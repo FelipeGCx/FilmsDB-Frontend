@@ -13,41 +13,64 @@ export default {
         require("@/assets/icons/neutral-filter.svg"),
         require("@/assets/icons/arrow-down-filter.svg"),
       ],
-      image: require("@/assets/icons/neutral-filter.svg"),
-      state: 1,
+      // image: require("@/assets/icons/neutral-filter.svg"),
+      nstate: 1,
       preState: 0,
     };
   },
+  computed: {
+    image() {
+      return this.images[this.nstate];
+    },
+  },
   methods: {
     changeState() {
-      if (this.state == 0) {
-        this.preState = this.state;
-        this.state = 1;
-        this.image = this.images[this.state];
-        this.$emit("note", "asc");
-        return;
-      }
-      if (this.state == 2) {
-        this.preState = this.state;
-        this.state = 1;
-        this.image = this.images[this.state];
-        this.$emit("note", "none");
-        return;
-      }
-      if (this.state == 1 && this.preState == 0) {
-        this.preState = this.state;
-        this.state = 2;
-        this.image = this.images[this.state];
-        this.$emit("note", "desc");
-        return;
-      } else {
-        this.preState = this.state;
-        this.state = 0;
-        this.image = this.images[this.state];
-        this.$emit("note", "asc");
-        return;
+      switch (this.nstate) {
+        case 0:
+          this.preState = this.nstate;
+          this.nstate = 1;
+          this.$emit("note", "none");
+          break;
+        case 1:
+          if (this.preState == 0) {
+            this.preState = this.nstate;
+            this.nstate = 2;
+            this.$emit("note", "desc");
+          } else {
+            this.preState = this.nstate;
+            this.nstate = 0;
+            this.$emit("note", "asc");
+          }
+          break;
+        case 2:
+          this.preState = this.nstate;
+          this.nstate = 1;
+          this.$emit("note", "none");
+          break;
+
+        default:
+          this.preState = this.nstate;
+          this.nstate = 0;
+          this.$emit("note", "asc");
+          break;
       }
     },
+  },
+  mounted() {
+    switch (this.$route.query.note) {
+      case "asc":
+        this.nstate = 0;
+        this.preState = 1;
+        break;
+      case "desc":
+        this.nstate = 2;
+        this.preState = 1;
+        break;
+      default:
+        this.nstate = 1;
+        this.preState = 0;
+        break;
+    }
   },
 };
 </script>
