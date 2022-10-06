@@ -1,174 +1,141 @@
 <template>
-    <div v-if="loading" class="loading-apollo">Loading...</div>
-    <div v-else-if="error" class="error-apollo">An error occurred {{ tt }}</div>
+  <main>
+    <the-loading v-if="loading" />
+    <span v-else-if="error">{{ tt }}</span>
+    <!-- <the-error v-else-if="error" /> -->
     <section v-else-if="details">
-      <the-main-title :title="title()" />
+      <the-main-title :title="title" />
       <the-content-visualization :contentDetails="details.data" />
       <the-pagination @changePage="newPage" :pagination="details.page" />
     </section>
     <div v-else class="no-result-apollo">No result :(</div>
-  </template>
-  
-  <script>
-  // import componets required
-  import TheMainTitle from "@/components/TheMainTitle.vue";
-  import ThePagination from "@/components/ThePagination.vue";
-  import TheContentVisualization from "@/components/TheContentVisualization.vue";
-  import gql from "graphql-tag";
-  
-  export default {
-    name: "CategoryView",
-    components: {
-      TheMainTitle,
-      TheContentVisualization,
-      ThePagination,
+  </main>
+</template>
+
+<script>
+// import componets required
+import TheMainTitle from "@/components/TheMainTitle.vue";
+import ThePagination from "@/components/ThePagination.vue";
+import TheContentVisualization from "@/components/TheContentVisualization.vue";
+import gql from "graphql-tag";
+// import TheError from "@/components/TheError.vue";
+import TheLoading from "@/components/TheLoading.vue";
+import queryParams from "@/mixins/queryParams";
+import stringObj from "@/mixins/stringObj";
+
+export default {
+  name: "CategoryView",
+  components: {
+    TheMainTitle,
+    TheContentVisualization,
+    ThePagination,
+    // TheError,
+    TheLoading,
+  },
+  mixins: [queryParams, stringObj],
+  data() {
+    return {
+      details: null,
+      tt: null,
+    };
+  },
+  computed: {
+    actualPage() {
+      return parseInt(this.$route.query.page) || 1;
     },
-    data() {
-      return {
-        details: null,
-        loading: false,
-        error: false,
-        tt: null,
-      };
+    filmsCategory() {
+      return this.$route.query.category;
     },
-    computed: {
-      actualPage() {
-        return parseInt(this.$route.query.page) || 1;
-      },
-      filmsType() {
-        return this.$route.query.type || "all";
-      },
-      filmsYear() {
-        return parseInt(this.$route.query.year) || new Date().getFullYear();
-      },
-      filmsNote() {
-        return this.$route.query.note || "none";
-      },
+    title() {
+      return `Category ${this.$route.query.category || ""}`;
     },
-    methods: {
-      // change the page value in the query params
-      newPage(numPage) {
-        window.scrollTo(0, 0);
-        this.$router.push({
-          query: {
-            type: this.filmsType,
-            year: this.filmsYear,
-            note: this.filmsNote,
-            page: numPage,
-          },
-        });
-      },
-      doFilter(data) {
-        this.$router.push({
-          query: {
-            type: data.type,
-            year: data.year ?? new Date().getFullYear(),
-            note: data.note ?? "none",
-            page: 1,
-          },
-        });
-      },
-      title() {
-        let typos = {
-          all: "All Content",
-          anime: "Animes",
-          serie: "Series",
-          movie: "Movies",
-        };
-        return typos[this.filmsType];
-      },
-    },
-    mounted() {
+  },
+  methods: {
+    // change the page value in the query params
+    newPage(numPage) {
+      window.scrollTo(0, 0);
       this.$router.push({
         query: {
-          type: this.filmsType,
-          year: this.filmsYear,
-          note: this.filmsNote,
-          page: this.actualPage,
+          category: this.filmsCategory,
+          page: numPage,
         },
       });
     },
-    apollo: {
-      details: {
-        query: gql`
-          query GetFilmsByType(
-            $filmsType: String
-            $filmsYear: Int
-            $filmsNote: String
-            $page: Int
-          ) {
-            getFilmsByType(
-              filmsType: $filmsType
-              filmsYear: $filmsYear
-              filmsNote: $filmsNote
-              page: $page
-            ) {
-              data {
+  },
+  // mounted() {
+  //   this.$router.push({
+  //     state: { categoryTitle: this.filmsCategory },
+  //     query: {
+  //       type: this.filmsCategory,
+  //       page: this.actualPage,
+  //     },
+  //   });
+  // },
+  apollo: {
+    details: {
+      query: gql`
+        query GetFilmsByCategory($filmsCategory: String, $page: Int) {
+          getFilmsByCategory(filmsCategory: $filmsCategory, page: $page) {
+            data {
+              id
+              type
+              titleOG
+              title
+              year
+              note
+              language
+              favorite
+              category {
                 id
-                type
-                titleOG
-                title
-                year
-                note
-                language
-                favorite
-                category {
-                  id
-                  category
-                  svg
-                }
-                info
-                poster
-                season
-                link
-                saga {
-                  id
-                  saga
-                  svg
-                }
+                category
+                svg
               }
-              error
-              page {
-                totalItems
-                size
-                totalPages
-                currentPage
+              info
+              poster
+              season
+              link
+              saga {
+                id
+                saga
+                svg
               }
             }
+            page {
+              totalItems
+              size
+              totalPages
+              currentPage
+            }
+            error
           }
-        `,
-        variables() {
-          return {
-            filmsType: this.filmsType,
-            filmsYear: this.filmsYear,
-            filmsNote: this.filmsNote,
-            page: this.actualPage,
-          };
-        },
-        update(data) {
-          return data.getFilmsByType;
-        },
-        error(error) {
-          this.tt = error;
-          this.error = true;
-        },
-        watchLoading(isLoading) {
-          this.loading = isLoading;
-        },
+        }
+      `,
+      variables() {
+        return {
+          filmsCategory: this.filmsCategory,
+          page: this.actualPage,
+        };
+      },
+      update(data) {
+        return data.getFilmsByCategory;
+      },
+      error(error) {
+        this.tt = error;
+        this.error = true;
+      },
+      watchLoading(isLoading) {
+        this.loading = isLoading;
       },
     },
-  };
-  </script>
-  
-  <style lang="scss" scoped>
-  .loading-apollo {
-    color: aliceblue;
-  }
-  section {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    margin-top: 2rem;
-  }
-  </style>
-  
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+</style>

@@ -7,8 +7,15 @@
       <ul v-else-if="categories">
         <h2 class="simple-title">Categories</h2>
         <li v-for="(item, index) in categories.data" :key="index">
-          <router-link class="img-button" to="/">
-            <!-- :to="{ name: item.name, query: { page: 1 } }" -->
+          <router-link
+            class="img-button"
+            @click="$emit('clicked')"
+            :to="{
+              name: 'Category',
+              state: { categoryTitle: item.category },
+              query: { category: item.category, page: 1 },
+            }"
+          >
             <svg
               v-html="item.svg"
               viewBox="0 0 24 24"

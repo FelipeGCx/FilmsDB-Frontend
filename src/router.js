@@ -32,6 +32,11 @@ const routes = [
     name: "Title",
     component: () => import("@/views/AllView.vue"),
   },
+  {
+    path: "/category",
+    name: "Category",
+    component: () => import("@/views/CategoryView.vue"),
+  },
 ];
 
 const router = createRouter({
@@ -40,19 +45,19 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  //   if (to.meta.title == undefined) {
-  //     if (to.name == "Title" && to.params.title == undefined) {
-  //       document.title = `FilmsDB - Results: ${to.query.title}`;
-  //     } else if (to.name == "Category" && to.params.title == undefined) {
-  //       document.title = `FilmsDB - Category: ${toTitleCase(to.params.id)}`;
-  //     } else if (to.name == "Saga" && to.params.title == undefined) {
-  //       document.title = `FilmsDB - Saga: ${toTitleCase(to.params.id)}`;
-  //     } else {
-  //       document.title = "FilmsDB - " + to.params.title;
-  //     }
-  //   } else {
-  document.title = "FilmsDB - " + to.meta.title;
-  //   }
+  if (to.meta.title == undefined) {
+    if (to.name == "Title" && to.params.title == undefined) {
+      document.title = `FilmsDB - Results: ${to.query.title}`;
+    } else if (to.name == "Category" && to.params.title == undefined) {
+      document.title = `FilmsDB - Category: ${to.state}`;
+    } else if (to.name == "Saga" && to.params.title == undefined) {
+      document.title = `FilmsDB - Saga: ${to.params.id}`;
+    } else {
+      document.title = "FilmsDB - " + to.params.title;
+    }
+  } else {
+    document.title = "FilmsDB - " + to.meta.title;
+  }
   next();
 });
 
