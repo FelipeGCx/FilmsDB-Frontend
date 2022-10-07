@@ -1,7 +1,7 @@
 <template>
   <main>
     <the-loading v-if="loading" />
-    <div v-else-if="error" class="error-apollo">An error occurred {{ tt }}</div>
+    <the-error v-else-if="error" />
     <section v-else-if="details">
       <the-main-title :title="title()" />
       <the-filters @doFilter="doFilter" />
@@ -20,6 +20,7 @@ import TheContentVisualization from "@/components/TheContentVisualization.vue";
 import TheFilters from "@/components/TheFilters.vue";
 import gql from "graphql-tag";
 import TheLoading from "@/components/TheLoading.vue";
+import TheError from "@/components/TheError.vue";
 
 export default {
   name: "AllView",
@@ -29,6 +30,7 @@ export default {
     TheContentVisualization,
     ThePagination,
     TheLoading,
+    TheError,
   },
   data() {
     return {

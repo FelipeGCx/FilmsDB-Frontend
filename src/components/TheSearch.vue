@@ -17,24 +17,15 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      value: null,
+    };
   },
   methods: {
     searchContent() {
-      let titleHead = this.toTitleCase(this.value);
-      // use go to avoid reactivite bug
-      this.$router.go({
+      this.$router.push({
         name: "Title",
-        params: {
-          title: `Resultados: ${titleHead}`,
-        },
-        query: { title: this.value, page: 1 },
-      });
-    },
-    // parse to title case
-    toTitleCase(str) {
-      return str.replace(/\w\S*/g, function (txt) {
-        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        query: { title: this.value },
       });
     },
   },
@@ -45,10 +36,12 @@ export default {
     padding() {
       return this.width == "18rem" ? "0 1rem" : "0";
     },
-    value() {
-      return !this.isClicked ? this.value : "";
-    },
   },
+  // watch: {
+  //   value() {
+  //     return !this.isClicked ? this.value : "";
+  //   },
+  // },
 };
 </script>
 <style lang="scss" scoped>

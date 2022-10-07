@@ -30,7 +30,7 @@ const routes = [
   {
     path: "/search",
     name: "Title",
-    component: () => import("@/views/AllView.vue"),
+    component: () => import("@/views/TitleView.vue"),
   },
   {
     path: "/category",
