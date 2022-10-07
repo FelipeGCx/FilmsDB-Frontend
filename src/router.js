@@ -37,6 +37,11 @@ const routes = [
     name: "Category",
     component: () => import("@/views/CategoryView.vue"),
   },
+  {
+    path: "/saga",
+    name: "Saga",
+    component: () => import("@/views/SagaView.vue"),
+  },
 ];
 
 const router = createRouter({

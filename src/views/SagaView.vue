@@ -23,7 +23,7 @@ import queryParams from "@/mixins/queryParams";
 import stringObj from "@/mixins/stringObj";
 
 export default {
-  name: "CategoryView",
+  name: "SagaView",
   components: {
     TheMainTitle,
     TheContentVisualization,
@@ -41,11 +41,11 @@ export default {
     actualPage() {
       return parseInt(this.$route.query.page) || 1;
     },
-    filmsCategory() {
-      return this.$route.query.category;
+    filmsSaga() {
+      return this.$route.query.saga;
     },
     title() {
-      return `Category ${this.$route.query.category || ""}`;
+      return `Saga ${this.$route.query.saga || ""}`;
     },
   },
   methods: {
@@ -54,7 +54,7 @@ export default {
       window.scrollTo(0, 0);
       this.$router.push({
         query: {
-          category: this.filmsCategory,
+          saga: this.filmsSaga,
           page: numPage,
         },
       });
@@ -62,9 +62,9 @@ export default {
   },
   // mounted() {
   //   this.$router.push({
-  //     state: { categoryTitle: this.filmsCategory },
+  //     state: { sagaTitle: this.filmsSaga },
   //     query: {
-  //       type: this.filmsCategory,
+  //       type: this.filmsSaga,
   //       page: this.actualPage,
   //     },
   //   });
@@ -72,8 +72,8 @@ export default {
   apollo: {
     details: {
       query: gql`
-        query GetFilmsByCategory($filmsCategory: String, $page: Int) {
-          getFilmsByCategory(filmsCategory: $filmsCategory, page: $page) {
+        query GetFilmsBySaga($filmsSaga: String, $page: Int) {
+          getFilmsBySaga(filmsSaga: $filmsSaga, page: $page) {
             data {
               id
               type
@@ -110,15 +110,14 @@ export default {
       `,
       variables() {
         return {
-          filmsCategory: this.filmsCategory,
+          filmsSaga: this.filmsSaga,
           page: this.actualPage,
         };
       },
       update(data) {
-        return data.getFilmsByCategory;
+        return data.getFilmsBySaga;
       },
-      error(error) {
-        this.tt = error;
+      error() {
         this.error = true;
       },
       watchLoading(isLoading) {
