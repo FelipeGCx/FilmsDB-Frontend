@@ -70,17 +70,26 @@ export default {
   methods: {
     showFilters() {
       // this.$route.query.active = "type";
-      let queries = this.$route.fullPath.split("?")[1].split("&");
-      let dQueries = {};
-      queries.forEach((query) => {
-        query = query.split("=");
-        dQueries[query[0]] = query[1];
-      });
-      dQueries["active"] = "type";
-      console.log(dQueries);
-      this.$router.push({
-        query: dQueries,
-      });
+      if (this.$route.fullPath.includes("?")) {
+        let queries = this.$route.fullPath.split("?").at(-1).split("&");
+        let dQueries = {};
+        queries.forEach((query) => {
+          query = query.split("=");
+          dQueries[query[0]] = query[1];
+        });
+        dQueries["active"] = "type";
+        console.log(dQueries);
+        this.$router.push({
+          query: dQueries,
+        });
+      } else {
+        this.$router.push({
+          query: {
+            active: "type",
+          },
+        });
+      }
+
       this.chartVisibility = false;
       this.filtersVisibility = true;
     },

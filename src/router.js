@@ -3,11 +3,11 @@ import { createRouter, createWebHistory } from "vue-router";
 const routes = [
   {
     path: "/",
-    redirect: { name: "Home", query: { page: 1 } },
+    redirect: { name: "Home" },
   },
   {
     path: "",
-    redirect: { name: "Home", query: { page: 1 } },
+    redirect: { name: "Home" },
   },
   {
     path: "/home",
