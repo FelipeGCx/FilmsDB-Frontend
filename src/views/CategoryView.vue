@@ -1,8 +1,7 @@
 <template>
   <main>
     <the-loading v-if="loading" />
-    <span v-else-if="error">{{ tt }}</span>
-    <!-- <the-error v-else-if="error" /> -->
+    <the-error v-else-if="error" />
     <section v-else-if="details">
       <the-main-title :title="title" />
       <the-content-visualization :contentDetails="details.data" />
@@ -18,7 +17,7 @@ import TheMainTitle from "@/components/TheMainTitle.vue";
 import ThePagination from "@/components/ThePagination.vue";
 import TheContentVisualization from "@/components/TheContentVisualization.vue";
 import gql from "graphql-tag";
-// import TheError from "@/components/TheError.vue";
+import TheError from "@/components/TheError.vue";
 import TheLoading from "@/components/TheLoading.vue";
 import queryParams from "@/mixins/queryParams";
 import stringObj from "@/mixins/stringObj";
@@ -29,14 +28,13 @@ export default {
     TheMainTitle,
     TheContentVisualization,
     ThePagination,
-    // TheError,
+    TheError,
     TheLoading,
   },
   mixins: [queryParams, stringObj],
   data() {
     return {
       details: null,
-      tt: null,
     };
   },
   computed: {

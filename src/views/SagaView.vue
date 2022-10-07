@@ -3,8 +3,7 @@
     <the-loading v-if="loading" />
     <the-error v-else-if="error" />
     <section v-else-if="details">
-      <the-main-title :title="title()" />
-      <the-filters @doFilter="doFilter" />
+      <the-main-title :title="title" />
       <the-content-visualization :contentDetails="details.data" />
       <the-pagination @changePage="newPage" :pagination="details.page" />
     </section>
@@ -17,41 +16,36 @@
 import TheMainTitle from "@/components/TheMainTitle.vue";
 import ThePagination from "@/components/ThePagination.vue";
 import TheContentVisualization from "@/components/TheContentVisualization.vue";
-import TheFilters from "@/components/TheFilters.vue";
 import gql from "graphql-tag";
-import TheLoading from "@/components/TheLoading.vue";
 import TheError from "@/components/TheError.vue";
+import TheLoading from "@/components/TheLoading.vue";
+import queryParams from "@/mixins/queryParams";
+import stringObj from "@/mixins/stringObj";
 
 export default {
-  name: "AllView",
+  name: "SagaView",
   components: {
     TheMainTitle,
-    TheFilters,
     TheContentVisualization,
     ThePagination,
-    TheLoading,
     TheError,
+    TheLoading,
   },
+  mixins: [queryParams, stringObj],
   data() {
     return {
       details: null,
-      loading: false,
-      error: false,
-      tt: null,
     };
   },
   computed: {
     actualPage() {
       return parseInt(this.$route.query.page) || 1;
     },
-    filmsType() {
-      return this.$route.query.type || "all";
+    filmsSaga() {
+      return this.$route.query.saga;
     },
-    filmsYear() {
-      return parseInt(this.$route.query.year) || new Date().getFullYear();
-    },
-    filmsNote() {
-      return this.$route.query.note || "none";
+    title() {
+      return `Saga ${this.$route.query.saga || ""}`;
     },
   },
   methods: {
@@ -60,58 +54,26 @@ export default {
       window.scrollTo(0, 0);
       this.$router.push({
         query: {
-          type: this.filmsType,
-          year: this.filmsYear,
-          note: this.filmsNote,
+          saga: this.filmsSaga,
           page: numPage,
         },
       });
     },
-    doFilter(data) {
-      this.$router.push({
-        query: {
-          type: data.type,
-          year: data.year ?? new Date().getFullYear(),
-          note: data.note ?? "none",
-          page: 1,
-        },
-      });
-    },
-    title() {
-      let typos = {
-        all: "All Content",
-        anime: "Animes",
-        serie: "Series",
-        movie: "Movies",
-      };
-      return typos[this.filmsType];
-    },
   },
-  mounted() {
-    this.$router.push({
-      query: {
-        type: this.filmsType,
-        year: this.filmsYear,
-        note: this.filmsNote,
-        page: this.actualPage,
-      },
-    });
-  },
+  // mounted() {
+  //   this.$router.push({
+  //     state: { sagaTitle: this.filmsSaga },
+  //     query: {
+  //       type: this.filmsSaga,
+  //       page: this.actualPage,
+  //     },
+  //   });
+  // },
   apollo: {
     details: {
       query: gql`
-        query GetFilmsByType(
-          $filmsType: String
-          $filmsYear: Int
-          $filmsNote: String
-          $page: Int
-        ) {
-          getFilmsByType(
-            filmsType: $filmsType
-            filmsYear: $filmsYear
-            filmsNote: $filmsNote
-            page: $page
-          ) {
+        query GetFilmsBySaga($filmsSaga: String, $page: Int) {
+          getFilmsBySaga(filmsSaga: $filmsSaga, page: $page) {
             data {
               id
               type
@@ -136,29 +98,26 @@ export default {
                 svg
               }
             }
-            error
             page {
               totalItems
               size
               totalPages
               currentPage
             }
+            error
           }
         }
       `,
       variables() {
         return {
-          filmsType: this.filmsType,
-          filmsYear: this.filmsYear,
-          filmsNote: this.filmsNote,
+          filmsSaga: this.filmsSaga,
           page: this.actualPage,
         };
       },
       update(data) {
-        return data.getFilmsByType;
+        return data.getFilmsBySaga;
       },
-      error(error) {
-        this.tt = error;
+      error() {
         this.error = true;
       },
       watchLoading(isLoading) {
@@ -170,9 +129,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.loading-apollo {
-  color: aliceblue;
-}
 section {
   display: flex;
   flex-direction: column;

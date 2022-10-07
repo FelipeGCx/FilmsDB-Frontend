@@ -93,16 +93,25 @@ export default {
   methods: {
     btnClicked(idx) {
       let element = this.navBtns[idx];
-      let queries = this.$route.fullPath.split("?")[1].split("&");
-      let dQueries = {};
-      queries.forEach((query) => {
-        query = query.split("=");
-        dQueries[query[0]] = query[1];
-      });
-      dQueries["active"] = element.e;
-      this.$router.push({
-        query: dQueries,
-      });
+      if (this.$route.fullPath.includes("?")) {
+        let queries = this.$route.fullPath.split("?").at(-1).split("&");
+        let dQueries = {};
+        queries.forEach((query) => {
+          query = query.split("=");
+          dQueries[query[0]] = query[1];
+        });
+        dQueries["active"] = element.e;
+        console.log(dQueries);
+        this.$router.push({
+          query: dQueries,
+        });
+      } else {
+        this.$router.push({
+          query: {
+            active: element.e,
+          },
+        });
+      }
       this.hideAll();
       this.show(element.e);
     },

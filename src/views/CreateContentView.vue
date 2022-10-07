@@ -240,14 +240,7 @@
           <input class="input" name="link" v-model="filme.link" />
         </div>
         <div class="buttons">
-          <router-link
-            class="sub-button"
-            :to="{
-              name: 'All',
-              params: { page: 1 },
-            }"
-            >Cancel</router-link
-          >
+          <router-link class="sub-button" to="/">Cancel</router-link>
           <button type="submit" :disabled="invalidImage" class="main-button">
             Save
           </button>

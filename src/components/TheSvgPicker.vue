@@ -292,7 +292,7 @@ export default {
     this.title = this.$route.params.type;
     window.addEventListener("resize", this.setSize);
   },
-  destroyed() {
+  unmounted() {
     window.removeEventListener("resize", this.setSize);
   },
 };
