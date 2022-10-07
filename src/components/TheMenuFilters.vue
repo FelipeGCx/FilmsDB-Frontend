@@ -86,16 +86,22 @@ export default {
   },
   computed: {
     eActive() {
+      // return this.$route.state || "type";
       return this.$route.query.active || "type";
     },
   },
   methods: {
     btnClicked(idx) {
       let element = this.navBtns[idx];
+      let queries = this.$route.fullPath.split("?")[1].split("&");
+      let dQueries = {};
+      queries.forEach((query) => {
+        query = query.split("=");
+        dQueries[query[0]] = query[1];
+      });
+      dQueries["active"] = element.e;
       this.$router.push({
-        query: {
-          active: element.e,
-        },
+        query: dQueries,
       });
       this.hideAll();
       this.show(element.e);

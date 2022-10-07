@@ -2,7 +2,7 @@
   <nav class="menu">
     <ul>
       <li>
-        <router-link to="/all">
+        <router-link to="/">
           <img
             :src="require('@/assets/icons/home-fill.svg')"
             alt="Home FilmsDB"
@@ -69,10 +69,17 @@ export default {
   },
   methods: {
     showFilters() {
+      // this.$route.query.active = "type";
+      let queries = this.$route.fullPath.split("?")[1].split("&");
+      let dQueries = {};
+      queries.forEach((query) => {
+        query = query.split("=");
+        dQueries[query[0]] = query[1];
+      });
+      dQueries["active"] = "type";
+      console.log(dQueries);
       this.$router.push({
-        query: {
-          active: "type",
-        },
+        query: dQueries,
       });
       this.chartVisibility = false;
       this.filtersVisibility = true;
