@@ -1,10 +1,11 @@
 <template>
-  <ul class="films">
+  <ul class="films" ref="contentVisualization">
     <li
       class="film"
       v-for="item in contentDetails"
       :key="item.id"
       :class="item.type"
+      ref="itemVisualization"
     >
       <div class="information">
         <div class="main-data">
@@ -113,6 +114,8 @@
 </template>
 
 <script>
+import reziseListener from "@/mixins/reziseListener";
+
 export default {
   name: "FilmsView",
   props: {
@@ -121,13 +124,25 @@ export default {
       // require: true,
     },
   },
+  mixins: [reziseListener],
   data() {
     return {
       Categories: null,
       categoriesStatus: false,
       Sagas: null,
       sagasStatus: false,
+      windowWidth: 8000,
     };
+  },
+  watch: {
+    windowWidth() {
+      let w = this.$refs.contentVisualization.offsetWidth;
+      let wi = this.$refs.itemVisualization[0].offsetWidth + 10;
+      let nE = Math.floor(w / wi);
+      let tW = nE * wi;
+      console.log("emito", tW);
+      this.$emit("filled", tW);
+    },
   },
   methods: {
     isVoid(value) {
@@ -165,6 +180,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  width: 100%;
   /* min-height: 70vh; */
   .film {
     border: 0.2em solid transparent;
