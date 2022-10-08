@@ -86,6 +86,8 @@
 </template>
 
 <script>
+import reziseListener from "@/mixins/reziseListener";
+
 export default {
   props: {
     pagination: {
@@ -93,6 +95,7 @@ export default {
       required: true,
     },
   },
+  mixins: [reziseListener],
   data() {
     return {
       windowWidth: 8000,
@@ -125,12 +128,12 @@ export default {
       return numPage == this.pagination.currentPage ? "active" : "";
     },
   },
-  mounted() {
-    this.windowWidth = window.innerWidth;
-    window.addEventListener("resize", () => {
-      this.windowWidth = window.innerWidth;
-    });
-  },
+  // mounted() {
+  //   this.windowWidth = window.innerWidth;
+  //   window.addEventListener("resize", () => {
+  //     this.windowWidth = window.innerWidth;
+  //   });
+  // },
 };
 </script>
 

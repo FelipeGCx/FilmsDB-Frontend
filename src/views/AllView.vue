@@ -2,10 +2,13 @@
   <main>
     <the-loading v-if="loading" />
     <the-error v-else-if="error" />
-    <section v-else-if="details">
-      <the-main-title :title="title()" />
-      <the-filters @doFilter="doFilter" />
-      <the-content-visualization :contentDetails="details.data" />
+    <section v-else-if="details" ref="section">
+      <the-main-title :title="title()" :padding="space" />
+      <the-filters @doFilter="doFilter" :padding="space" />
+      <the-content-visualization
+        @filled="toTitle"
+        :contentDetails="details.data"
+      />
       <the-pagination @changePage="newPage" :pagination="details.page" />
     </section>
     <div v-else class="no-result-apollo">No result :(</div>
@@ -38,6 +41,8 @@ export default {
       loading: false,
       error: false,
       tt: null,
+      space: 200,
+      windowWidth: 8000,
     };
   },
   computed: {
@@ -85,6 +90,12 @@ export default {
         movie: "Movies",
       };
       return typos[this.filmsType];
+    },
+    toTitle(n) {
+      n = (this.$refs.section.offsetWidth - n) / 2;
+      console.log("pasa por el padre", n);
+      this.space = ` ${n}px`;
+      // this.space = ` ${n}px`;
     },
   },
   mounted() {
@@ -177,6 +188,6 @@ section {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  margin-top: 2rem;
+  margin: 2rem 6rem 0 6rem;
 }
 </style>

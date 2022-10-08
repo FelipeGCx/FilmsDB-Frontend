@@ -27,6 +27,13 @@
 <script>
 import TheOrderNote from "./TheOrderNote.vue";
 export default {
+  props: {
+    padding: {
+      type: String,
+      required: true,
+      default: "5rem",
+    },
+  },
   data() {
     return {
       filter: {
@@ -66,7 +73,9 @@ form {
   gap: 1rem;
   align-items: center;
   justify-content: flex-end;
-  padding-right: 2rem;
+  width: 100%;
+  padding: 0 v-bind(padding);
+  align-self: center;
   @include minsize {
     & {
       display: none !important;

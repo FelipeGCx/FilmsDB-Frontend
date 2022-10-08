@@ -13,6 +13,11 @@ export default {
       type: String,
       required: true,
     },
+    padding: {
+      type: String,
+      required: true,
+      default: "5rem",
+    },
   },
 };
 </script>
@@ -22,6 +27,9 @@ div {
   display: flex;
   gap: 2.5rem;
   align-items: center;
+  align-self: center;
+  width: 100%;
+  padding: 0 v-bind(padding);
   span {
     width: 100%;
     height: 0.2rem;
