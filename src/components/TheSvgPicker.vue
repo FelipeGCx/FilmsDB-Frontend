@@ -75,14 +75,7 @@
       </div>
       <div class="btn-container">
         <div class="buttons">
-          <router-link
-            class="sub-button"
-            :to="{
-              name: 'All',
-              params: { page: 1 },
-            }"
-            >Cancelar</router-link
-          >
+          <router-link class="sub-button" to="/">Cancelar</router-link>
           <button type="submit" class="main-button">Guardar</button>
         </div>
       </div>
@@ -91,6 +84,7 @@
 </template>
 <script>
 // import apollo library and componets required
+import gql from "graphql-tag";
 export default {
   name: "AddSoC",
   data() {
@@ -108,18 +102,32 @@ export default {
   methods: {
     // get the image that user upload to transform and create blob
     async fileSelected(e) {
-      this.svgToXml(e.target.files[0]);
       this.file = e.target.files[0];
+      const svgXml = this.svgToXml(this.file);
+      console.log("xml", svgXml.FileReader);
+      const childrens = this.getChildrens(svgXml);
+      console.log(childrens);
       this.posterSvg = URL.createObjectURL(this.file);
     },
     // parse the svg file to xml
-    svgToXml(svg) {
+    svgToXml(file) {
       let reader = new FileReader();
-      reader.onload = (event) => {
-        this.codeSvg = event.target.result;
-        this.cadeSvg = this.deleteSvgTags(this.codeSvg);
-      };
-      reader.readAsText(svg);
+      reader.readAsText(file);
+      // reader.onload = (e) => {
+      //   console.log(e.target.result);
+      // };
+      return reader;
+    },
+    getChildrens(svgXml) {
+      const div = document.createElement("div");
+      div.innerHTML = svgXml;
+      const svg = div.querySelector("svg");
+      const childrens = svg.childNodes;
+      let response = "";
+      childrens.forEach(function (c) {
+        response += c;
+      });
+      return response;
     },
     // delete the tags that are not necessary in the svg
     deleteSvgTags(string) {
@@ -127,22 +135,23 @@ export default {
       for (let i = 0; i < string.length; i++) {
         svgList.push(string[i]);
       }
-      let svg = svgList.join("");
-      let newSvg;
-      while (svg.search("<path") != -1) {
-        let start = svg.search("<path");
-        let end = svg.search("</path>");
-        newSvg += svg.slice(start, end);
-        svg = svg.replace(/<path[^>]*?>/g, "");
-        svg = svg.replace(/<\/path[^>]*?>/g, "");
-      }
-      newSvg = newSvg.replace(/fill="[^>]*?"/g, "");
-      newSvg = newSvg.replace(/undefined/g, "");
-      newSvg = newSvg.replace(/<\/svg[^>]*>/g, "");
-      newSvg = newSvg.replace(/<\/svg[^>]*/g, "");
-      newSvg = newSvg.replace(/<\/g[^>]*>/g, "");
-      newSvg = newSvg.replace(/\"/g, "'");
-      return newSvg;
+      // let svg = svgList.join("");
+      // let newSvg;
+      // while (svg.search("<path") != -1) {
+      //   let start = svg.search("<path");
+      //   let end = svg.search("</path>");
+      //   newSvg += svg.slice(start, end);
+      //   svg = svg.replace(/<path[^>]*?>/g, "");
+      //   svg = svg.replace(/<\/path[^>]*?>/g, "");
+      // }
+      // newSvg = newSvg.replace(/fill="[^>]*?"/g, "");
+      // newSvg = newSvg.replace(/undefined/g, "");
+      // newSvg = newSvg.replace(/<\/svg[^>]*>/g, "");
+      // newSvg = newSvg.replace(/<\/svg[^>]*/g, "");
+      // newSvg = newSvg.replace(/<\/g[^>]*>/g, "");
+      // newSvg = newSvg.replace(/\"/g, "'");
+      // return newSvg;
+      return "hhhhhola";
     },
     // show the modal if all the fields are filled
     add() {
@@ -209,13 +218,10 @@ export default {
           },
         })
         .then((result) => {
-          this.modal.load = false;
-          this.modal.success = true;
+          console.log(result);
         })
         .catch((error) => {
-          this.modal.load = false;
-          this.modal.errorText = "El Registro Fallo";
-          this.modal.error = true;
+          console.log(error);
         });
     },
     // add saga
@@ -238,13 +244,10 @@ export default {
           },
         })
         .then((result) => {
-          this.modal.load = false;
-          this.modal.success = true;
+          console.log(result);
         })
         .catch((error) => {
-          this.modal.load = false;
-          this.modal.errorText = "El Registro Fallo";
-          this.modal.error = true;
+          console.log(error);
         });
     },
     // parse to title case
