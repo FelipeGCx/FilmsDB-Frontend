@@ -1,12 +1,13 @@
 <template>
   <svg class="chart-container" viewbox="0 0 24 24">
-    <circle r="40" cx="50%" cy="50%" class="back" fill="none" />
+    <circle r="35%" cx="50%" cy="50%" class="back" fill="none" />
     <circle
-      r="40"
+      r="35%"
       cx="50%"
       cy="50%"
       class="front"
       fill="none"
+      pathLength="100"
       :style="{ strokeDasharray: strokeChart() }"
     />
     <g class="text">
@@ -38,22 +39,23 @@ export default {
   methods: {
     // return the percentage in strokeDasharray format for the front circle
     strokeChart() {
-      return `${this.percentage * 2.45}, 1000`;
+      return `${this.percentage}, 100`;
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+$w: 11rem;
 .chart-container {
-  width: 11rem;
-  height: 11rem;
+  width: $w;
+  height: $w;
   .back {
     stroke: $base-third-color;
-    stroke-width: 1rem;
+    stroke-width: 8%;
   }
   .front {
-    stroke-width: 1rem;
+    stroke-width: 7.5%;
     stroke-linecap: round;
     rotate: -90deg;
     transform-origin: center;
@@ -70,14 +72,14 @@ export default {
     animation: display 1s forwards;
     text {
       fill: $secondary-color;
-      font-size: 1.3rem;
+      font-size: 0.4em;
       font-weight: 500;
     }
   }
 }
 @keyframes fill {
   to {
-    stroke-dasharray: 0, 1000000;
+    stroke-dasharray: 0, 100;
   }
 }
 @keyframes display {

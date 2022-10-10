@@ -1,19 +1,4 @@
 <template>
-  <!-- modal for adding a new Saga or Category -->
-  <Modal
-    v-show="modal.visible"
-    :questionText="modal.questionText"
-    :successText="modal.successText"
-    :errorText="modal.errorText"
-    :error="modal.error"
-    :question="modal.question"
-    :success="modal.success"
-    :auth="modal.auth"
-    :load="modal.load"
-    @questionRequest="questionRequest"
-    @authRequest="authRequest"
-    @request="request"
-  />
   <!-- form for adding a new Saga or Category -->
   <div class="main-add-soc">
     <h1>
@@ -104,13 +89,9 @@
     </form>
   </div>
 </template>
-
 <script>
 // import apollo library and componets required
-import gql from "graphql-tag";
-import Modal from "@/components/Modal.vue";
 export default {
-  components: { Modal },
   name: "AddSoC",
   data() {
     return {
@@ -122,17 +103,6 @@ export default {
       codeSvg: null,
       posterSvg: null,
       size: false,
-      modal: {
-        visible: false,
-        questionText: "¿Agregar Registro?",
-        successText: "Registro Creado",
-        errorText: "El Registro Fallo",
-        error: false,
-        question: true,
-        success: false,
-        auth: false,
-        load: false,
-      },
     };
   },
   methods: {
