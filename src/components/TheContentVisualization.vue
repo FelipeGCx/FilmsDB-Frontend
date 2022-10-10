@@ -86,6 +86,8 @@
         class="poster"
         loading="lazy"
         oncontextmenu="return false"
+        oncopy="return false"
+        oncut="return false"
         :alt="item.title"
         onerror="this.onerror=null; this.src='https://firebasestorage.googleapis.com/v0/b/films-a2d18.appspot.com/o/assets%2FNot%20Found%20Image.webp?alt=media&token=8bfcfa56-b828-4db9-9c74-82e34324f673'"
       />
