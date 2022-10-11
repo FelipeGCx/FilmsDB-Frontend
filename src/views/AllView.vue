@@ -181,9 +181,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.loading-apollo {
-  color: aliceblue;
-}
 section {
   display: flex;
   flex-direction: column;
