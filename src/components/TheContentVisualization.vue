@@ -34,16 +34,14 @@
               data-tooltip="category"
               data-flow="left"
               v-show="isVoid(item.category.svg)"
-              to="/"
-            >
-              <!-- :to="{
+              :to="{
                 name: 'Category',
-                params: {
-                  title: `Categoria: ${item.category.category}`,
-                  id: item.category.category,
+                query: {
+                  category: item.category.category,
+                  page: 1,
                 },
-                query: { page: 0 },
-              }" -->
+              }"
+            >
               <svg v-html="item.category.svg" viewBox="0 0 24 24"></svg>
             </router-link>
             <span class="year || pin" data-tooltip="year" data-flow="left"
@@ -54,16 +52,14 @@
               data-tooltip="saga"
               data-flow="left"
               v-show="isVoid(item.saga.svg)"
-              to="/"
-            >
-              <!-- :to="{
+              :to="{
                 name: 'Saga',
-                params: {
-                  title: `Categoria: ${item.saga.saga}`,
-                  id: item.saga.saga,
+                query: {
+                  saga: item.saga.saga,
+                  page: 1,
                 },
-                query: { page: 0 },
-              }" -->
+              }"
+            >
               <svg v-html="item.saga.svg" viewBox="0 0 24 24"></svg>
             </router-link>
 

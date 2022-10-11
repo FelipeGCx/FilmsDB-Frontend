@@ -160,15 +160,15 @@
           </div>
         </div>
         <div class="picture-container">
-          <div class="selector-container">
+          <div class="img-input">
             <input
               type="file"
               id="select-image"
               accept="image/*"
               @change="fileSelected"
             />
-            <label for="select-image" class="selector">Image</label>
-            <label for="select-image" class="name-file">
+            <label for="select-image">Image</label>
+            <label for="select-image">
               <p>{{ this.file.name }}</p>
             </label>
           </div>
@@ -428,45 +428,6 @@ export default {
         align-items: center;
         gap: 1rem;
         width: 23rem;
-        .selector-container {
-          position: relative;
-          display: flex;
-          flex-direction: row;
-          border-radius: $border-radius;
-          border: 0.2rem solid $primary-color;
-          overflow: hidden;
-          height: 2.8rem;
-          width: 100%;
-          input {
-            display: none;
-          }
-          .selector {
-            padding: 0.2rem 1rem;
-            height: 100%;
-            color: $secondary-color;
-          }
-          .name-file {
-            display: flex;
-            width: 100%;
-            height: 100%;
-            border: none;
-            background-color: $secondary-color;
-            // align-items: center;
-            color: $base-color;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            p {
-              color: $base-color;
-              white-space: nowrap;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              // text-indent: 0.5rem;
-              padding: 0 0.5rem;
-              align-self: center;
-            }
-          }
-        }
         .image-container {
           position: relative;
           align-self: center;
@@ -499,12 +460,6 @@ export default {
       display: flex;
       flex-direction: column;
       gap: 1rem;
-      .buttons {
-        display: flex;
-        gap: 1rem;
-        justify-content: flex-end;
-        margin-top: 2rem;
-      }
     }
     .multi-select {
       .checkbox {
