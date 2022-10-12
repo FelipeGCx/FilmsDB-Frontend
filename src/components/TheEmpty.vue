@@ -1,13 +1,12 @@
 <template>
   <div>
     <img
-      :src="require('@/assets/icons/error-server.svg')"
+      :src="require('@/assets/icons/empty-data.svg')"
       alt="FilmsDB error"
       draggable="false"
     />
-    <h1>an error has occurred</h1>
-    <span>try reload</span>
-    <button class="main-button" @click="this.location.reload()">Reload</button>
+    <h1>not find data</h1>
+    <router-link class="main-button" to="/">Go Home</router-link>
   </div>
 </template>
 
