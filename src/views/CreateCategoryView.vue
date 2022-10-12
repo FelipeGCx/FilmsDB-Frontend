@@ -1,8 +1,8 @@
 <template>
   <main>
     <section ref="section">
-      <the-main-title :title="'Create Saga'" :padding="'0vw'" />
-      <the-svg-picker :title="'Saga'" @contentToSave="addSaga" />
+      <the-main-title :title="'Create Category'" :padding="'0vw'" />
+      <the-svg-picker :title="'Category'" @contentToSave="addCategory" />
     </section>
   </main>
 </template>
@@ -12,7 +12,7 @@ import TheMainTitle from "@/components/TheMainTitle.vue";
 export default {
   components: { TheSvgPicker, TheMainTitle },
   methods: {
-    addSaga(data) {
+    addCategory(data) {
       console.log(data);
     },
   },

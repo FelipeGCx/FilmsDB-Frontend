@@ -2,8 +2,8 @@
   <div class="saga">
     <the-button-close @btnClicked="$emit('clicked')" />
     <nav class="sagas | blur">
-      <div v-if="loading" class="loading apollo">Loading...</div>
-      <div v-else-if="error" class="error apollo">An error occurred</div>
+      <the-loading v-if="loading" />
+      <the-error v-else-if="error" />
       <ul v-else-if="sagas">
         <h2 class="simple-title">Sagas</h2>
         <li v-for="(item, index) in sagas.data" :key="index">
@@ -32,11 +32,17 @@
 
 <script>
 import TheButtonClose from "@/components/TheButtonClose.vue";
-import queryParams from "@/mixins/queryParams.js";
 import Sagas from "@/mixins/sagas.js";
+import TheLoading from "@/components/TheLoading.vue";
+import TheError from "@/components/TheError.vue";
+import queryParams from "@/mixins/queryParams.js";
 
 export default {
-  components: { TheButtonClose },
+  components: {
+    TheButtonClose,
+    TheLoading,
+    TheError,
+  },
   mixins: [Sagas, queryParams],
 };
 </script>

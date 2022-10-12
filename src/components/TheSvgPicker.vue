@@ -1,7 +1,7 @@
 <template>
   <!-- form for adding a new Saga or Category -->
   <div class="first-container">
-    <form @submit.prevent="add">
+    <form @submit.prevent="createContent">
       <div class="field">
         <label for="name">{{ title }}:</label>
         <input
@@ -83,7 +83,8 @@ export default {
       string = string.replace(/"/g, "'");
       return string;
     },
-    add() {
+    createContent() {
+      console.log("se emite");
       this.$emit("contentToSave", this.item);
     },
   },
@@ -91,10 +92,39 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@include minsize {
+  .first-container {
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+  }
+  .second-container {
+    .buttons {
+      justify-content: space-between !important;
+      a,
+      button {
+        width: 100%;
+      }
+    }
+  }
+}
+@include midsize {
+  .first-container {
+    flex-direction: row;
+    justify-content: center;
+    gap: 3rem;
+  }
+}
+@include maxsize {
+  .first-container {
+    flex-direction: row;
+    justify-content: center;
+    gap: 3rem;
+  }
+}
+
 .first-container {
   display: flex;
-  justify-content: center;
-  gap: 3rem;
   form {
     display: flex;
     flex-direction: column;
@@ -121,8 +151,9 @@ export default {
       overflow: hidden;
       display: flex;
       justify-content: center;
+      align-items: center;
       img {
-        height: 100%;
+        height: 80%;
         filter: contrast(0);
       }
     }
@@ -136,12 +167,5 @@ export default {
 }
 .second-container {
   width: 100%;
-  // .buttons {
-  //   justify-content: space-between !important;
-  //   a,
-  //   button {
-  //     width: 100%;
-  //   }
-  // }
 }
 </style>

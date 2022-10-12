@@ -6,8 +6,8 @@
       <the-main-title :title="title()" :padding="space" />
       <the-filters @doFilter="doFilter" :padding="space" />
       <the-content-visualization
-        @filled="toTitle"
         :contentDetails="details.data"
+        @filled="toTitle"
       />
       <the-pagination @changePage="newPage" :pagination="details.page" />
     </section>
@@ -41,7 +41,7 @@ export default {
       loading: false,
       error: false,
       tt: null,
-      space: 200,
+      space: "0vw",
       windowWidth: 8000,
     };
   },
@@ -93,9 +93,7 @@ export default {
     },
     toTitle(n) {
       n = (this.$refs.section.offsetWidth - n) / 2;
-      console.log("pasa por el padre", n);
       this.space = ` ${n}px`;
-      // this.space = ` ${n}px`;
     },
   },
   mounted() {

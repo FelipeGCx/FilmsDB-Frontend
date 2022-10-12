@@ -34,6 +34,12 @@ const routes = [
     meta: { title: "Create Saga" },
   },
   {
+    path: "/create/category",
+    name: "CreateCategory",
+    component: () => import("@/views/CreateCategoryView.vue"),
+    meta: { title: "Create Category" },
+  },
+  {
     path: "/search",
     name: "Title",
     component: () => import("@/views/TitleView.vue"),

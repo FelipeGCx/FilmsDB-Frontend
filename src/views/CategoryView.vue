@@ -2,9 +2,12 @@
   <main>
     <the-loading v-if="loading" />
     <the-error v-else-if="error" />
-    <section v-else-if="details">
-      <the-main-title :title="title" />
-      <the-content-visualization :contentDetails="details.data" />
+    <section v-else-if="details" ref="section">
+      <the-main-title :title="title" :padding="space" />
+      <the-content-visualization
+        :contentDetails="details.data"
+        @filled="toTitle"
+      />
       <the-pagination @changePage="newPage" :pagination="details.page" />
     </section>
     <div v-else class="no-result-apollo">No result :(</div>
@@ -35,6 +38,7 @@ export default {
   data() {
     return {
       details: null,
+      space: "0vw",
     };
   },
   computed: {
@@ -58,6 +62,10 @@ export default {
           page: numPage,
         },
       });
+    },
+    toTitle(n) {
+      n = (this.$refs.section.offsetWidth - n) / 2;
+      this.space = ` ${n}px`;
     },
   },
   // mounted() {

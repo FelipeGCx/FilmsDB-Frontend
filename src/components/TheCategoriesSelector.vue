@@ -2,8 +2,8 @@
   <div class="type">
     <the-button-close @btnClicked="$emit('clicked')" />
     <nav class="types | blur">
-      <div v-if="loading" class="loading apollo">Loading...</div>
-      <div v-else-if="error" class="error apollo">An error occurred</div>
+      <the-loading v-if="loading" />
+      <the-error v-else-if="error" />
       <ul v-else-if="categories">
         <h2 class="simple-title">Categories</h2>
         <li v-for="(item, index) in categories.data" :key="index">
@@ -33,9 +33,15 @@
 <script>
 import TheButtonClose from "@/components/TheButtonClose.vue";
 import Categories from "@/mixins/categories.js";
+import TheLoading from "@/components/TheLoading.vue";
+import TheError from "@/components/TheError.vue";
 import queryParams from "@/mixins/queryParams.js";
 export default {
-  components: { TheButtonClose },
+  components: {
+    TheButtonClose,
+    TheLoading,
+    TheError,
+  },
   mixins: [Categories, queryParams],
 };
 </script>
