@@ -1,50 +1,10 @@
 <template>
   <nav class="menu">
     <ul>
-      <li>
-        <router-link to="/">
-          <img
-            :src="require('@/assets/icons/home-fill.svg')"
-            alt="Home FilmsDB"
-            draggable="false"
-          />
-        </router-link>
-      </li>
-      <li>
-        <button @click="showFilters">
-          <img
-            :src="require('@/assets/icons/filters.svg')"
-            alt="Filters FilmsDB"
-            draggable="false"
-          />
+      <li v-for="(item, idx) in filtersBtns" :key="idx">
+        <button @click="goTo(item.go)">
+          <img :src="item.img" :alt="item.alt" draggable="false" />
         </button>
-      </li>
-      <li>
-        <router-link to="/">
-          <img
-            :src="require('@/assets/icons/add-fill.svg')"
-            alt="Add Content FilmsDB"
-            draggable="false"
-          />
-        </router-link>
-      </li>
-      <li>
-        <button @click="showCharts">
-          <img
-            :src="require('@/assets/icons/chart-fill.svg')"
-            alt="Charts FilmsDB"
-            draggable="false"
-          />
-        </button>
-      </li>
-      <li>
-        <router-link to="/">
-          <img
-            :src="require('@/assets/icons/heart.svg')"
-            alt="Favorites FilmsDB"
-            draggable="false"
-          />
-        </router-link>
       </li>
     </ul>
   </nav>
@@ -65,9 +25,50 @@ export default {
     return {
       filtersVisibility: false,
       chartVisibility: false,
+      menuBtns: [
+        {
+          img: require("@/assets/icons/home-fill.svg"),
+          alt: "Home FilmsDB",
+          go: "/",
+        },
+        {
+          img: require("@/assets/icons/filters.svg"),
+          alt: "Filters FilmsDB",
+          go: "filters",
+        },
+        {
+          img: require("@/assets/icons/add-fill.svg"),
+          alt: "Add Content FilmsDB",
+          go: "/create/content",
+        },
+        {
+          img: require("@/assets/icons/chart-fill.svg"),
+          alt: "Charts FilmsDB",
+          go: "charts",
+        },
+        {
+          img: require("@/assets/icons/heart.svg"),
+          alt: "Favorites FilmsDB",
+          go: "/favorites",
+        },
+      ],
     };
   },
   methods: {
+    goTo(route) {
+      switch (route) {
+        case "filters":
+          this.showFilters;
+          break;
+        case "charts":
+          this.showCharts;
+          break;
+
+        default:
+          this.$router.push({ path: route });
+          break;
+      }
+    },
     showFilters() {
       // this.$route.query.active = "type";
       if (this.$route.fullPath.includes("?")) {

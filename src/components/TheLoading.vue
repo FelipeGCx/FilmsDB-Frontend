@@ -1,13 +1,19 @@
 <template>
   <div>
-    <img
-      :src="require('@/assets/icons/filmsdb.svg')"
-      alt="FilmsDB Logo"
-      draggable="false"
-    />
+    <img :src="img" alt="FilmsDB Logo" draggable="false" />
     <h1>Loading...</h1>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      img: require("@/assets/icons/filmsdb.svg"),
+    };
+  },
+};
+</script>
 
 <style lang="scss" scoped>
 div {

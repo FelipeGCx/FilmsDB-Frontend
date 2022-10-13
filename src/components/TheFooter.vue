@@ -1,12 +1,18 @@
 <template>
   <footer>
-    <img :src="require('@/assets/icons/github.svg')" alt="github icon" />
+    <img :src="img" alt="github icon" />
     <h3>Created by FelipeGCx</h3>
   </footer>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      img: require("@/assets/icons/github.svg"),
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>

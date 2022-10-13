@@ -4,11 +4,7 @@
       <ul>
         <li v-for="(item, idx) in navBtns" :key="idx">
           <button :id="item.id" @click="btnClicked(idx)">
-            <img
-              :src="eActive == item.e ? item.svgTwo : item.svg"
-              :alt="item.alt"
-              draggable="false"
-            />
+            <img :src="imgLoad(item)" :alt="item.alt" draggable="false" />
           </button>
         </li>
       </ul>
@@ -148,6 +144,9 @@ export default {
       this.$emit("changeVisibility");
       this.hideAll();
       this.show("type");
+    },
+    imgLoad(item) {
+      return this.eActive == item.e ? item.svgTwo : item.svg;
     },
   },
 };
