@@ -1,15 +1,49 @@
 <template>
   <div>
-    <img
-      :src="require('@/assets/icons/error-server.svg')"
-      alt="FilmsDB error"
-      draggable="false"
-    />
+    <img :src="img" alt="FilmsDB error" draggable="false" />
     <h1>an error has occurred</h1>
-    <span>try reload</span>
-    <button class="main-button" @click="this.location.reload()">Reload</button>
+    <span>{{ spanText }}</span>
+    <button class="main-button" @click="doAction">
+      {{ buttonText }}
+    </button>
   </div>
 </template>
+
+<script>
+export default {
+  props: {
+    refetch: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  data() {
+    return {
+      img: require("@/assets/icons/error-server.svg"),
+      spanText: null,
+      buttonText: null,
+    };
+  },
+  methods: {
+    doAction() {
+      if (this.refetch) {
+        this.$emit("reload");
+      } else {
+        this.$forceUpdate();
+      }
+    },
+  },
+  mounted() {
+    if (this.refetch) {
+      this.spanText = "try refetch";
+      this.buttonText = "Refetch";
+    } else {
+      this.spanText = "try reload";
+      this.buttonText = "Reload";
+    }
+  },
+};
+</script>
 
 <style lang="scss" scoped>
 div {

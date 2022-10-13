@@ -3,7 +3,7 @@
     <img :src="obj.svg" :alt="obj.alt" />
     <div>
       <router-link
-        :to="option.route || '/'"
+        :to="option.route"
         v-for="(option, idx) in obj.options"
         :key="idx"
       >

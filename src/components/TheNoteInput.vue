@@ -1,7 +1,7 @@
 <template>
   <div class="input-container">
     <button @click="nOne = adding(nOne)">
-      <img :src="require('@/assets/icons/arrow-up.svg')" draggable="false" />
+      <img :src="imgUp" draggable="false" />
     </button>
     <input
       class="input"
@@ -14,7 +14,7 @@
       step="0.1"
     />
     <button @click="nOne = subtracting(nOne)">
-      <img :src="require('@/assets/icons/arrow-down.svg')" draggable="false" />
+      <img :src="imgDown" draggable="false" />
     </button>
   </div>
 </template>
@@ -23,6 +23,8 @@
 export default {
   data() {
     return {
+      imgUp: require("@/assets/icons/arrow-up.svg"),
+      imgDown: require("@/assets/icons/arrow-down.svg"),
       nOne: 10.0,
       date: 10.0,
       lOne: 0,

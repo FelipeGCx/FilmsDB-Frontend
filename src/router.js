@@ -54,6 +54,11 @@ const routes = [
     name: "Saga",
     component: () => import("@/views/SagaView.vue"),
   },
+  {
+    path: "/favorites",
+    name: "Favorites",
+    component: () => import("@/views/FavoritesView.vue"),
+  },
 ];
 
 const router = createRouter({

@@ -1,14 +1,20 @@
 <template>
   <div>
-    <img
-      :src="require('@/assets/icons/empty-data.svg')"
-      alt="FilmsDB error"
-      draggable="false"
-    />
+    <img :src="img" alt="FilmsDB error" draggable="false" />
     <h1>not find data</h1>
     <router-link class="main-button" to="/">Go Home</router-link>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      img: require("@/assets/icons/empty-data.svg"),
+    };
+  },
+};
+</script>
 
 <style lang="scss" scoped>
 div {

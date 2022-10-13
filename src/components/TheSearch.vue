@@ -37,11 +37,6 @@ export default {
       return this.width == "18rem" ? "0 1rem" : "0";
     },
   },
-  // watch: {
-  //   value() {
-  //     return !this.isClicked ? this.value : "";
-  //   },
-  // },
 };
 </script>
 <style lang="scss" scoped>

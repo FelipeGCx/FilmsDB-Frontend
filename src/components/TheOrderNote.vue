@@ -1,6 +1,6 @@
 <template>
   <button type="button" @click="changeState">
-    <img :src="image" alt="" srcset="" />
+    <img :src="image" alt="order" />
   </button>
 </template>
 
