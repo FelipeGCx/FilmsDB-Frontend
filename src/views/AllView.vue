@@ -11,7 +11,7 @@
       />
       <the-pagination @changePage="newPage" :pagination="details.page" />
     </section>
-    <div v-else class="no-result-apollo">No result :(</div>
+    <the-empty v-else />
   </main>
 </template>
 
@@ -24,6 +24,7 @@ import TheFilters from "@/components/TheFilters.vue";
 import gql from "graphql-tag";
 import TheLoading from "@/components/TheLoading.vue";
 import TheError from "@/components/TheError.vue";
+import TheEmpty from "@/components/TheEmpty.vue";
 
 export default {
   name: "AllView",
@@ -34,6 +35,7 @@ export default {
     ThePagination,
     TheLoading,
     TheError,
+    TheEmpty,
   },
   data() {
     return {

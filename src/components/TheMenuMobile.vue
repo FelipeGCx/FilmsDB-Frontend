@@ -1,7 +1,7 @@
 <template>
   <nav class="menu">
     <ul>
-      <li v-for="(item, idx) in filtersBtns" :key="idx">
+      <li v-for="(item, idx) in menuBtns" :key="idx">
         <button @click="goTo(item.go)">
           <img :src="item.img" :alt="item.alt" draggable="false" />
         </button>

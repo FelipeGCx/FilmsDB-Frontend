@@ -6,15 +6,11 @@
       <the-error v-else-if="error" :refetch="true" @reload="reloadTheQuery" />
       <ul v-else-if="categories">
         <h2 class="simple-title">Categories</h2>
-        <li v-for="(item, index) in categories.data" :key="index">
+        <li v-for="item in categories.data" :key="item.id">
           <router-link
             class="img-button"
             @click="$emit('clicked')"
-            :to="{
-              name: 'Category',
-              state: { categoryTitle: item.category },
-              query: { category: item.category, page: 1 },
-            }"
+            :to="goTo(item)"
           >
             <svg
               v-html="item.svg"
@@ -25,7 +21,7 @@
           </router-link>
         </li>
       </ul>
-      <div v-else class="no-result apollo">No result :(</div>
+      <the-empty v-else />
     </nav>
   </div>
 </template>
@@ -36,16 +32,26 @@ import Categories from "@/mixins/categories.js";
 import TheLoading from "@/components/TheLoading.vue";
 import TheError from "@/components/TheError.vue";
 import queryParams from "@/mixins/queryParams.js";
+import TheEmpty from "@/components/TheEmpty.vue";
+
 export default {
   components: {
     TheButtonClose,
     TheLoading,
     TheError,
+    TheEmpty,
   },
   mixins: [Categories, queryParams],
   methods: {
     reloadTheQuery() {
       this.$apollo.queries.categories.refetch();
+    },
+    goTo(item) {
+      return {
+        name: "Category",
+        state: { categoryTitle: item.category },
+        query: { category: item.category, page: 1 },
+      };
     },
   },
 };
