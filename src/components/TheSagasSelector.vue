@@ -6,15 +6,11 @@
       <the-error v-else-if="error" :refetch="true" @reload="reloadTheQuery" />
       <ul v-else-if="sagas">
         <h2 class="simple-title">Sagas</h2>
-        <li v-for="(item, index) in sagas.data" :key="index">
+        <li v-for="item in sagas.data" :key="item.id">
           <router-link
             class="img-button"
             @click="$emit('clicked')"
-            :to="{
-              name: 'Saga',
-              state: { sagaTitle: item.saga },
-              query: { saga: item.saga, page: 1 },
-            }"
+            :to="goTo(item)"
           >
             <svg
               v-html="item.svg"
@@ -47,6 +43,13 @@ export default {
   methods: {
     reloadTheQuery() {
       this.$apollo.queries.sagas.refetch();
+    },
+    goTo(item) {
+      return {
+        name: "Saga",
+        state: { sagaTitle: item.saga },
+        query: { saga: item.saga, page: 1 },
+      };
     },
   },
 };

@@ -28,6 +28,12 @@ const routes = [
     meta: { title: "Create Content" },
   },
   {
+    path: "/update/content",
+    name: "UpdateContent",
+    component: () => import("@/views/UpdateContentView.vue"),
+    meta: { title: "Update Content" },
+  },
+  {
     path: "/create/saga",
     name: "CreateSaga",
     component: () => import("@/views/CreateSagaView.vue"),

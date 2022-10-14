@@ -1,10 +1,11 @@
 <template>
   <div class="type">
     <the-button-close @btnClicked="$emit('clicked')" />
-    <div v-if="loading" class="loading-apollo">Loading...</div>
-    <div v-else-if="error" class="error-apollo">An error occurred {{ tt }}</div>
-    <nav v-else-if="charts" class="types | blur">
-      <ul>
+
+    <nav class="types | blur">
+      <the-loading v-if="loading" />
+      <the-error v-else-if="error" :refetch="true" @reload="reloadTheQuery" />
+      <ul v-else-if="charts">
         <li v-for="item in charts.data" :key="item.type">
           <the-charts-circle
             :percentage="percentage(item.elements)"
@@ -13,20 +14,29 @@
           <p>{{ item.elements }} {{ item.type }}s</p>
         </li>
       </ul>
+      <the-empty v-else />
     </nav>
-    <div v-else class="no-result-apollo">No result :(</div>
   </div>
 </template>
 
 <script>
 // import variables from "@/sass/_variables.scss";
+import gql from "graphql-tag";
 import TheButtonClose from "@/components/TheButtonClose.vue";
 import TheChartsCircle from "@/components/TheChartsCircle.vue";
-import gql from "graphql-tag";
-import queryParams from "@/mixins/queryParams";
+import TheLoading from "@/components/TheLoading.vue";
+import TheError from "@/components/TheError.vue";
+import queryParams from "@/mixins/queryParams.js";
+import TheEmpty from "@/components/TheEmpty.vue";
 
 export default {
-  components: { TheButtonClose, TheChartsCircle },
+  components: {
+    TheButtonClose,
+    TheLoading,
+    TheError,
+    TheEmpty,
+    TheChartsCircle,
+  },
   mixins: [queryParams],
   data() {
     return {

@@ -24,7 +24,7 @@
             class="season"
             data-tooltip="season"
             data-flow="right"
-            :style="{ opacity: item.season == 0 ? 0 : 100 }"
+            :data-opacity="seasonOpacity(item.season)"
           >
             <span class="pin">{{ item.season }}</span>
           </div>
@@ -34,13 +34,7 @@
               data-tooltip="category"
               data-flow="left"
               v-show="isVoid(item.category.svg)"
-              :to="{
-                name: 'Category',
-                query: {
-                  category: item.category.category,
-                  page: 1,
-                },
-              }"
+              :to="goToCategory(item.category)"
             >
               <svg v-html="item.category.svg" viewBox="0 0 24 24"></svg>
             </router-link>
@@ -52,13 +46,7 @@
               data-tooltip="saga"
               data-flow="left"
               v-show="isVoid(item.saga.svg)"
-              :to="{
-                name: 'Saga',
-                query: {
-                  saga: item.saga.saga,
-                  page: 1,
-                },
-              }"
+              :to="goToSaga(item.saga)"
             >
               <svg v-html="item.saga.svg" viewBox="0 0 24 24"></svg>
             </router-link>
@@ -88,20 +76,11 @@
         onerror="this.onerror=null; this.src='https://firebasestorage.googleapis.com/v0/b/films-a2d18.appspot.com/o/assets%2FNot%20Found%20Image.webp?alt=media&token=8bfcfa56-b828-4db9-9c74-82e34324f673'"
       />
       <div class="icons">
-        <router-link to="/" data-tooltip="edit" data-flow="top">
-          <img :src="require('@/assets/icons/edit.svg')" alt="edit" />
+        <router-link :to="goToEdit(item)" data-tooltip="edit" data-flow="top">
+          <img :src="imgEdit" alt="edit" />
         </router-link>
         <div data-tooltip="favorite" data-flow="top">
-          <img
-            v-if="item.favorite"
-            :src="require('@/assets/icons/heart.svg')"
-            alt="favorite"
-          />
-          <img
-            v-else
-            :src="require('@/assets/icons/heart-outline.svg')"
-            alt="not favorite"
-          />
+          <img :src="favoriteImage(item.favorite)" alt="favorite" />
         </div>
         <span class="note || pin" data-tooltip="note" data-flow="top"
           >{{ normalizeNote(item.note) }}
@@ -130,6 +109,9 @@ export default {
       Sagas: null,
       sagasStatus: false,
       windowWidth: 8000,
+      imgEdit: require("@/assets/icons/edit.svg"),
+      imgFav: require("@/assets/icons/heart.svg"),
+      imgNoFav: require("@/assets/icons/heart-outline.svg"),
     };
   },
   watch: {
@@ -157,6 +139,39 @@ export default {
         params: { title: item.title },
         query: { s: item.season },
       });
+    },
+    goToCategory(item) {
+      return {
+        name: "Category",
+        query: {
+          category: item.category,
+          page: 1,
+        },
+      };
+    },
+    goToSaga(item) {
+      return {
+        name: "Saga",
+        query: {
+          saga: item.saga,
+          page: 1,
+        },
+      };
+    },
+    goToEdit(item) {
+      return {
+        name: "UpdateContent",
+        query: {
+          title: item.titleOG,
+          s: item.season
+        },
+      };
+    },
+    favoriteImage(bool) {
+      return bool ? this.imgFav : this.imgNoFav;
+    },
+    seasonOpacity(season) {
+      return season == 0 ? 0 : 100;
     },
   },
 };
@@ -254,6 +269,12 @@ export default {
           transform: translateX(-100%);
           transition: all 0.3s linear;
           transition-delay: 0.2s;
+          &[data-opacity="0"] {
+            opacity: 0;
+          }
+          &[data-opacity="100"] {
+            opacity: 1;
+          }
         }
         .rigth-icons {
           display: flex;

@@ -3,9 +3,9 @@
     <ol>
       <li
         class="page-item | previuos"
-        @click="$emit('changePage', 1)"
+        @click="changePage('first')"
         :class="isActive(pagination.currentPage - 1)"
-        v-show="pagination.currentPage > numPages / 2 + 1"
+        v-show="firstIsVisible"
       >
         <svg viewBox="0 0 24 24" fill="currentColor">
           <title>First Page</title>
@@ -16,14 +16,9 @@
       </li>
       <li
         class="page-item | previuos"
-        @click="
-          $emit(
-            'changePage',
-            pagination.currentPage == 1 ? 1 : pagination.currentPage - 1
-          )
-        "
+        @click="changePage('prev')"
         :class="isActive(pagination.currentPage - 1)"
-        v-show="pagination.currentPage > 1"
+        v-show="prevIsVisible"
       >
         <svg viewBox="0 0 24 24" fill="currentColor">
           <title>Previuos</title>
@@ -40,7 +35,7 @@
         class="page-item"
         @click="$emit('changePage', page)"
         :class="isActive(page)"
-        v-show="page >= min && page <= max && pagination.totalPages != 1"
+        v-show="pageIsVisible(page)"
       >
         <span class="page-container">
           {{ page }}
@@ -48,15 +43,8 @@
       </li>
       <li
         class="page-item | next"
-        @click="
-          $emit(
-            'changePage',
-            pagination.currentPage == pagination.totalPages
-              ? pagination.currentPage
-              : pagination.currentPage + 1
-          )
-        "
-        v-show="pagination.currentPage < pagination.totalPages"
+        @click="changePage('next')"
+        v-show="nextIsVisible"
         :class="isActive(pagination.currentPage + 1)"
       >
         <svg viewBox="0 0 24 24" fill="currentColor">
@@ -70,9 +58,9 @@
       </li>
       <li
         class="page-item | next"
-        @click="$emit('changePage', pagination.totalPages)"
+        @click="changePage('last')"
         :class="isActive(pagination.currentPage + 1)"
-        v-show="pagination.totalPages - pagination.currentPage > numPages / 2"
+        v-show="lastIsVisible"
       >
         <svg viewBox="0 0 24 24" fill="currentColor">
           <title>Last Page</title>
@@ -124,16 +112,57 @@ export default {
     },
   },
   methods: {
-    isActive(numPage) {
-      return numPage == this.pagination.currentPage ? "active" : "";
+    isActive(page) {
+      return page == this.pagination.currentPage ? "active" : "";
+    },
+    changePage(to) {
+      let np = 1;
+      switch (to) {
+        case "first":
+          np = 1;
+          break;
+        case "prev":
+          np =
+            this.pagination.currentPage == 1
+              ? 1
+              : this.pagination.currentPage - 1;
+          break;
+        case "next":
+          np =
+            this.pagination.currentPage == this.pagination.totalPages
+              ? this.pagination.currentPage
+              : this.pagination.currentPage + 1;
+          break;
+        case "last":
+          np = this.pagination.totalPages;
+          break;
+        default:
+          np = 1;
+          break;
+      }
+      this.$emit("changePage", np);
+    },
+    firstIsVisible() {
+      return this.pagination.currentPage > this.numPages / 2 + 1;
+    },
+    prevIsVisible() {
+      return this.pagination.currentPage > 1;
+    },
+    pageIsVisible(page) {
+      return (
+        page >= this.min && page <= this.max && this.pagination.totalPages != 1
+      );
+    },
+    nextIsVisible() {
+      return this.pagination.currentPage < this.pagination.totalPages;
+    },
+    lastIsVisible() {
+      return (
+        this.pagination.totalPages - this.pagination.currentPage >
+        this.numPages / 2
+      );
     },
   },
-  // mounted() {
-  //   this.windowWidth = window.innerWidth;
-  //   window.addEventListener("resize", () => {
-  //     this.windowWidth = window.innerWidth;
-  //   });
-  // },
 };
 </script>
 
