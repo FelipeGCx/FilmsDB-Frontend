@@ -76,7 +76,7 @@
         onerror="this.onerror=null; this.src='https://firebasestorage.googleapis.com/v0/b/films-a2d18.appspot.com/o/assets%2FNot%20Found%20Image.webp?alt=media&token=8bfcfa56-b828-4db9-9c74-82e34324f673'"
       />
       <div class="icons">
-        <router-link to="/" data-tooltip="edit" data-flow="top">
+        <router-link :to="goToEdit(item)" data-tooltip="edit" data-flow="top">
           <img :src="imgEdit" alt="edit" />
         </router-link>
         <div data-tooltip="favorite" data-flow="top">
@@ -155,6 +155,15 @@ export default {
         query: {
           saga: item.saga,
           page: 1,
+        },
+      };
+    },
+    goToEdit(item) {
+      return {
+        name: "UpdateContent",
+        query: {
+          title: item.titleOG,
+          s: item.season
         },
       };
     },
