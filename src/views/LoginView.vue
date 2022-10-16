@@ -18,6 +18,7 @@
             <img :src="require('@/assets/icons/lock-fill.svg')" />
           </figure>
           <input :type="passType" name="password" autocomplete="off" />
+          <img class="pass-eye" :src="passImg" @click="passVisibility" />
         </div>
       </div>
       <button class="main-button" @click="submit">Login</button>
@@ -30,8 +31,23 @@
 export default {
   data() {
     return {
-      passType: "text",
+      passType: "password",
+      passImg: require("@/assets/icons/eye-show.svg"),
+      passState: false,
     };
+  },
+  methods: {
+    passVisibility() {
+      if (this.passState) {
+        this.passType = "password";
+        this.passImg = require("@/assets/icons/eye-show.svg");
+        this.passState = false;
+      } else {
+        this.passType = "text";
+        this.passImg = require("@/assets/icons/eye-hide.svg");
+        this.passState = true;
+      }
+    },
   },
 };
 </script>
@@ -47,12 +63,13 @@ main {
   justify-content: center;
   align-items: center;
   form {
-    background-color: $neutral-color;
+    background-color: $base-color;
     border-radius: $border-radius;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    padding: 2.4rem 4.5rem;
+    gap: 2rem;
+    padding: 3.4rem 4.5rem;
+    border: 0.3rem solid $neutral-color;
     h1 {
       text-transform: uppercase;
       align-self: center;
@@ -69,11 +86,13 @@ main {
       $border-radius: 8px;
       .input-box {
         display: flex;
-        height: 3rem;
+        border: 0.3rem solid $primary-color;
+        border-radius: $border-radius;
+        overflow: hidden;
+        min-width: 25rem;
+        position: relative;
         figure {
-          background-color: $primary-color;
-          border-top-left-radius: $border-radius;
-          border-bottom-left-radius: $border-radius;
+          background-color: $base-color;
           height: 100%;
           display: flex;
           justify-content: center;
@@ -82,25 +101,34 @@ main {
           img {
             width: 2rem;
             height: 2rem;
-            filter: contrast(1) invert(1);
+            filter: contrast(1) invert(0.5);
           }
         }
         input {
           // height: 100%;
           padding-left: 1rem;
-          background-color: $secondary-color;
+          background-color: $base-color;
+          color: $secondary-color;
           border-radius: 0;
+          padding: 0.7rem 0;
           border: none;
-          border-top-right-radius: $border-radius;
-          border-bottom-right-radius: $border-radius;
           &:focus {
             outline: none;
           }
         }
+        .pass-eye {
+          width: 2rem;
+          height: 2rem;
+          filter: contrast(1) invert(0.5);
+          position: absolute;
+          right: 1rem;
+          top: 15%;
+        }
       }
     }
     button {
-      width: 100%;
+      margin-top: 0.5rem;
+      width: 100% !important;
     }
   }
   p {

@@ -5,6 +5,7 @@
     v-model="value"
     v-on:keyup.enter="searchContent"
     placeholder="Search by title"
+    tabindex="-1"
   />
 </template>
 
