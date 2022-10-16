@@ -309,6 +309,14 @@ export default {
       return this.seasonVisible ? "flex" : "none";
     },
   },
+  methods: {
+    async fileSelected(e) {
+      this.invalidImage = true;
+      this.iconImage.first = true;
+      this.file = e.target.files[0];
+      this.filme.poster = URL.createObjectURL(this.file);
+    },
+  },
   mounted() {
     window.scrollTo(0, 0);
   },

@@ -84,7 +84,6 @@ form {
   select {
     background-color: $base-third-color;
     border: none;
-    outline: none;
     border-radius: $border-radius;
     padding: 0.6rem;
     option {

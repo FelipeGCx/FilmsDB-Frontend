@@ -2,10 +2,11 @@
   <ul class="films" ref="contentVisualization">
     <li
       class="film"
-      v-for="item in contentDetails"
+      v-for="(item, idx) in contentDetails"
       :key="item.id"
       :class="item.type"
       ref="itemVisualization"
+      :tabindex="idx"
     >
       <div class="information">
         <div class="main-data">
@@ -14,6 +15,7 @@
             class="a-normal"
             :href="item.link"
             target="blank"
+            tabindex="-1"
             >{{ item.titleOG }}</a
           >
           <p v-else>{{ item.titleOG }}</p>
@@ -35,6 +37,7 @@
               data-flow="left"
               v-show="isVoid(item.category.svg)"
               :to="goToCategory(item.category)"
+              tabindex="-1"
             >
               <svg v-html="item.category.svg" viewBox="0 0 24 24"></svg>
             </router-link>
@@ -47,6 +50,7 @@
               data-flow="left"
               v-show="isVoid(item.saga.svg)"
               :to="goToSaga(item.saga)"
+              tabindex="-1"
             >
               <svg v-html="item.saga.svg" viewBox="0 0 24 24"></svg>
             </router-link>
@@ -76,7 +80,12 @@
         onerror="this.onerror=null; this.src='https://firebasestorage.googleapis.com/v0/b/films-a2d18.appspot.com/o/assets%2FNot%20Found%20Image.webp?alt=media&token=8bfcfa56-b828-4db9-9c74-82e34324f673'"
       />
       <div class="icons">
-        <router-link :to="goToEdit(item)" data-tooltip="edit" data-flow="top">
+        <router-link
+          :to="goToEdit(item)"
+          data-tooltip="edit"
+          data-flow="top"
+          tabindex="-1"
+        >
           <img :src="imgEdit" alt="edit" />
         </router-link>
         <div data-tooltip="favorite" data-flow="top">
@@ -210,21 +219,24 @@ export default {
     justify-content: center;
     &.Anime {
       @include tooltip($anime-color);
-      &:hover {
+      &:hover,
+      &:focus {
         filter: drop-shadow(0 0 1rem $anime-color);
         border-color: $anime-color;
       }
     }
     &.Movie {
       @include tooltip($movie-color);
-      &:hover {
+      &:hover,
+      &:focus {
         filter: drop-shadow(0 0 1rem $movie-color);
         border-color: $movie-color;
       }
     }
     &.Serie {
       @include tooltip($serie-color);
-      &:hover {
+      &:hover,
+      &:focus {
         filter: drop-shadow(0 0 1rem $serie-color);
         border-color: $serie-color;
       }
@@ -322,7 +334,9 @@ export default {
       fill: $secondary-color;
       width: 2.5rem;
     }
-    &:hover {
+    &:hover,
+    &:focus {
+      outline: none;
       .information {
         transform: translate3d(0, 0, 0);
         .more-data {

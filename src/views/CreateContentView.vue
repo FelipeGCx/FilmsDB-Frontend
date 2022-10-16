@@ -1,11 +1,12 @@
 <template>
   <main>
     <section>
-      <the-main-title :title="'new register'" :padding="'0vw'" />
+      <the-main-title :title="'new register'" :padding="space" />
       <the-load-content
         :content="filme"
         :action="'create'"
         @clicked="saveFilme"
+        @filled="toTitle"
       />
     </section>
   </main>
@@ -34,11 +35,16 @@ export default {
         season: 0,
         saga: 0,
       },
+      space: "0px",
     };
   },
   methods: {
     saveFilme(data) {
       console.log(data);
+    },
+    toTitle(n) {
+      n = (window.innerWidth - n) / 2;
+      this.space = ` ${n}px`;
     },
   },
 };
@@ -49,6 +55,7 @@ section {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  width: 100%;
   margin: 2rem 6rem 0 6rem;
 }
 </style>

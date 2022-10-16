@@ -1,7 +1,7 @@
 <template>
   <!-- form for create  -->
   <div class="register">
-    <form @submit.prevent="$emit('clicked', filme)">
+    <form @submit.prevent="$emit('clicked', filme)" ref="formContent">
       <div class="first-container">
         <div class="fields-container">
           <div class="field || multi-select">
@@ -16,7 +16,7 @@
                   id="movie"
                   name="type_content"
                   value="Movie"
-                  checked="checked"
+                  :checked="filme.type == 'Movie'"
                   @click="
                     filme.type = 'Movie';
                     filme.season = action == 'create' ? 0 : filme.season;
@@ -32,6 +32,7 @@
                   id="anime"
                   name="type_content"
                   value="Anime"
+                  :checked="filme.type == 'Anime'"
                   @click="
                     filme.type = 'Anime';
                     filme.season = action == 'create' ? 1 : filme.season;
@@ -47,6 +48,7 @@
                   id="serie"
                   name="type_content"
                   value="Serie"
+                  :checked="filme.type == 'Serie'"
                   @click="
                     filme.type = 'Serie';
                     filme.season = action == 'create' ? 1 : filme.season;
@@ -137,7 +139,7 @@
                 >Dubbing
                 <input
                   type="radio"
-                  checked="checked"
+                  :checked="!filme.language"
                   @click="filme.language = false"
                   name="language"
                   id="dubbing"
@@ -150,6 +152,7 @@
                 >Original
                 <input
                   type="radio"
+                  :checked="filme.language"
                   @click="filme.language = true"
                   name="language"
                   id="original"
@@ -198,7 +201,7 @@
                 >Normal
                 <input
                   type="radio"
-                  checked="checked"
+                  :checked="!filme.favorite"
                   id="normal"
                   name="favorite"
                   @click="filme.favorite = false"
@@ -211,6 +214,7 @@
                 >Favorite
                 <input
                   type="radio"
+                  :checked="filme.favorite"
                   id="favorite"
                   name="favorite"
                   @click="filme.favorite = true"
@@ -252,6 +256,8 @@
 <script>
 import Categories from "@/mixins/categories";
 import Sagas from "@/mixins/sagas";
+import reziseListener from "@/mixins/reziseListener";
+
 export default {
   name: "CreateFilme",
   props: {
@@ -296,7 +302,7 @@ export default {
       },
     };
   },
-  mixins: [Sagas, Categories],
+  mixins: [Sagas, Categories, reziseListener],
   computed: {
     seasonOp() {
       return this.seasonVisible ? 1 : 0;
@@ -306,12 +312,20 @@ export default {
     },
   },
   watch: {
-    question: {
-      handler() {
-        this.filme = this.content;
-        console.log("filmein load", this.filme);
-      },
-      immediate: true,
+    windowWidth() {
+      let tW = this.$refs.formContent.offsetWidth;
+      this.$emit("filled", tW);
+    },
+    content() {
+      this.filme = this.content;
+    },
+  },
+  methods: {
+    async fileSelected(e) {
+      // this.invalidImage = true;
+      // this.iconImage.first = true;
+      this.file = e.target.files[0];
+      this.filme.poster = URL.createObjectURL(this.file);
     },
   },
   mounted() {
@@ -322,17 +336,17 @@ export default {
 
 <style lang="scss" scoped>
 @media only screen and (min-width: 1024px) {
-  .new-register {
+  .register {
     margin: 0 20vw;
   }
 }
 @media only screen and (min-width: 750px) and (max-width: 1024px) {
-  .new-register {
+  .register {
     margin: 0 16vw;
   }
 }
 @media only screen and (max-width: 750px) {
-  .new-register {
+  .register {
     margin: 0 13vw;
     align-items: center;
     form {
@@ -398,7 +412,7 @@ export default {
             appearance: none;
             width: 100%;
             height: 1rem;
-            background: $base-second-color;
+            background: $neutral-color;
             padding: 0;
             &::-webkit-slider-thumb {
               -webkit-appearance: none;
@@ -444,6 +458,7 @@ export default {
           .img-done,
           .img-load {
             width: 2.5rem;
+            height: 2.5rem;
             position: absolute;
             right: 0.7rem;
             bottom: 1rem;
