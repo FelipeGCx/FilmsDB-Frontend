@@ -1,11 +1,12 @@
 <template>
   <main>
     <section>
-      <the-main-title :title="'update register'" :padding="'0vw'" />
+      <the-main-title :title="'update register'" :padding="space" />
       <the-load-content
         :content="filme"
         :action="'update'"
         @clicked="updateFilme"
+        @filled="toTitle"
       />
     </section>
   </main>
@@ -35,11 +36,12 @@ export default {
         season: 0,
         saga: 0,
       },
+      space: "0px",
     };
   },
   computed: {
     filmTitle() {
-      return this.$route.query.title;
+      return this.$route.query.title || " ";
     },
     season() {
       return parseInt(this.$route.query.s) || 0;
@@ -49,9 +51,18 @@ export default {
     updateFilme(data) {
       console.log(data);
     },
+    toTitle(n) {
+      n = (window.innerWidth - n) / 2;
+      this.space = ` ${n}px`;
+    },
   },
   mounted() {
-    console.log(this.filmTitle);
+    this.$router.push({
+      query: {
+        title: this.filmTitle,
+        s: this.season,
+      },
+    });
   },
   apollo: {
     film: {
@@ -119,6 +130,7 @@ section {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  width: 100%;
   margin: 2rem 6rem 0 6rem;
 }
 </style>

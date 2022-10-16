@@ -93,7 +93,7 @@ export default {
     // a computed getter
     numPages() {
       // `this` points to the vm instance
-      return this.windowWidth > 700 ? 8 : 5;
+      return this.windowWidth > 700 ? 8 : 4;
     },
     // logic to align the page always in the center
     min() {
@@ -168,6 +168,7 @@ export default {
 
 <style lang="scss" scoped>
 .pagination {
+  padding: 0 1.5rem;
   ol {
     bottom: 1;
     display: flex;

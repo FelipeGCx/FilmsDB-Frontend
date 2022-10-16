@@ -44,7 +44,6 @@ export default {
       error: false,
       tt: null,
       space: "0vw",
-      windowWidth: 8000,
     };
   },
   computed: {
@@ -186,5 +185,6 @@ section {
   flex-direction: column;
   gap: 2rem;
   margin: 2rem 6rem 0 6rem;
+  width: 100%;
 }
 </style>
