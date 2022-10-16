@@ -3,7 +3,7 @@
     <the-button-close @btnClicked="$emit('clicked')" />
     <nav class="sagas | blur">
       <the-loading v-if="loading" />
-      <the-error v-else-if="error" :refetch="true" @reload="reloadTheQuery" />
+      <the-error v-else-if="error" :refetch="true" @reload="reloadTheQuery()" />
       <ul v-else-if="sagas">
         <h2 class="simple-title">Sagas</h2>
         <li v-for="item in sagas.data" :key="item.id">

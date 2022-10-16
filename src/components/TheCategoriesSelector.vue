@@ -3,7 +3,7 @@
     <the-button-close @btnClicked="$emit('clicked')" />
     <nav class="types | blur">
       <the-loading v-if="loading" />
-      <the-error v-else-if="error" :refetch="true" @reload="reloadTheQuery" />
+      <the-error v-else-if="error" :refetch="true" @reload="reloadTheQuery()" />
       <ul v-else-if="categories">
         <h2 class="simple-title">Categories</h2>
         <li v-for="item in categories.data" :key="item.id">

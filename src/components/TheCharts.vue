@@ -4,7 +4,7 @@
 
     <nav class="types | blur">
       <the-loading v-if="loading" />
-      <the-error v-else-if="error" :refetch="true" @reload="reloadTheQuery" />
+      <the-error v-else-if="error" :refetch="true" @reload="reloadTheQuery()" />
       <ul v-else-if="charts">
         <li v-for="item in charts.data" :key="item.type">
           <the-charts-circle

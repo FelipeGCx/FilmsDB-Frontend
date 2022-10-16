@@ -2,7 +2,11 @@
   <main>
     <section>
       <the-main-title :title="'new register'" :padding="'0vw'" />
-      <the-load-content :filme="filme" :action="'create'" @clicked="saveFilme" />
+      <the-load-content
+        :content="filme"
+        :action="'create'"
+        @clicked="saveFilme"
+      />
     </section>
   </main>
 </template>
