@@ -163,7 +163,7 @@ export default {
         name: "UpdateContent",
         query: {
           title: item.titleOG,
-          s: item.season
+          s: item.season,
         },
       };
     },

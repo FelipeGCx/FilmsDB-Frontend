@@ -252,11 +252,10 @@
 <script>
 import Categories from "@/mixins/categories";
 import Sagas from "@/mixins/sagas";
-
 export default {
   name: "CreateFilme",
   props: {
-    filme: {
+    content: {
       type: Object,
       required: true,
     },
@@ -267,6 +266,22 @@ export default {
   },
   data() {
     return {
+      filme: {
+        type: "Movie",
+        title: null,
+        titleOG: null,
+        year: new Date().getFullYear(),
+        note: 10,
+        language: false,
+        category: 0,
+        favorite: false,
+        info: " ",
+        link: " ",
+        poster:
+          "https://firebasestorage.googleapis.com/v0/b/films-a2d18.appspot.com/o/assets%2FNot%20Found%20Image.webp?alt=media&token=8bfcfa56-b828-4db9-9c74-82e34324f673",
+        season: 0,
+        saga: 0,
+      },
       seasonVisible: false,
       file: {
         name: "",
@@ -288,6 +303,15 @@ export default {
     },
     seasonDp() {
       return this.seasonVisible ? "flex" : "none";
+    },
+  },
+  watch: {
+    question: {
+      handler() {
+        this.filme = this.content;
+        console.log("filmein load", this.filme);
+      },
+      immediate: true,
     },
   },
   mounted() {
