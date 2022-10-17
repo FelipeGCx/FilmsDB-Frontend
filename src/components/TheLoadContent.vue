@@ -84,10 +84,12 @@
               type="number"
               name="year"
               :min="1896"
-              :max="filme.year"
+              :max="new Date().getFullYear()"
               maxlength="4"
               minlength="4"
               v-model="filme.year"
+              @keyup="evaluateLength"
+              @change="evaluateMin"
               required
             />
           </div>
@@ -108,12 +110,23 @@
           </div>
           <div class="field">
             <label for="category">Category</label>
-            <select class="input" id="category" v-model="filme.category">
-              <option value="0" disabled selected>Select Category</option>
+            <select class="input" id="category">
               <option
-                v-for="(item, index) in categories.data"
-                :key="index"
+                value="0"
+                disabled
+                :selected="action == 'create' || filme.category.id == 0"
+              >
+                Select Category
+              </option>
+              <option
+                v-for="item in categories.data"
+                :key="item.id"
                 :value="item.id"
+                :selected="
+                  action != 'creaate' &&
+                  filme.category.category == item.category
+                "
+                @click="filme.category.id = item.id"
               >
                 {{ item.category }}
               </option>
@@ -121,12 +134,20 @@
           </div>
           <div class="field">
             <label for="saga">Saga</label>
-            <select class="input" id="saga" v-model="filme.saga">
-              <option value="0" disabled selected>Select Saga</option>
+            <select class="input" id="saga">
               <option
-                v-for="(item, index) in sagas.data"
-                :key="index"
+                value="0"
+                disabled
+                :selected="action == 'create' || filme.saga.id == 0"
+              >
+                Select Saga
+              </option>
+              <option
+                v-for="item in sagas.data"
+                :key="item.id"
                 :value="item.id"
+                :selected="action != 'creaate' && filme.saga.saga == item.saga"
+                @click="filme.saga.id = item.id"
               >
                 {{ item.saga }}
               </option>
@@ -317,7 +338,7 @@ export default {
       this.$emit("filled", tW);
     },
     content() {
-      this.filme = this.content;
+      this.filme = { ...this.content };
     },
   },
   methods: {
@@ -326,6 +347,21 @@ export default {
       // this.iconImage.first = true;
       this.file = e.target.files[0];
       this.filme.poster = URL.createObjectURL(this.file);
+    },
+    evaluateLength() {
+      this.filme.year =
+        this.filme.year.toString().length >= 4
+          ? parseInt(this.filme.year.toString().slice(0, 4))
+          : this.filme.year;
+    },
+    evaluateMin() {
+      this.filme.year =
+        this.filme.year.toString().length < 4
+          ? parseInt(this.addZeros(this.filme.year.toString(), 4))
+          : this.filme.year;
+    },
+    addZeros(str, targetLength) {
+      return str.padEnd(targetLength, "0");
     },
   },
   mounted() {
