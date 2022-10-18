@@ -70,7 +70,6 @@ export default {
         query GetFilmByTitle($filmTitle: String) {
           getFilmByTitle(filmTitle: $filmTitle) {
             data {
-              id
               type
               titleOG
               title
@@ -93,7 +92,6 @@ export default {
                 svg
               }
             }
-            error
           }
         }
       `,
@@ -106,7 +104,7 @@ export default {
         return data.getFilmByTitle;
       },
       result() {
-        const filme = Array.from(this.film.data).filter((f) => {
+        let filmes = Array.from(this.film.data).filter((f) => {
           if (
             f.season === this.season &&
             f.titleOG.toLowerCase() === this.filmTitle.toLowerCase()
@@ -114,8 +112,24 @@ export default {
             return f;
           }
         });
-        console.log("titulo", filme[0]);
-        this.filme = filme[0];
+        // I have tried do this with map and inside of filter but it doesn't work
+        let filme = {
+          type: filmes[0].type,
+          title: filmes[0].title,
+          titleOG: filmes[0].titleOG,
+          year: filmes[0].year,
+          note: filmes[0].note,
+          language: filmes[0].language,
+          category: filmes[0].category.id,
+          favorite: filmes[0].favorite,
+          info: filmes[0].info,
+          link: filmes[0].link,
+          poster: filmes[0].poster,
+          season: filmes[0].season,
+          saga: filmes[0].saga.id,
+        };
+        this.filme = filme;
+        console.log("titulo", this.filme);
       },
       error() {
         this.error = true;
@@ -132,7 +146,7 @@ export default {
 section {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  // gap: 1rem;
   width: 100%;
   margin: 2rem 6rem 0 6rem;
 }

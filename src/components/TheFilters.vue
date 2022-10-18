@@ -85,7 +85,7 @@ form {
     background-color: $base-third-color;
     border: none;
     border-radius: $border-radius;
-    padding: 0.6rem;
+    min-width: 10rem;
     option {
       font-style: inherit;
       &:hover {

@@ -218,6 +218,7 @@ export default {
     transition: all 1s ease;
     display: flex;
     justify-content: center;
+    user-select: none;
     &.Anime {
       @include tooltip($anime-color);
       &:hover,

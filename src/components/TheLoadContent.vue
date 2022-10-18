@@ -64,6 +64,7 @@
               name="titleOG"
               v-model="filme.titleOG"
               autocomplete="off"
+              autocapitalize="words"
               required
             />
           </div>
@@ -114,7 +115,7 @@
               <option
                 value="0"
                 disabled
-                :selected="action == 'create' || filme.category.id == 0"
+                :selected="action == 'create' || filme.category == 0"
               >
                 Select Category
               </option>
@@ -122,11 +123,8 @@
                 v-for="item in categories.data"
                 :key="item.id"
                 :value="item.id"
-                :selected="
-                  action != 'creaate' &&
-                  filme.category.category == item.category
-                "
-                @click="filme.category.id = item.id"
+                :selected="action != 'creaate' && filme.category == item.id"
+                @click="filme.category = item.id"
               >
                 {{ item.category }}
               </option>
@@ -138,7 +136,7 @@
               <option
                 value="0"
                 disabled
-                :selected="action == 'create' || filme.saga.id == 0"
+                :selected="action == 'create' || filme.saga == 0"
               >
                 Select Saga
               </option>
@@ -146,8 +144,8 @@
                 v-for="item in sagas.data"
                 :key="item.id"
                 :value="item.id"
-                :selected="action != 'creaate' && filme.saga.saga == item.saga"
-                @click="filme.saga.id = item.id"
+                :selected="action != 'creaate' && filme.saga == item.id"
+                @click="filme.saga = item.id"
               >
                 {{ item.saga }}
               </option>
@@ -338,7 +336,11 @@ export default {
       this.$emit("filled", tW);
     },
     content() {
+      console.log("content cambio");
       this.filme = { ...this.content };
+      if (this.filme.type == "Anime" || this.filme.type == "Serie") {
+        this.seasonVisible = true;
+      }
     },
   },
   methods: {
@@ -366,6 +368,7 @@ export default {
   },
   mounted() {
     window.scrollTo(0, 0);
+    console.log("content", this.content);
   },
 };
 </script>
@@ -526,8 +529,8 @@ export default {
           cursor: pointer;
           position: relative;
           user-select: none;
-          &:has(input:checked),
-          .active {
+          // &:has(input:checked),
+          &.active {
             background-color: $primary-color;
             color: $secondary-color;
           }
@@ -551,7 +554,7 @@ export default {
       width: 100%;
     }
     input {
-      text-align: start;
+      text-align: start !important;
     }
     label {
       align-self: flex-start;
