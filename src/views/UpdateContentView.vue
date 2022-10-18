@@ -106,8 +106,11 @@ export default {
         return data.getFilmByTitle;
       },
       result() {
-        const filme = this.film.data.filter((f) => {
-          if (f.season === this.season) {
+        const filme = Array.from(this.film.data).filter((f) => {
+          if (
+            f.season === this.season &&
+            f.titleOG.toLowerCase() === this.filmTitle.toLowerCase()
+          ) {
             return f;
           }
         });
