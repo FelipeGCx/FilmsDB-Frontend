@@ -54,7 +54,7 @@ export default {
 section {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  // gap: 1rem;
   width: 100%;
   margin: 2rem 6rem 0 6rem;
 }

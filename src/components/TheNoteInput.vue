@@ -55,7 +55,6 @@ export default {
     border-radius: 4px;
     img {
       width: 2rem;
-      filter: contrast(1) invert(1);
     }
     &:first-child {
       border-top-left-radius: $border-radius;

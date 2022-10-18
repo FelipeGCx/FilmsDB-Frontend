@@ -1,7 +1,7 @@
 <template>
   <main>
     <the-loading v-if="loading" />
-    <the-error v-else-if="error" />
+    <the-error v-else-if="error" :refetch="true" @reload="reloadTheQuery()" />
     <section v-else-if="details" ref="section">
       <the-main-title :title="title()" :padding="space" />
       <the-filters @doFilter="doFilter" :padding="space" />
@@ -95,6 +95,9 @@ export default {
     toTitle(n) {
       n = (this.$refs.section.offsetWidth - n) / 2;
       this.space = ` ${n}px`;
+    },
+    reloadTheQuery() {
+      this.$apollo.queries.details.refetch();
     },
   },
   mounted() {

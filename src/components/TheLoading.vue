@@ -1,7 +1,7 @@
 <template>
   <div>
     <img :src="img" alt="FilmsDB Logo" draggable="false" />
-    <h1>Loading...</h1>
+    <h3>Loading...</h3>
   </div>
 </template>
 
@@ -23,10 +23,11 @@ div {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 1rem;
   img {
     filter: invert(1);
-    width: 10rem;
-    height: 10rem;
+    width: 7rem;
+    height: 7rem;
     pointer-events: none;
     animation: loop 0.5s infinite ease-in forwards;
   }

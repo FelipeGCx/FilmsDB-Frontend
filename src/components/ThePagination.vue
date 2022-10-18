@@ -1,5 +1,5 @@
 <template>
-  <nav class="pagination">
+  <nav class="pagination" v-show="pagination.totalPages > 1">
     <ol>
       <li
         class="page-item | previuos"

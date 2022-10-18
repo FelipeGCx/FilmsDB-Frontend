@@ -58,10 +58,10 @@ export default {
     goTo(route) {
       switch (route) {
         case "filters":
-          this.showFilters;
+          this.showFilters();
           break;
         case "charts":
-          this.showCharts;
+          this.showCharts();
           break;
 
         default:
@@ -108,7 +108,6 @@ export default {
 //     display: flex !important;
 //   }
 // }
-
 .menu {
   z-index: 5;
   display: none;
