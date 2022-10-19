@@ -84,7 +84,6 @@ export default {
       return string;
     },
     createContent() {
-      console.log("se emite");
       this.$emit("contentToSave", this.item);
     },
   },

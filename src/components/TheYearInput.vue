@@ -11,7 +11,8 @@
       :max="date"
       maxlength="4"
       minlength="4"
-      @change="evaluateLength"
+      @keyup="evaluateLength"
+      @change="evaluateMin"
     />
     <button @click="nOne = subtracting(nOne)">
       <img :src="imgDown" draggable="false" />
@@ -39,9 +40,18 @@ export default {
     },
     evaluateLength() {
       this.nOne =
-        this.nOne.toString().length > 4
+        this.nOne.toString().length >= 4
           ? parseInt(this.nOne.toString().slice(0, 4))
           : this.nOne;
+    },
+    evaluateMin() {
+      this.nOne =
+        this.nOne.toString().length < 4
+          ? parseInt(this.addZeros(this.nOne.toString(), 4))
+          : this.nOne;
+    },
+    addZeros(str, targetLength) {
+      return str.padEnd(targetLength, "0");
     },
   },
 };

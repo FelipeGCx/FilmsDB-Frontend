@@ -2,15 +2,18 @@
   <main>
     <the-loading v-if="loading" />
     <the-error v-else-if="error" :refetch="true" @reload="reloadTheQuery()" />
-    <section v-else-if="details" ref="section">
-      <the-main-title :title="title()" :padding="space" />
-      <the-filters @doFilter="doFilter" :padding="space" />
-      <the-content-visualization
-        :contentDetails="details.data"
-        @filled="toTitle"
-      />
-      <the-pagination @changePage="newPage" :pagination="details.page" />
-    </section>
+    <div class="sec" v-else-if="details">
+      <section v-if="details.page.totalItems > 1" ref="section">
+        <the-main-title :title="title()" :padding="space" />
+        <the-filters @doFilter="doFilter" :padding="space" />
+        <the-content-visualization
+          :contentDetails="details.data"
+          @filled="toTitle"
+        />
+        <the-pagination @changePage="newPage" :pagination="details.page" />
+      </section>
+      <the-empty v-else />
+    </div>
     <the-empty v-else />
   </main>
 </template>
@@ -183,11 +186,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-section {
+.sec {
   display: flex;
   flex-direction: column;
   gap: 2rem;
   margin: 2rem 6rem 0 6rem;
   width: 100%;
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
 }
 </style>

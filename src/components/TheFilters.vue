@@ -11,12 +11,14 @@
     <input
       type="number"
       min="1896"
-      max="2099"
+      :max="new Date().getFullYear()"
       maxlength="4"
       minlength="4"
       step="1"
       name="year"
       v-model="filter.year"
+      @keyup="evaluateLength"
+      @change="evaluateMin"
     />
     <label for="note">Note</label>
     <the-order-note @note="setNote" />
@@ -46,17 +48,30 @@ export default {
   components: { TheOrderNote },
   methods: {
     checkYear(e) {
-      console.log(e.target.value.length);
       if (e.target.value.length > 3) {
         e.target.value = "1000";
       }
     },
     doFilter() {
-      console.log(this.filter);
       this.$emit("doFilter", this.filter);
     },
     setNote(n) {
       this.filter.note = n;
+    },
+    evaluateLength() {
+      this.filter.year =
+        this.filter.year.toString().length >= 4
+          ? parseInt(this.filter.year.toString().slice(0, 4))
+          : this.filter.year;
+    },
+    evaluateMin() {
+      this.filter.year =
+        this.filter.year.toString().length < 4
+          ? parseInt(this.addZeros(this.filter.year.toString(), 4))
+          : this.filter.year;
+    },
+    addZeros(str, targetLength) {
+      return str.padEnd(targetLength, "0");
     },
   },
   mounted() {

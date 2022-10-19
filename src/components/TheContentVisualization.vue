@@ -130,7 +130,6 @@ export default {
       let wi = this.$refs.itemVisualization[0].offsetWidth + 10;
       let nE = Math.floor(w / wi);
       let tW = nE * wi;
-      console.log("emito", tW);
       this.$emit("filled", tW);
     },
   },

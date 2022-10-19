@@ -1,16 +1,19 @@
 <template>
   <main>
     <the-loading v-if="loading" />
-    <the-error v-else-if="error" />
-    <section v-else-if="details" ref="section">
-      <the-main-title :title="title" :padding="space" />
-      <the-content-visualization
-        :contentDetails="details.data"
-        @filled="toTitle"
-      />
-      <the-pagination @changePage="newPage" :pagination="details.page" />
-    </section>
-    <div v-else class="no-result-apollo">No result :(</div>
+    <the-error v-else-if="error" :refetch="true" @reload="reloadTheQuery()" />
+    <div class="sec" v-else-if="details">
+      <section v-if="details.page.totalItems > 1" ref="section">
+        <the-main-title :title="title" :padding="space" />
+        <the-content-visualization
+          :contentDetails="details.data"
+          @filled="toTitle"
+        />
+        <the-pagination @changePage="newPage" :pagination="details.page" />
+      </section>
+      <the-empty v-else />
+    </div>
+    <the-empty v-else />
   </main>
 </template>
 
@@ -23,6 +26,7 @@ import gql from "graphql-tag";
 import TheError from "@/components/TheError.vue";
 import TheLoading from "@/components/TheLoading.vue";
 import queryParams from "@/mixins/queryParams";
+import TheEmpty from "@/components/TheEmpty.vue";
 import stringObj from "@/mixins/stringObj";
 
 export default {
@@ -32,6 +36,7 @@ export default {
     TheContentVisualization,
     ThePagination,
     TheError,
+    TheEmpty,
     TheLoading,
   },
   mixins: [queryParams, stringObj],
@@ -67,16 +72,10 @@ export default {
       n = (this.$refs.section.offsetWidth - n) / 2;
       this.space = ` ${n}px`;
     },
+    reloadTheQuery() {
+      this.$apollo.queries.categories.refetch();
+    },
   },
-  // mounted() {
-  //   this.$router.push({
-  //     state: { categoryTitle: this.filmsCategory },
-  //     query: {
-  //       type: this.filmsCategory,
-  //       page: this.actualPage,
-  //     },
-  //   });
-  // },
   apollo: {
     details: {
       query: gql`
@@ -138,10 +137,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-section {
+.sec {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  margin-top: 2rem;
+  margin: 2rem 6rem 0 6rem;
+  width: 100%;
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
 }
 </style>

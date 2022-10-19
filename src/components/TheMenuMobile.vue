@@ -66,6 +66,8 @@ export default {
 
         default:
           this.$router.push({ path: route });
+          this.filtersVisibility = false;
+          this.chartVisibility = false;
           break;
       }
     },
@@ -79,7 +81,6 @@ export default {
           dQueries[query[0]] = query[1];
         });
         dQueries["active"] = "type";
-        console.log(dQueries);
         this.$router.push({
           query: dQueries,
         });

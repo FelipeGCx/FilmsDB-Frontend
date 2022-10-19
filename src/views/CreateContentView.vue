@@ -21,8 +21,8 @@ export default {
     return {
       filme: {
         type: "Movie",
-        title: null,
-        titleOG: null,
+        title: "",
+        titleOG: "",
         year: new Date().getFullYear(),
         note: 10,
         language: false,

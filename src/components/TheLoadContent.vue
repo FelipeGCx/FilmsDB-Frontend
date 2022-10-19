@@ -282,7 +282,7 @@ export default {
   props: {
     content: {
       type: Object,
-      required: true,
+      // required: true,
     },
     action: {
       type: String,
@@ -293,14 +293,14 @@ export default {
     return {
       filme: {
         type: "Movie",
-        title: null,
-        titleOG: null,
+        title: "",
+        titleOG: "",
         year: new Date().getFullYear(),
         note: 10,
         language: false,
         category: 0,
         favorite: false,
-        info: " ",
+        info: "para ver ",
         link: " ",
         poster:
           "https://firebasestorage.googleapis.com/v0/b/films-a2d18.appspot.com/o/assets%2FNot%20Found%20Image.webp?alt=media&token=8bfcfa56-b828-4db9-9c74-82e34324f673",
@@ -337,6 +337,7 @@ export default {
     },
     content() {
       console.log("content cambio");
+      console.log("content", this.content);
       this.filme = { ...this.content };
       if (this.filme.type == "Anime" || this.filme.type == "Serie") {
         this.seasonVisible = true;
@@ -367,8 +368,7 @@ export default {
     },
   },
   mounted() {
-    window.scrollTo(0, 0);
-    console.log("content", this.content);
+    // window.scrollTo(0, 0);
   },
 };
 </script>
@@ -554,7 +554,7 @@ export default {
       width: 100%;
     }
     input {
-      text-align: start !important;
+      text-align: start;
     }
     label {
       align-self: flex-start;
@@ -564,6 +564,9 @@ export default {
     select,
     .note-number {
       padding: 0.5rem 1rem;
+    }
+    select {
+      text-align: start;
     }
   }
 }
