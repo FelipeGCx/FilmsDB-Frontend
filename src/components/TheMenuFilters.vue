@@ -97,7 +97,6 @@ export default {
           dQueries[query[0]] = query[1];
         });
         dQueries["active"] = element.e;
-        console.log(dQueries);
         this.$router.push({
           query: dQueries,
         });

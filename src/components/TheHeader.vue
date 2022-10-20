@@ -16,6 +16,7 @@
             v-if="item.id == 'add-button'"
             :id="item.id"
             :obj="item"
+            @click="hideAll()"
           />
           <button v-else :id="item.id" @click="btnClicked(item.id, idx)">
             <img :src="item.svg" :alt="item.alt" draggable="false" />
@@ -141,6 +142,7 @@ export default {
       let element = this.navBtns[idx];
       switch (id) {
         case "search-button":
+          this.hideAll();
           this.isClicked = !this.isClicked;
           this.searchColor = this.isClicked ? "1" : "0.6";
           break;
@@ -190,7 +192,7 @@ export default {
     window.addEventListener("resize", () => {
       if (document.documentElement.clientWidth < 624) this.hideAll();
     });
-    console.log(this.$isAdmin);
+    this.$isAdmin = true;
   },
 };
 </script>

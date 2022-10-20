@@ -77,9 +77,9 @@ router.beforeEach((to, from, next) => {
     if (to.name == "Title" && to.params.title == undefined) {
       document.title = `FilmsDB - Results: ${to.query.title}`;
     } else if (to.name == "Category" && to.params.title == undefined) {
-      document.title = `FilmsDB - Category: ${to.state}`;
+      document.title = `FilmsDB - Category: ${to.query.category}`;
     } else if (to.name == "Saga" && to.params.title == undefined) {
-      document.title = `FilmsDB - Saga: ${to.params.id}`;
+      document.title = `FilmsDB - Saga: ${to.query.saga}`;
     } else {
       document.title = "FilmsDB - " + to.params.title;
     }
