@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import reziseListener from "@/mixins/reziseListener";
+import reziseListener from "@/mixins/utils/reziseListener";
 
 export default {
   props: {

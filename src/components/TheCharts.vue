@@ -26,7 +26,7 @@ import TheButtonClose from "@/components/TheButtonClose.vue";
 import TheChartsCircle from "@/components/TheChartsCircle.vue";
 import TheLoading from "@/components/TheLoading.vue";
 import TheError from "@/components/TheError.vue";
-import queryParams from "@/mixins/queryParams.js";
+import queryParams from "@/mixins/queries/queryParams.js";
 import TheEmpty from "@/components/TheEmpty.vue";
 
 export default {

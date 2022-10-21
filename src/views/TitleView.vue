@@ -23,9 +23,9 @@ import TheContentVisualization from "@/components/TheContentVisualization.vue";
 import gql from "graphql-tag";
 import TheError from "@/components/TheError.vue";
 import TheLoading from "@/components/TheLoading.vue";
-import queryParams from "@/mixins/queryParams";
+import queryParams from "@/mixins/queries/queryParams";
 import TheEmpty from "@/components/TheEmpty.vue";
-import stringObj from "@/mixins/stringObj";
+import stringObj from "@/mixins/utils/stringObj";
 
 export default {
   name: "SagaView",
@@ -66,7 +66,7 @@ export default {
       });
     },
     toTitle(n) {
-      n = (this.$refs.section.offsetWidth - n) / 2;
+      n = n >= 240 ? (this.$refs.section.offsetWidth - n) / 2 : 0;
       this.space = ` ${n}px`;
     },
     reloadTheQuery() {

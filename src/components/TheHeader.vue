@@ -190,38 +190,12 @@ export default {
   },
   mounted() {
     window.addEventListener("resize", () => {
-      if (document.documentElement.clientWidth < 624) this.hideAll();
+      if (document.documentElement.clientWidth < 450) this.hideAll();
     });
   },
 };
 </script>
 <style lang="scss" scoped>
-@media only screen and (min-width: 0px) and (max-width: 460px) {
-  .logo {
-    h1 {
-      display: none;
-    }
-  }
-}
-@media only screen and (min-width: 0px) and (max-width: 620px) {
-  header {
-    z-index: 5;
-    nav {
-      ul {
-        gap: 0 !important;
-        #sagas-button,
-        #categories-button,
-        #chart-button,
-        #add-button {
-          display: none;
-        }
-        #search-button {
-          padding-right: 0.5rem;
-        }
-      }
-    }
-  }
-}
 header {
   background-color: $neutral-color;
   height: 5.4rem;
@@ -250,6 +224,16 @@ header {
         font-style: italic;
         user-select: none;
         transition: all 0.3s ease;
+        @include mobilesize {
+          & {
+            display: none;
+          }
+        }
+        @include tabletsize {
+          & {
+            display: none;
+          }
+        }
       }
     }
     &:hover {
@@ -301,6 +285,20 @@ header {
         #chart-button {
           img {
             opacity: v-bind(chartsColor);
+          }
+        }
+      }
+      @include mobilesize {
+        & {
+          gap: 0 !important;
+          #sagas-button,
+          #categories-button,
+          #chart-button,
+          #add-button {
+            display: none;
+          }
+          #search-button {
+            padding-right: 0.5rem;
           }
         }
       }

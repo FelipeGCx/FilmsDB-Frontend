@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import TheOrderNote from "./TheOrderNote.vue";
+import TheOrderNote from "@/components/TheOrderNote.vue";
 export default {
   props: {
     padding: {
@@ -83,6 +83,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@media only screen and (min-width: 0px) and (max-width: 907px) {
+  form {
+    display: none !important;
+  }
+}
 form {
   display: flex;
   gap: 1rem;
@@ -91,7 +96,12 @@ form {
   width: 100%;
   padding: 0 v-bind(padding);
   align-self: center;
-  @include minsize {
+  @include mobilesize {
+    & {
+      display: none !important;
+    }
+  }
+  @include tabletsize {
     & {
       display: none !important;
     }
@@ -122,6 +132,7 @@ form {
     max-width: 8rem;
     // padding: 0.6rem 2rem;
     appearance: none;
+    text-align: centerl;
     &::-webkit-inner-spin-button {
       -webkit-appearance: none;
       appearance: none;

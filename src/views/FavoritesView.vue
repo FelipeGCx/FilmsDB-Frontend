@@ -22,8 +22,8 @@ import TheContentVisualization from "@/components/TheContentVisualization.vue";
 import gql from "graphql-tag";
 import TheError from "@/components/TheError.vue";
 import TheLoading from "@/components/TheLoading.vue";
-import queryParams from "@/mixins/queryParams";
-import stringObj from "@/mixins/stringObj";
+import queryParams from "@/mixins/queries/queryParams";
+import stringObj from "@/mixins/utils/stringObj";
 import TheEmpty from "@/components/TheEmpty.vue";
 
 export default {
@@ -59,7 +59,7 @@ export default {
       });
     },
     toTitle(n) {
-      n = (this.$refs.section.offsetWidth - n) / 2;
+      n = n >= 240 ? (this.$refs.section.offsetWidth - n) / 2 : 0;
       this.space = ` ${n}px`;
     },
   },

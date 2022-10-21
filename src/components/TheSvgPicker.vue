@@ -1,7 +1,7 @@
 <template>
   <!-- form for adding a new Saga or Category -->
   <div class="first-container">
-    <form @submit.prevent="createContent">
+    <form>
       <div class="field">
         <label for="name">{{ title }}:</label>
         <input
@@ -36,7 +36,7 @@
   <div class="second-container">
     <div class="buttons">
       <router-link class="sub-button" to="/">Cancel</router-link>
-      <button type="submit" class="main-button">Save</button>
+      <button class="main-button" @click="createContent">Save</button>
     </div>
   </div>
 </template>
@@ -48,11 +48,12 @@ export default {
       required: true,
     },
   },
+  emits: ["contentToSave"],
   data() {
     return {
       item: {
         name: null,
-        svg: null,
+        svg: " ",
         svgImg: null,
       },
       file: {
@@ -77,13 +78,22 @@ export default {
     },
     // delete the tags that are not necessary in the svg
     deleteSvgTags(string) {
+      string = string.replace(/<\?xml[^>]*?>/g, "");
+      // string = string.replace(/<!DOCTYPE[^>]*?>/g, "");
+      string = string.replace(/<!--[^>]*?-->/g, "");
+      string = string.replace(/<title>[^>]*?<\/title>/g, "");
+      string = string.replace(/<style[^>]*>[^>]*?<\/style>/g, "");
+      string = string.replace(/id="[^>]*?"/g, "");
+      string = string.replace(/class="[^>]*?"/g, "");
       string = string.replace(/fill="[^>]*?"/g, "");
+      string = string.replace(/style="[^>]*?"/g, "");
       string = string.replace(/width="[^>]*?"/g, "");
       string = string.replace(/height="[^>]*?"/g, "");
-      string = string.replace(/"/g, "'");
+      string = string.replaceAll('"', "'");
       return string;
     },
     createContent() {
+      console.log("what happend");
       this.$emit("contentToSave", this.item);
     },
   },
@@ -91,39 +101,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@include minsize {
-  .first-container {
-    flex-direction: column;
-    justify-content: center;
-    gap: 1rem;
-  }
-  .second-container {
-    .buttons {
-      justify-content: space-between !important;
-      a,
-      button {
-        width: 100%;
-      }
-    }
-  }
-}
-@include midsize {
-  .first-container {
-    flex-direction: row;
-    justify-content: center;
-    gap: 3rem;
-  }
-}
-@include maxsize {
-  .first-container {
-    flex-direction: row;
-    justify-content: center;
-    gap: 3rem;
-  }
-}
-
 .first-container {
   display: flex;
+  justify-content: center;
   form {
     display: flex;
     flex-direction: column;
@@ -163,8 +143,47 @@ export default {
     color: $secondary-color;
     width: 24rem;
   }
+  @include mobilesize {
+    & {
+      flex-direction: column;
+      gap: 1rem;
+      textarea {
+        height: 18rem;
+      }
+    }
+  }
+  @include tabletsize {
+    & {
+      flex-direction: column;
+      gap: 1rem;
+      textarea {
+        height: 18rem;
+      }
+    }
+  }
+  @include midsize {
+    & {
+      gap: 3rem;
+    }
+  }
+  @include maxsize {
+    & {
+      gap: 3rem;
+    }
+  }
 }
 .second-container {
   width: 100%;
+  @include mobilesize {
+    & {
+      .buttons {
+        justify-content: space-between !important;
+        a,
+        button {
+          width: 100%;
+        }
+      }
+    }
+  }
 }
 </style>

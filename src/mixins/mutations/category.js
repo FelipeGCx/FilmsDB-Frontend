@@ -6,7 +6,7 @@ export default {
       console.log("category", category);
       await this.$apollo
         .mutate({
-          mutations: gql`
+          mutation: gql`
             mutation CreateCategory($categoryInput: CategoryInput) {
               createCategory(categoryInput: $categoryInput) {
                 data {

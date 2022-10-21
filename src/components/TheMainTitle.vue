@@ -30,6 +30,11 @@ div {
   align-self: center;
   width: 100%;
   padding: 0 v-bind(padding);
+  // @include mobilesize {
+  //   & {
+  //     padding: 0px !important;
+  //   }
+  // }
   span {
     width: 100%;
     height: 0.2rem;

@@ -28,10 +28,10 @@
 
 <script>
 import TheButtonClose from "@/components/TheButtonClose.vue";
-import Categories from "@/mixins/categories.js";
+import Categories from "@/mixins/queries/categories.js";
 import TheLoading from "@/components/TheLoading.vue";
 import TheError from "@/components/TheError.vue";
-import queryParams from "@/mixins/queryParams.js";
+import queryParams from "@/mixins/queries/queryParams.js";
 import TheEmpty from "@/components/TheEmpty.vue";
 
 export default {
@@ -83,10 +83,10 @@ export default {
       gap: 1.5rem;
       height: 100%;
       width: 100%;
-      padding-top: 4rem;
+      padding-top: 2rem;
       li {
         &:last-child {
-          padding-bottom: 2rem;
+          padding-bottom: 7rem;
         }
       }
     }

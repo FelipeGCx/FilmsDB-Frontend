@@ -5,7 +5,7 @@ export default {
     async createSaga(saga) {
       console.log("saga", saga);
       let data = await this.$apollo.mutate({
-        mutations: gql`
+        mutation: gql`
           mutation CreateSaga($sagaInput: SagaInput) {
             createSaga(sagaInput: $sagaInput) {
               data {
