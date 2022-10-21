@@ -192,7 +192,6 @@ export default {
     window.addEventListener("resize", () => {
       if (document.documentElement.clientWidth < 624) this.hideAll();
     });
-    this.$isAdmin = true;
   },
 };
 </script>

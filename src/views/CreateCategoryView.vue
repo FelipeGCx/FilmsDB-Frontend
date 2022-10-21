@@ -9,11 +9,14 @@
 <script>
 import TheSvgPicker from "@/components/TheSvgPicker.vue";
 import TheMainTitle from "@/components/TheMainTitle.vue";
+import category from "@/mixins/mutations/category";
 export default {
   components: { TheSvgPicker, TheMainTitle },
+  mixins: [category],
   methods: {
     addCategory(data) {
       console.log(data);
+      this.category(data);
     },
   },
 };

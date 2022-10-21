@@ -1,6 +1,6 @@
 <template>
   <main>
-    <form submit.prevent="login">
+    <form @submit.prevent="login">
       <h1>Login</h1>
       <div class="box">
         <label for="username">Usename</label>
@@ -8,7 +8,12 @@
           <figure class="img-box">
             <img :src="require('@/assets/icons/user-fill.svg')" />
           </figure>
-          <input type="text" name="username" autocomplete="off" />
+          <input
+            type="text"
+            name="username"
+            autocomplete="off"
+            v-model="user.username"
+          />
         </div>
       </div>
       <div class="box">
@@ -17,7 +22,12 @@
           <figure class="img-box">
             <img :src="require('@/assets/icons/lock-fill.svg')" />
           </figure>
-          <input :type="passType" name="password" autocomplete="off" />
+          <input
+            :type="passType"
+            name="password"
+            autocomplete="off"
+            v-model="user.password"
+          />
           <img class="pass-eye" :src="passImg" @click="passVisibility" />
         </div>
       </div>
@@ -28,12 +38,19 @@
 </template>
 
 <script>
+import auth from "@/mixins/mutations/auth";
+
 export default {
+  mixins: [auth],
   data() {
     return {
       passType: "password",
       passImg: require("@/assets/icons/eye-show.svg"),
       passState: false,
+      user: {
+        username: null,
+        password: null,
+      },
     };
   },
   methods: {
@@ -47,6 +64,9 @@ export default {
         this.passImg = require("@/assets/icons/eye-hide.svg");
         this.passState = true;
       }
+    },
+    login() {
+      this.authenticate(this.user);
     },
   },
 };
