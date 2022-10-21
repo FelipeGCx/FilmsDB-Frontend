@@ -1,11 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600;1,700&display=swap");
 
-@media only screen and (min-width: 0px) and (max-width: 700px) {
+@media only screen and (min-width: 0px) and (max-width: 450px) {
   :root {
     font-size: 10px;
   }
 }
-@media only screen and (min-width: 701px) and (max-width: 8000px) {
+@media only screen and (min-width: 451px) and (max-width: 768px) {
+  :root {
+    font-size: 11px;
+  }
+}
+@media only screen and (min-width: 769px) and (max-width: 8000px) {
   :root {
     font-size: 12px;
   }
@@ -61,6 +66,16 @@ input {
   border: none;
   padding: 0.7rem 1.6rem;
   border-radius: $border-radius;
+}
+input[type="number"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  // background-image: url("@/assets/icons/arrow-down.svg");
+  // background-repeat: no-repeat;
+  // background-position-x: right;
+  // background-position-y: center;
+  // background-origin: content-box;
 }
 select {
   -webkit-appearance: none;

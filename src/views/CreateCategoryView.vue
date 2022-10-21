@@ -10,13 +10,18 @@
 import TheSvgPicker from "@/components/TheSvgPicker.vue";
 import TheMainTitle from "@/components/TheMainTitle.vue";
 import category from "@/mixins/mutations/category";
+import categories from "@/mixins/queries/categories";
 export default {
   components: { TheSvgPicker, TheMainTitle },
-  mixins: [category],
+  mixins: [category, categories],
   methods: {
     addCategory(data) {
-      console.log(data);
-      this.category(data);
+      let item = {
+        category: data.name,
+        svg: data.svg,
+      };
+      this.category(item);
+      this.$apollo.queries.categories.refetch();
     },
   },
 };

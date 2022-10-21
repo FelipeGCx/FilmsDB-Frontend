@@ -119,7 +119,7 @@ export default {
   left: 0;
   bottom: 0;
   transition: display ease 0.5s;
-  @include minsize {
+  @include mobilesize {
     & {
       display: flex !important;
     }

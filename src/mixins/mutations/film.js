@@ -6,7 +6,7 @@ export default {
       console.log("film", film);
       await this.$apollo
         .mutate({
-          mutations: gql`
+          mutation: gql`
             mutation CreateFilm($filmInput: FilmInput) {
               createFilm(filmInput: $filmInput) {
                 data {

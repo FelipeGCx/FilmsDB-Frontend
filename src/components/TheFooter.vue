@@ -28,7 +28,7 @@ footer {
   align-items: center;
   justify-content: center;
   padding: 6vw 2rem 3vw 2rem;
-  @include minsize {
+  @include mobilesize {
     & {
       padding: 7rem 2rem 6rem 2rem !important;
     }

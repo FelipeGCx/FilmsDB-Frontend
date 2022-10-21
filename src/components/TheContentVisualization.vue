@@ -101,7 +101,7 @@
 </template>
 
 <script>
-import reziseListener from "@/mixins/reziseListener";
+import reziseListener from "@/mixins/utils/reziseListener";
 
 export default {
   name: "FilmsView",
@@ -187,15 +187,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@media only screen and (min-width: 0px) and (max-width: 500px) {
-  .films {
-    .poster {
-      height: 35rem !important;
-      width: 23rem !important;
-    }
-  }
-}
-
 .films {
   gap: 1.2rem;
   // margin: 0 3vw;
@@ -245,6 +236,12 @@ export default {
     & > .poster {
       height: 30.5rem;
       width: 20rem;
+    }
+    @include mobilesize {
+      & > .poster {
+        height: 35rem !important;
+        width: 23rem !important;
+      }
     }
     .information {
       align-items: flex-start;

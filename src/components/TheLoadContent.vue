@@ -273,9 +273,9 @@
 </template>
 
 <script>
-import Categories from "@/mixins/categories";
-import Sagas from "@/mixins/sagas";
-import reziseListener from "@/mixins/reziseListener";
+import Categories from "@/mixins/queries/categories";
+import Sagas from "@/mixins/queries/sagas";
+import reziseListener from "@/mixins/utils/reziseListener";
 
 export default {
   name: "CreateFilme",
@@ -374,55 +374,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@media only screen and (min-width: 1024px) {
-  .register {
-    margin: 0 20vw;
-  }
-}
-@media only screen and (min-width: 750px) and (max-width: 1024px) {
-  .register {
-    margin: 0 16vw;
-  }
-}
-@media only screen and (max-width: 750px) {
-  .register {
-    margin: 0 13vw;
-    align-items: center;
-    form {
-      width: 100%;
-      align-items: center;
-      .first-container {
-        flex-direction: column;
-        gap: 1rem;
-        width: 100%;
-        .fields-container,
-        .picture-container {
-          width: 100% !important;
-        }
-        .checkbox {
-          justify-content: space-between;
-          label {
-            width: 100%;
-          }
-        }
-        .season {
-          display: v-bind(seasonDp);
-        }
-      }
-      .second-container {
-        width: 100%;
-        .buttons {
-          justify-content: space-between !important;
-          a,
-          button {
-            width: 100%;
-          }
-        }
-      }
-    }
-  }
-}
-
 .register {
   display: flex;
   flex-direction: column;
@@ -567,6 +518,97 @@ export default {
     }
     select {
       text-align: start;
+    }
+  }
+  @include mobilesize {
+    & {
+      margin: 0 13vw;
+      align-items: center;
+      form {
+        width: 100%;
+        align-items: center;
+        .first-container {
+          flex-direction: column;
+          gap: 1rem;
+          width: 100%;
+          .fields-container,
+          .picture-container {
+            width: 100% !important;
+          }
+          .checkbox {
+            justify-content: space-between;
+            label {
+              width: 100%;
+            }
+          }
+          .season {
+            display: v-bind(seasonDp);
+          }
+        }
+        .second-container {
+          width: 100%;
+          .buttons {
+            justify-content: space-between !important;
+            a,
+            button {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+  @include tabletsize {
+    & {
+      margin: 0 13vw;
+      align-items: center;
+      form {
+        width: 100%;
+        align-items: center;
+        .first-container {
+          flex-direction: column;
+          gap: 1rem;
+          width: 100%;
+          .fields-container,
+          .picture-container {
+            width: 100% !important;
+          }
+          .checkbox {
+            justify-content: space-between;
+            label {
+              width: 100%;
+            }
+          }
+          .season {
+            display: v-bind(seasonDp);
+          }
+        }
+        .second-container {
+          width: 100%;
+          .buttons {
+            justify-content: space-between !important;
+            a,
+            button {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+  @include midsize {
+    & {
+      margin: 0 16vw;
+      form {
+        .first-container {
+          gap: 1rem;
+        }
+      }
+    }
+  }
+  @include maxsize {
+    & {
+      margin: 0 20vw;
     }
   }
 }

@@ -105,18 +105,23 @@
   }
 }
 
-@mixin minsize {
-  @media only screen and (min-width: 0px) and (max-width: 765px) {
+@mixin mobilesize {
+  @media only screen and (min-width: 0px) and (max-width: 450px) {
+    @content;
+  }
+}
+@mixin tabletsize {
+  @media only screen and (min-width: 450px) and (max-width: 768px) {
     @content;
   }
 }
 @mixin midsize {
-  @media only screen and (min-width: 766px) and (max-width: 1024px) {
+  @media only screen and (min-width: 768px) and (max-width: 1024px) {
     @content;
   }
 }
 @mixin maxsize {
-  @media only screen and (min-width: 1024px) {
+  @media only screen and (min-width: 1024px) and (max-width: 8000px) {
     @content;
   }
 }

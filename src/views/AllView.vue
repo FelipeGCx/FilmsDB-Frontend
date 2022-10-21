@@ -96,10 +96,11 @@ export default {
       return typos[this.filmsType];
     },
     toTitle(n) {
-      n = (this.$refs.section.offsetWidth - n) / 2;
+      n = n >= 240 ? (this.$refs.section.offsetWidth - n) / 2 : 0;
       this.space = ` ${n}px`;
     },
     reloadTheQuery() {
+      this.error = false;
       this.$apollo.queries.details.refetch();
     },
   },
@@ -190,7 +191,8 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  margin: 2rem 6rem 0 6rem;
+  padding: 2rem 6rem 0 6rem;
+  // margin: 2rem 6rem 0 6rem;
   width: 100%;
   section {
     display: flex;

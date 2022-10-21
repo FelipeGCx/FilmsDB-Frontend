@@ -10,13 +10,19 @@
 import TheSvgPicker from "@/components/TheSvgPicker.vue";
 import TheMainTitle from "@/components/TheMainTitle.vue";
 import saga from "@/mixins/mutations/saga";
+import sagas from "@/mixins/queries/sagas";
 export default {
   components: { TheSvgPicker, TheMainTitle },
-  mixins: [saga],
+  mixins: [saga, sagas],
   methods: {
-    addSaga(data) {
+    async addSaga(data) {
       console.log(data);
-      this.saga(data);
+      let item = {
+        saga: data.name,
+        svg: data.svg,
+      };
+      await this.createSaga(item);
+      this.$apollo.queries.sagas.refetch();
     },
   },
 };
