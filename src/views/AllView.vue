@@ -192,7 +192,6 @@ export default {
   flex-direction: column;
   gap: 2rem;
   padding: 2rem 6rem 0 6rem;
-  // margin: 2rem 6rem 0 6rem;
   width: 100%;
   section {
     display: flex;

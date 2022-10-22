@@ -1,14 +1,15 @@
 main {
   width: 100vw;
-  min-height: 78.7vh;
+  // min-height: 78.7vh;
+  min-height: 57.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-$border-radius: 8px;
 .main-button {
+  $border-radius: 8px;
   background-color: $primary-color;
   border-radius: $border-radius;
   color: $secondary-color;
@@ -26,8 +27,8 @@ $border-radius: 8px;
     color: $primary-color;
   }
 }
-$border-radius: 8px;
 .sub-button {
+  $border-radius: 8px;
   background-color: $neutral-color;
   border-radius: $border-radius;
   color: $neutral-second-color;

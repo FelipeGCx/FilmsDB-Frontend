@@ -112,7 +112,7 @@ export default {
 .menu {
   z-index: 5;
   display: none;
-  height: 4.7rem;
+  height: $footer-h;
   width: 100vw;
   background-color: $primary-color;
   position: fixed;

@@ -137,6 +137,7 @@ section {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  margin-top: 2rem;
+  padding: 2rem 6rem 0 6rem;
+  // margin-top: 2rem;
 }
 </style>

@@ -17,20 +17,28 @@ export default {
 
 <style lang="scss" scoped>
 footer {
-  background-image: url("@/assets/icons/footer.svg");
-  background-repeat: no-repeat, repeat;
-  background-size: cover;
-  background-position: center;
+  // background-image: url("@/assets/icons/footer.svg");
+  // background-repeat: no-repeat, repeat;
+  // background-size: cover;
+  // background-position: center;
   // height: 12rem;
-  bottom: 0;
+  position: absolute;
   display: flex;
   gap: 1.5rem;
   align-items: center;
   justify-content: center;
-  padding: 6vw 2rem 3vw 2rem;
+  height: $footer-h;
+  background-color: $neutral-color;
+  width: 100%;
+  margin-top: 2rem;
+  // padding: 6vw 2rem 3vw 2rem;
   @include mobilesize {
     & {
-      padding: 7rem 2rem 6rem 2rem !important;
+      // margin-bottom: $footer-h;
+      height: $footer-h * 2;
+      padding-bottom: $footer-h;
+      // bottom: $footer-h !important;
+      // padding: 7rem 2rem 6rem 2rem !important;
     }
   }
   img {

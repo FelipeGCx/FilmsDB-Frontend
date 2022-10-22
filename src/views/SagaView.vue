@@ -149,7 +149,7 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  margin: 2rem 6rem 0 6rem;
+  padding: 2rem 6rem 0 6rem;
   width: 100%;
   section {
     display: flex;
