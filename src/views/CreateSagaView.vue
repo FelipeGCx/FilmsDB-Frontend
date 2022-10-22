@@ -2,8 +2,16 @@
   <main>
     <section ref="section">
       <the-main-title :title="'Create Saga'" :padding="'0vw'" />
-      <the-svg-picker :title="'Saga'" @contentToSave="addSaga" />
+      <the-svg-picker :title="'Saga'" @contentToSave="openModal" />
     </section>
+    <teleport to="body">
+      <the-modal
+        :isOpened="isOpen"
+        :titleMessage="'create saga?'"
+        @close="isOpen = false"
+        @accept="addSaga"
+      />
+    </teleport>
   </main>
 </template>
 <script>
@@ -11,15 +19,25 @@ import TheSvgPicker from "@/components/TheSvgPicker.vue";
 import TheMainTitle from "@/components/TheMainTitle.vue";
 import saga from "@/mixins/mutations/saga";
 import sagas from "@/mixins/queries/sagas";
+import TheModal from "@/components/TheModal.vue";
 export default {
-  components: { TheSvgPicker, TheMainTitle },
+  components: { TheSvgPicker, TheMainTitle, TheModal },
   mixins: [saga, sagas],
+  data() {
+    return {
+      data: null,
+      isOpen: false,
+    };
+  },
   methods: {
-    async addSaga(data) {
-      console.log(data);
+    openModal(data) {
+      this.data = data;
+      this.isOpen = true;
+    },
+    async addSaga() {
       let item = {
-        saga: data.name,
-        svg: data.svg,
+        saga: this.data.name,
+        svg: this.data.svg,
       };
       await this.createSaga(item);
       this.$apollo.queries.sagas.refetch();

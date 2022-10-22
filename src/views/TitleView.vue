@@ -1,7 +1,10 @@
 <template>
   <main>
     <the-loading v-if="loading" />
-    <the-error v-else-if="error" :refetch="true" @reload="reloadTheQuery()" />
+    <div v-else-if="error">
+      <the-error v-if="errorMsg" :refetch="true" @reload="reloadTheQuery()" />
+      <the-empty v-else />
+    </div>
     <div class="sec" v-else-if="details">
       <section v-if="details.page.totalItems > 1" ref="section">
         <the-main-title :title="title" :padding="space" />
@@ -114,8 +117,8 @@ export default {
       update(data) {
         return data.getFilmByTitle;
       },
-      error() {
-        this.error = true;
+      error(error) {
+        (this.errorMsg = error), (this.error = true);
       },
       watchLoading(isLoading) {
         this.loading = isLoading;
@@ -130,7 +133,7 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  margin: 2rem 6rem 0 6rem;
+  padding: 2rem 6rem 0 6rem;
   width: 100%;
   section {
     display: flex;

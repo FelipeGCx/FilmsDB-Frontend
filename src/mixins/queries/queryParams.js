@@ -3,6 +3,7 @@ export default {
     return {
       loading: false,
       error: false,
+      errorMsg: null,
     };
   },
 };
