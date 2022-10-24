@@ -63,6 +63,11 @@ export default {
           return "#fff";
       }
     },
+    reloadTheQuery() {
+      this.error = false;
+      this.charts = null;
+      this.$apollo.queries.charts.refetch();
+    },
   },
   apollo: {
     charts: {

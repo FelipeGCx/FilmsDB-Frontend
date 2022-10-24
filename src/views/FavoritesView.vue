@@ -1,7 +1,7 @@
 <template>
   <main>
     <the-loading v-if="loading" />
-    <the-error v-else-if="error" />
+    <the-error v-else-if="error" :refetch="true" @reload="reloadTheQuery()" />
     <section v-else-if="details" ref="section">
       <the-main-title :title="'Favorites'" :padding="space" />
       <the-content-visualization
@@ -62,16 +62,12 @@ export default {
       n = n >= 240 ? (this.$refs.section.offsetWidth - n) / 2 : 0;
       this.space = ` ${n}px`;
     },
+    reloadTheQuery() {
+      this.error = false;
+      this.details = null;
+      this.$apollo.queries.details.refetch();
+    },
   },
-  // mounted() {
-  //   this.$router.push({
-  //     state: { categoryTitle: this.filmsCategory },
-  //     query: {
-  //       type: this.filmsCategory,
-  //       page: this.actualPage,
-  //     },
-  //   });
-  // },
   apollo: {
     details: {
       query: gql`

@@ -88,8 +88,19 @@ main {
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    padding: 3.4rem 4.5rem;
-    border: 0.3rem solid $neutral-color;
+    border: 0.2rem solid $neutral-color;
+    @include mobilesize {
+      padding: 2.4rem 4rem;
+    }
+    @include tabletsize {
+      padding: 2.4rem 4rem;
+    }
+    @include midsize {
+      padding: 3.4rem 4.5rem;
+    }
+    @include maxsize {
+      padding: 3.4rem 4.5rem;
+    }
     h1 {
       text-transform: uppercase;
       align-self: center;
@@ -106,10 +117,15 @@ main {
       $border-radius: 8px;
       .input-box {
         display: flex;
-        border: 0.3rem solid $primary-color;
+        border: 0.2rem solid $primary-color;
         border-radius: $border-radius;
         overflow: hidden;
-        min-width: 25rem;
+        @include midsize {
+          min-width: 25rem;
+        }
+        @include maxsize {
+          min-width: 25rem;
+        }
         position: relative;
         figure {
           background-color: $base-color;

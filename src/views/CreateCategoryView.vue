@@ -2,8 +2,16 @@
   <main>
     <section ref="section">
       <the-main-title :title="'Create Category'" :padding="'0vw'" />
-      <the-svg-picker :title="'Category'" @contentToSave="addCategory" />
+      <the-svg-picker :title="'Category'" @contentToSave="openModal" />
     </section>
+    <teleport to="body">
+      <the-modal
+        :isOpened="isOpen"
+        :titleMessage="'create saga?'"
+        @close="isOpen = false"
+        @accept="addSaga"
+      />
+    </teleport>
   </main>
 </template>
 <script>
@@ -11,16 +19,27 @@ import TheSvgPicker from "@/components/TheSvgPicker.vue";
 import TheMainTitle from "@/components/TheMainTitle.vue";
 import category from "@/mixins/mutations/category";
 import categories from "@/mixins/queries/categories";
+import TheModal from "@/components/TheModal.vue";
 export default {
-  components: { TheSvgPicker, TheMainTitle },
+  components: { TheSvgPicker, TheMainTitle, TheModal },
   mixins: [category, categories],
+  data() {
+    return {
+      data: null,
+      isOpen: false,
+    };
+  },
   methods: {
-    addCategory(data) {
+    openModal(data) {
+      this.data = data;
+      this.isOpen = true;
+    },
+    async addCategory() {
       let item = {
-        category: data.name,
-        svg: data.svg,
+        category: this.data.name,
+        svg: this.data.svg,
       };
-      this.category(item);
+      await this.createCategory(item);
       this.$apollo.queries.categories.refetch();
     },
   },

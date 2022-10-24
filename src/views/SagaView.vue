@@ -73,6 +73,8 @@ export default {
       this.space = ` ${n}px`;
     },
     reloadTheQuery() {
+      this.error = false;
+      this.sagas = null;
       this.$apollo.queries.sagas.refetch();
     },
   },

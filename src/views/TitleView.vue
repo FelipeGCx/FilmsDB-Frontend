@@ -2,18 +2,17 @@
   <main>
     <the-loading v-if="loading" />
     <div v-else-if="error">
-      <the-error v-if="errorMsg" :refetch="true" @reload="reloadTheQuery()" />
-      <the-empty v-else />
+      <the-empty v-if="errorMsg == 'Error: 404: Not Found'" />
+      <the-error v-else :refetch="true" @reload="reloadTheQuery()" />
     </div>
     <div class="sec" v-else-if="details">
-      <section v-if="details.page.totalItems > 1" ref="section">
+      <section ref="section">
         <the-main-title :title="title" :padding="space" />
         <the-content-visualization
           :contentDetails="details.data"
           @filled="toTitle"
         />
       </section>
-      <the-empty v-else />
     </div>
     <the-empty v-else />
   </main>
@@ -73,6 +72,8 @@ export default {
       this.space = ` ${n}px`;
     },
     reloadTheQuery() {
+      this.error = false;
+      this.details = null;
       this.$apollo.queries.details.refetch();
     },
   },

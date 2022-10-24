@@ -42,6 +42,8 @@ export default {
   mixins: [Sagas, queryParams],
   methods: {
     reloadTheQuery() {
+      this.error = false;
+      this.categories = null;
       this.$apollo.queries.sagas.refetch();
     },
     goTo(item) {

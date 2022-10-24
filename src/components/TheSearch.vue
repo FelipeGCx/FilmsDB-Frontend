@@ -6,6 +6,7 @@
     v-on:keyup.enter="searchContent"
     placeholder="Search by title"
     tabindex="-1"
+    ref="searchInput"
   />
 </template>
 
@@ -24,10 +25,12 @@ export default {
   },
   methods: {
     searchContent() {
+      this.$emit("hide");
       this.$router.push({
         name: "Title",
         query: { title: this.value },
       });
+      this.value = null;
     },
   },
   computed: {
@@ -36,6 +39,13 @@ export default {
     },
     padding() {
       return this.width == "18rem" ? "0 1rem" : "0";
+    },
+  },
+  watch: {
+    isClicked() {
+      if (this.isClicked) {
+        this.$refs.searchInput.focus();
+      }
     },
   },
 };

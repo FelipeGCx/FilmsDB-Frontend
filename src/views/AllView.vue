@@ -28,6 +28,7 @@ import gql from "graphql-tag";
 import TheLoading from "@/components/TheLoading.vue";
 import TheError from "@/components/TheError.vue";
 import TheEmpty from "@/components/TheEmpty.vue";
+import queryParams from "@/mixins/queries/queryParams";
 
 export default {
   name: "AllView",
@@ -40,12 +41,10 @@ export default {
     TheError,
     TheEmpty,
   },
+  mixins: [queryParams],
   data() {
     return {
       details: null,
-      loading: false,
-      error: false,
-      tt: null,
       space: "0vw",
     };
   },
@@ -101,6 +100,7 @@ export default {
     },
     reloadTheQuery() {
       this.error = false;
+      this.details = null;
       this.$apollo.queries.details.refetch();
     },
   },
