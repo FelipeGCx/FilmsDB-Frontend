@@ -42,7 +42,13 @@ div {
   }
   h1 {
     text-transform: uppercase;
-    white-space: nowrap;
+    text-align: center;
+    @include midsize {
+      white-space: nowrap;
+    }
+    @include maxsize {
+      white-space: nowrap;
+    }
     // margin: 0 1rem;
   }
 }

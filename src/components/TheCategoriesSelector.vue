@@ -44,6 +44,8 @@ export default {
   mixins: [Categories, queryParams],
   methods: {
     reloadTheQuery() {
+      this.error = false;
+      this.categories = null;
       this.$apollo.queries.categories.refetch();
     },
     goTo(item) {

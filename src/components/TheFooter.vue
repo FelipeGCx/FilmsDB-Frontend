@@ -1,6 +1,8 @@
 <template>
   <footer>
-    <img :src="img" alt="github icon" />
+    <a :href="link" target="blanck">
+      <img :src="img" alt="github icon" />
+    </a>
     <h3>Created by FelipeGCx</h3>
   </footer>
 </template>
@@ -10,6 +12,7 @@ export default {
   data() {
     return {
       img: require("@/assets/icons/github.svg"),
+      link: "https://github.com/FelipeGCx",
     };
   },
 };

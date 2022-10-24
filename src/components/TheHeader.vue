@@ -9,7 +9,7 @@
     <nav>
       <ul>
         <li>
-          <the-search :isClicked="isClicked" />
+          <the-search :isClicked="isClicked" @hide="isClicked = false" />
         </li>
         <li v-for="(item, idx) in navBtns" :key="idx">
           <the-dropdown-image
