@@ -13,12 +13,19 @@
 import TheHeader from "@/components/TheHeader.vue";
 import TheFooter from "@/components/TheFooter.vue";
 import TheMenuMobile from "@/components/TheMenuMobile.vue";
+import vtoken from "./mixins/mutations/vtoken";
 
 export default {
   components: { TheHeader, TheFooter, TheMenuMobile },
-  // created() {
-  //   this.$isAdmin = false;
-  // },
+  mixins:[vtoken],
+  created() {
+    this.$isAdmin = false;
+    if (localStorage.getItem("tokenAccess")) {
+      // here need verify the token
+      // let response = await ...;
+      this.verifyToken(localStorage.getItem("tokenAccess"));
+    }
+  },
 };
 </script>
 
