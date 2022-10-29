@@ -4,21 +4,30 @@ export default {
   methods: {
     async verifyToken(token) {
       console.log("token", token);
-      return await this.$apollo.mutate({
-        mutation: gql`
-          mutation VerifyToken($token: String) {
-            verifyToken(token: $token) {
-              data {
-                id
+      await this.$apollo
+        .mutate({
+          mutation: gql`
+            mutation VerifyToken($token: String) {
+              verifyToken(token: $token) {
+                data {
+                  id
+                }
+                error
               }
-              error
             }
-          }
-        `,
-        variables: {
-          token: token,
-        },
-      });
+          `,
+          variables: {
+            token: token,
+          },
+        })
+        .then((result) => {
+          console.log(result);
+          this.$isAdmin = true;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$isAdmin = false;
+        });
     },
   },
 };
