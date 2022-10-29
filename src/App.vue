@@ -19,12 +19,10 @@ export default {
   components: { TheHeader, TheFooter, TheMenuMobile },
   mixins: [vtoken],
   created() {
-    this.$isAdmin = false;
     if (localStorage.getItem("tokenAccess")) {
-      // here need verify the token
-      // let response = await ...;
-      let response = this.verifyToken(localStorage.getItem("tokenAccess"));
-      console.log(response);
+      this.verifyToken(localStorage.getItem("tokenAccess"));
+    } else {
+      this.$isAdmin = false;
     }
   },
 };
