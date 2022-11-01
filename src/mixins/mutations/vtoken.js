@@ -3,14 +3,13 @@ import gql from "graphql-tag";
 export default {
   methods: {
     async verifyToken(token) {
-      console.log("token", token);
       await this.$apollo
         .mutate({
           mutation: gql`
             mutation VerifyToken($token: String) {
               verifyToken(token: $token) {
                 data {
-                  id
+                  roles
                 }
                 error
               }
@@ -21,11 +20,11 @@ export default {
           },
         })
         .then((result) => {
-          console.log(result);
-          this.$isAdmin = true;
+          let data = result.data.verifyToken.data;
+          this.$isAdmin = data.roles.includes("ROLE_ADMIN");
+          console.log("admin despues de cargar pagina", this.$isAdmin);
         })
-        .catch((error) => {
-          console.log(error);
+        .catch(() => {
           this.$isAdmin = false;
         });
     },

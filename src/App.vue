@@ -18,7 +18,7 @@ import vtoken from "./mixins/mutations/vtoken";
 export default {
   components: { TheHeader, TheFooter, TheMenuMobile },
   mixins: [vtoken],
-  created() {
+  mounted() {
     if (localStorage.getItem("tokenAccess")) {
       this.verifyToken(localStorage.getItem("tokenAccess"));
     } else {
