@@ -11,7 +11,7 @@
         <li>
           <the-search :isClicked="isClicked" @hide="isClicked = false" />
         </li>
-        <li v-for="(item, idx) in navBtns" :key="idx">
+        <li v-for="(item, idx) in navBtns" :key="idx" v-show="showBtn(item)">
           <the-dropdown-image
             v-if="item.id == 'add-button'"
             :id="item.id"
@@ -186,6 +186,12 @@ export default {
       this.navBtns.forEach((element) => {
         element.svg = element.svgOne || element.svg;
       });
+    },
+    showBtn(item) {
+      if (item.access) {
+        return item.access == this.$isAdmin;
+      }
+      return true;
     },
   },
   mounted() {

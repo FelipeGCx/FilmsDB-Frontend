@@ -1,7 +1,7 @@
 <template>
   <nav class="menu">
     <ul>
-      <li v-for="(item, idx) in menuBtns" :key="idx">
+      <li v-for="(item, idx) in menuBtns" :key="idx" v-show="showItem(item)">
         <button @click="goTo(item.go)">
           <img :src="item.img" :alt="item.alt" draggable="false" />
         </button>
@@ -54,6 +54,12 @@ export default {
       ],
     };
   },
+  computed: {
+    isAdmin() {
+      console.log("admin en menu mobile", this.$isAdmin);
+      return this.$isAdmin;
+    },
+  },
   methods: {
     goTo(route) {
       switch (route) {
@@ -98,6 +104,12 @@ export default {
     showCharts() {
       this.filtersVisibility = false;
       this.chartVisibility = true;
+    },
+    showItem(item) {
+      if (item.alt == "Add Content FilmsDB") {
+        return this.isAdmin;
+      }
+      return true;
     },
   },
 };
