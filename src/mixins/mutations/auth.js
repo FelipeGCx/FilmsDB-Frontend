@@ -23,6 +23,7 @@ export default {
           result = result.data.loginUser.data;
           localStorage.setItem("tokenAccess", result.accessToken);
           this.$isAdmin = result.roles.includes("ROLE_ADMIN");
+          this.$isLogin = true;
           console.log("admin despues de login", this.$isAdmin);
           this.$router.push({ name: "Home" });
         })

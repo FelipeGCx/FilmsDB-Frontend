@@ -1,12 +1,12 @@
 <template>
-  <the-header />
+  <the-header :isAdmin="isAdmin" :isLogin="$isLogin" />
   <router-view v-slot="{ Component, route }">
     <transition name="fade" mode="out-in">
       <component :class="route" :is="Component" />
     </transition>
   </router-view>
   <the-footer />
-  <the-menu-mobile />
+  <the-menu-mobile :isAdmin="isAdmin" />
 </template>
 
 <script>
@@ -17,12 +17,18 @@ import vtoken from "./mixins/mutations/vtoken";
 
 export default {
   components: { TheHeader, TheFooter, TheMenuMobile },
+  data() {
+    return {
+      isAdmin: false,
+    };
+  },
   mixins: [vtoken],
   mounted() {
     if (localStorage.getItem("tokenAccess")) {
       this.verifyToken(localStorage.getItem("tokenAccess"));
     } else {
-      this.$isAdmin = false;
+      this.isAdmin = false;
+      this.$isLogin = false;
     }
   },
 };
