@@ -7,6 +7,7 @@
         <the-main-title :title="title" :padding="space" />
         <the-content-visualization
           :contentDetails="details.data"
+          :isAdmin="isAdmin"
           @filled="toTitle"
         />
         <the-pagination @changePage="newPage" :pagination="details.page" />
@@ -28,6 +29,7 @@ import TheLoading from "@/components/TheLoading.vue";
 import queryParams from "@/mixins/queries/queryParams";
 import TheEmpty from "@/components/TheEmpty.vue";
 import stringObj from "@/mixins/utils/stringObj";
+import adminProps from "@/mixins/utils/adminProps";
 
 export default {
   name: "CategoryView",
@@ -39,7 +41,7 @@ export default {
     TheEmpty,
     TheLoading,
   },
-  mixins: [queryParams, stringObj],
+  mixins: [queryParams, stringObj, adminProps],
   data() {
     return {
       details: null,

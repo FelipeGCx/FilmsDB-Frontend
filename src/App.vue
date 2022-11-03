@@ -1,6 +1,6 @@
 <template>
   <the-header :isAdmin="isAdmin" :isLogin="isLogin" @logout="logout" />
-  <router-view v-slot="{ Component, route }" @login="login">
+  <router-view v-slot="{ Component, route }" @login="login" :isAdmin="isAdmin">
     <transition name="fade" mode="out-in">
       <component :class="route" :is="Component" />
     </transition>

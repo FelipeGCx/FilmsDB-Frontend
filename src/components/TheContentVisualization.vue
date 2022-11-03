@@ -86,6 +86,7 @@
           data-tooltip="edit"
           data-flow="top"
           tabindex="-1"
+          v-show="isAdmin"
         >
           <img :src="imgEdit" alt="edit" />
         </router-link>
@@ -101,6 +102,7 @@
 </template>
 
 <script>
+import adminProps from "@/mixins/utils/adminProps";
 import reziseListener from "@/mixins/utils/reziseListener";
 
 export default {
@@ -111,7 +113,7 @@ export default {
       // require: true,
     },
   },
-  mixins: [reziseListener],
+  mixins: [reziseListener, adminProps],
   data() {
     return {
       Categories: null,

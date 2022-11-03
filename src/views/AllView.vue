@@ -8,6 +8,7 @@
         <the-filters @doFilter="doFilter" :padding="space" />
         <the-content-visualization
           :contentDetails="details.data"
+          :isAdmin="isAdmin"
           @filled="toTitle"
         />
         <the-pagination @changePage="newPage" :pagination="details.page" />
@@ -29,6 +30,7 @@ import TheLoading from "@/components/TheLoading.vue";
 import TheError from "@/components/TheError.vue";
 import TheEmpty from "@/components/TheEmpty.vue";
 import queryParams from "@/mixins/queries/queryParams";
+import adminProps from "@/mixins/utils/adminProps";
 
 export default {
   name: "AllView",
@@ -41,7 +43,7 @@ export default {
     TheError,
     TheEmpty,
   },
-  mixins: [queryParams],
+  mixins: [queryParams, adminProps],
   data() {
     return {
       details: null,

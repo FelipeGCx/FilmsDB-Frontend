@@ -23,8 +23,10 @@ export default {
           let data = result.data.verifyToken.data;
           this.isLogin = true;
           this.isAdmin = data.roles.includes("ROLE_ADMIN");
+          this.$isAdmin = data.roles.includes("ROLE_ADMIN");
         })
         .catch(() => {
+          this.$isAdmin = false;
           this.isAdmin = false;
           this.isLogin = false;
         });
