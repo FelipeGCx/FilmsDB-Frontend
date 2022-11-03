@@ -1,6 +1,6 @@
 <template>
-  <the-header :isAdmin="isAdmin" :isLogin="$isLogin" />
-  <router-view v-slot="{ Component, route }">
+  <the-header :isAdmin="isAdmin" :isLogin="isLogin" @logout="logout" />
+  <router-view v-slot="{ Component, route }" @login="login">
     <transition name="fade" mode="out-in">
       <component :class="route" :is="Component" />
     </transition>
@@ -20,15 +20,28 @@ export default {
   data() {
     return {
       isAdmin: false,
+      isLogin: false,
     };
   },
   mixins: [vtoken],
-  mounted() {
+  methods: {
+    login(data) {
+      this.isAdmin = data.isAdmin;
+      this.isLogin = data.isLogin;
+    },
+    logout() {
+      localStorage.removeItem("tokenAccess");
+      this.isAdmin = false;
+      this.isLogin = false;
+      this.$router.push({ name: "Home" });
+    },
+  },
+  created() {
     if (localStorage.getItem("tokenAccess")) {
       this.verifyToken(localStorage.getItem("tokenAccess"));
     } else {
       this.isAdmin = false;
-      this.$isLogin = false;
+      this.isLogin = false;
     }
   },
 };

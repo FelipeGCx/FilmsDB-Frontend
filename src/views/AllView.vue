@@ -193,6 +193,11 @@ export default {
   gap: 2rem;
   padding: 2rem 6rem 0 6rem;
   width: 100%;
+  @include mobilesize {
+    & {
+      padding: 2rem 3rem 0 3rem !important;
+    }
+  }
   section {
     display: flex;
     flex-direction: column;

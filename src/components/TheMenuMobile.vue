@@ -51,7 +51,7 @@ export default {
           img: require("@/assets/icons/add-fill.svg"),
           alt: "Add Content FilmsDB",
           go: "/create/content",
-          visible: true,
+          visible: false,
         },
         {
           id: "charts-button",
@@ -72,7 +72,6 @@ export default {
   },
   watch: {
     isAdmin() {
-      console.log("admin cambio en mobile", this.isAdmin);
       this.menuBtns[2].visible = this.isAdmin;
     },
   },
