@@ -143,6 +143,20 @@ export default {
       ],
     };
   },
+  computed: {
+    showBtn(item) {
+      if (item.id == "add-button") {
+        return this.isAdmin;
+      }
+      return true;
+    },
+    showIcon(item) {
+      if (item.id == "auth-button") {
+        return this.isLogin ? item.svgTwo : item.svgOne;
+      }
+      return item.svg;
+    },
+  },
   methods: {
     btnClicked(id, idx) {
       let element = this.navBtns[idx];
@@ -192,18 +206,6 @@ export default {
       this.navBtns.forEach((element) => {
         element.svg = element.svgOne || element.svg;
       });
-    },
-    showBtn(item) {
-      if (item.id == "add-button") {
-        return this.isAdmin;
-      }
-      return true;
-    },
-    showIcon(item) {
-      if (item.id == "auth-button") {
-        return this.isLogin ? item.svgTwo : item.svgOne;
-      }
-      return item.svg;
     },
   },
   mounted() {

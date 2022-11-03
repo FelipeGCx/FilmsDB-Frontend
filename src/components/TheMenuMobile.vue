@@ -1,7 +1,7 @@
 <template>
   <nav class="menu">
     <ul>
-      <li v-for="(item, idx) in menuBtns" :key="idx" v-show="showItem(item)">
+      <li v-for="item in menuBtns" :key="item.id" v-show="item.visible">
         <button @click="goTo(item.go)">
           <img :src="item.img" :alt="item.alt" draggable="false" />
         </button>
@@ -21,43 +21,59 @@ import TheCharts from "@/components/TheCharts.vue";
 
 export default {
   components: { TheMenuFilters, TheCharts },
+  props: {
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       filtersVisibility: false,
       chartVisibility: false,
       menuBtns: [
         {
+          id: "home-button",
           img: require("@/assets/icons/home-fill.svg"),
           alt: "Home FilmsDB",
           go: "/",
+          visible: true,
         },
         {
+          id: "filters-button",
           img: require("@/assets/icons/filters.svg"),
           alt: "Filters FilmsDB",
           go: "filters",
+          visible: true,
         },
         {
+          id: "add-button",
           img: require("@/assets/icons/add-fill.svg"),
           alt: "Add Content FilmsDB",
           go: "/create/content",
+          visible: true,
         },
         {
+          id: "charts-button",
           img: require("@/assets/icons/chart-fill.svg"),
           alt: "Charts FilmsDB",
           go: "charts",
+          visible: true,
         },
         {
+          id: "favorites-button",
           img: require("@/assets/icons/heart.svg"),
           alt: "Favorites FilmsDB",
           go: "/favorites",
+          visible: true,
         },
       ],
     };
   },
-  computed: {
+  watch: {
     isAdmin() {
-      console.log("admin en menu mobile", this.$isAdmin);
-      return this.$isAdmin;
+      console.log("admin cambio en mobile", this.isAdmin);
+      this.menuBtns[2].visible = this.isAdmin;
     },
   },
   methods: {
@@ -104,12 +120,6 @@ export default {
     showCharts() {
       this.filtersVisibility = false;
       this.chartVisibility = true;
-    },
-    showItem(item) {
-      if (item.alt == "Add Content FilmsDB") {
-        return this.isAdmin;
-      }
-      return true;
     },
   },
 };
