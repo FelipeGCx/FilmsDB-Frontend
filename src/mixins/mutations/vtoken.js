@@ -21,13 +21,14 @@ export default {
         })
         .then((result) => {
           let data = result.data.verifyToken.data;
-          this.$isLogin = true;
+          this.isLogin = true;
           this.isAdmin = data.roles.includes("ROLE_ADMIN");
-          console.log("admin despues de cargar pagina", this.$isAdmin);
+          this.$isAdmin = data.roles.includes("ROLE_ADMIN");
         })
         .catch(() => {
+          this.$isAdmin = false;
           this.isAdmin = false;
-          this.$isLogin = false;
+          this.isLogin = false;
         });
     },
   },

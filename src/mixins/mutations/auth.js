@@ -22,10 +22,12 @@ export default {
         .then((result) => {
           result = result.data.loginUser.data;
           localStorage.setItem("tokenAccess", result.accessToken);
-          this.$isAdmin = result.roles.includes("ROLE_ADMIN");
-          this.$isLogin = true;
-          console.log("admin despues de login", this.$isAdmin);
+          let data = {
+            isAdmin: result.roles.includes("ROLE_ADMIN"),
+            isLogin: true,
+          };
           this.$router.push({ name: "Home" });
+          this.$emit("login", data);
         })
         .catch((error) => {
           console.log(error);

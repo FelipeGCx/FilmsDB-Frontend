@@ -168,7 +168,6 @@ export default {
 
 <style lang="scss" scoped>
 .pagination {
-  padding: 0 1.5rem;
   ol {
     bottom: 1;
     display: flex;

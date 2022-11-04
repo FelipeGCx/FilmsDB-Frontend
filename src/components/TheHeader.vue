@@ -19,7 +19,7 @@
             @click="hideAll()"
           />
           <button v-else :id="item.id" @click="btnClicked(item.id, idx)">
-            <img :src="showIcon(item)" :alt="item.alt" draggable="false" />
+            <img :src="item.svg" :alt="item.alt" draggable="false" />
           </button>
         </li>
       </ul>
@@ -143,6 +143,13 @@ export default {
       ],
     };
   },
+  watch: {
+    isLogin() {
+      this.navBtns[5].svg = this.isLogin
+        ? this.navBtns[5].svgTwo
+        : this.navBtns[5].svgOne;
+    },
+  },
   methods: {
     btnClicked(id, idx) {
       let element = this.navBtns[idx];
@@ -174,7 +181,11 @@ export default {
           break;
         case "auth-button":
           this.hideAll();
-          this.$router.push({ name: "Login" });
+          if (this.isLogin) {
+            this.$emit("logout");
+          } else {
+            this.$router.push({ name: "Login" });
+          }
           break;
 
         default:
@@ -190,7 +201,9 @@ export default {
       this.chartsColor = "0.6";
       this.searchColor = "0.6";
       this.navBtns.forEach((element) => {
-        element.svg = element.svgOne || element.svg;
+        if (element.id != "auth-button") {
+          element.svg = element.svgOne || element.svg;
+        }
       });
     },
     showBtn(item) {
