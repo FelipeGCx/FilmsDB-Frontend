@@ -31,6 +31,7 @@ export default {
         query: { title: this.value },
       });
       this.value = null;
+      this.$refs.searchInput.blur();
     },
   },
   computed: {
