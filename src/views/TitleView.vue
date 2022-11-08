@@ -48,9 +48,6 @@ export default {
     };
   },
   computed: {
-    actualPage() {
-      return parseInt(this.$route.query.page) || 1;
-    },
     filmTitle() {
       return this.$route.query.title;
     },
