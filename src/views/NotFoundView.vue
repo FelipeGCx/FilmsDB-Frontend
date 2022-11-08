@@ -1,52 +1,43 @@
 <template>
-  <div class="not-found">
-    <div class="image">
-      <NotFoundImg />
+  <main>
+    <div class="not-found">
+      <h1>404 Not Found</h1>
+      <img :src="img" alt="FilmsDB error" draggable="false" />
+      <h2>the page was remove or not exist</h2>
+      <router-link class="main-button" to="/home">go home</router-link>
     </div>
-    <span>LA PAGINA QUE BUSCAS HA SIDO REMOVIDA O NO EXISTE</span>
-    <router-link class="main-button" to="/all">IR A INICIO</router-link>
-  </div>
+  </main>
 </template>
 
 <script>
-import NotFoundImg from "@/components/NotFoundImg.vue";
 export default {
   name: "NotFound",
-  components: { NotFoundImg },
+  data() {
+    return {
+      img: require("@/assets/icons/empty-data.svg"),
+    };
+  },
 };
 </script>
 
 <style scoped>
-@media only screen and (min-width: 764px) and (max-width: 3000px) {
-  .image {
-    width: 30rem;
-  }
-}
-@media only screen and (min-width: 100px) and (max-width: 763px) {
-  .image {
-    width: 20rem;
-  }
-}
 .not-found {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 70vh;
   gap: 1rem;
   margin: 0 13vw;
+  height: 100%;
+  width: 100%;
 }
-a {
-  text-decoration: none;
-  text-align: center;
+
+img {
+  width: 10rem;
+  height: 10rem;
+  pointer-events: none;
 }
-.main-button {
-  font-size: 1.3rem;
-}
-span {
-  font-size: 1rem;
-  color: var(--color-clear);
-  text-align: center;
-  font-weight: 500;
+h1 {
+  text-transform: capitalize;
 }
 </style>

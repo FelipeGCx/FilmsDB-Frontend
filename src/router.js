@@ -75,6 +75,12 @@ const routes = [
     component: () => import("@/views/FavoritesView.vue"),
     meta: { requireAdmin: false, requireLogin: false },
   },
+  {
+    path: "/:catchAll(.*)",
+    name: "NotFound",
+    component: () => import("@/views/NotFoundView.vue"),
+    meta: { title: "Not Found", requiresAuth: false, requiresAdmin: false },
+  },
 ];
 
 const router = createRouter({
