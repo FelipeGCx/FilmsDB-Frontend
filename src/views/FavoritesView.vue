@@ -47,7 +47,17 @@ export default {
   },
   computed: {
     actualPage() {
-      return parseInt(this.$route.query.page) || 1;
+      let ap = parseInt(this.$route.query.page) || 1;
+      try {
+        if (ap > this.details.page.totalPages) {
+          ap = this.details.page.totalPages;
+        } else if (ap <= 0) {
+          ap = 1;
+        }
+        return ap;
+      } catch {
+        return ap;
+      }
     },
   },
   methods: {

@@ -155,13 +155,14 @@ async function userIsAdmin(token) {
 }
 
 router.beforeEach(async (to, from, next) => {
+  window.scrollTo(0, 0);
   document.title = setTitle(to);
   let guard = await setGuard(to);
   if (guard) {
     next();
   } else {
     // next();
-    next({ name: "Home" });
+    next({ name: "NotFound" });
   }
 });
 
