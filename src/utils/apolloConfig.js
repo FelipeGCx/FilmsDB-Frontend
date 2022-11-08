@@ -25,6 +25,8 @@ const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-export const apolloProvider = new createApolloProvider({
+const apolloProvider = new createApolloProvider({
   defaultClient: apolloClient,
 });
+
+export { apolloClient, apolloProvider };
