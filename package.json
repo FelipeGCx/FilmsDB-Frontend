@@ -14,6 +14,7 @@
     "apollo-link-context": "^1.0.20",
     "buble": "^0.20.0",
     "core-js": "^3.8.3",
+    "firebase": "^9.13.0",
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",
     "vue": "^3.2.13",

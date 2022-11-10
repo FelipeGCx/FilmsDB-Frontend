@@ -1,12 +1,15 @@
 export default {
   methods: {
-    fileToBase6(blob) {
+    fileToBase64(blob) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(blob);
         reader.onloadend = () => {
           resolve(reader.result.split(",")[1]);
           // "data:image/jpg;base64,    =sdCXDSAsadsadsa"
+        };
+        reader.onerror = () => {
+          reject;
         };
       });
     },

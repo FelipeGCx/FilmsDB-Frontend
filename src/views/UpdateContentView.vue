@@ -4,7 +4,7 @@
       <the-main-title :title="'update register'" :padding="space" />
       <!-- form for create  -->
       <div class="register">
-        <form @submit.prevent="$emit('clicked', filme)" ref="formContent">
+        <form @submit.prevent="saveFilme" ref="formContent">
           <div class="first-container">
             <div class="fields-container">
               <div class="field || multi-select">
@@ -93,7 +93,7 @@
               </div>
               <div class="field">
                 <label for="category">Category</label>
-                <select class="input" id="category">
+                <select class="input" id="category" v-model="filme.category">
                   <option value="0" disabled :selected="filme.category == 0">
                     Select Category
                   </option>
@@ -102,7 +102,6 @@
                     :key="item.id"
                     :value="item.id"
                     :selected="categorySelected(item.id)"
-                    @click="categoryClicked(item.id)"
                   >
                     {{ item.category }}
                   </option>
@@ -110,7 +109,7 @@
               </div>
               <div class="field">
                 <label for="saga">Saga</label>
-                <select class="input" id="saga">
+                <select class="input" id="saga" v-model="filme.saga">
                   <option value="0" disabled :selected="filme.saga == 0">
                     Select Saga
                   </option>
@@ -119,7 +118,6 @@
                     :key="item.id"
                     :value="item.id"
                     :selected="sagaSelected(item.id)"
-                    @click="sagaClicked(item.id)"
                   >
                     {{ item.saga }}
                   </option>
@@ -255,14 +253,20 @@
 
 <script>
 import TheMainTitle from "@/components/TheMainTitle.vue";
+import updateFilm from "@/mixins/mutations/updateFilm";
+import imageTransform from "@/mixins/mutations/imageTransform";
+import imageUpload from "@/mixins/mutations/imageUpload";
 import Categories from "@/mixins/queries/categories";
 import Sagas from "@/mixins/queries/sagas";
+import base64Manager from "@/mixins/utils/base64Manager";
 import reziseListener from "@/mixins/utils/reziseListener";
+import stringObj from "@/mixins/utils/stringObj";
 import gql from "graphql-tag";
 export default {
   components: { TheMainTitle },
   data() {
     return {
+      id: 0,
       filme: {
         type: "Movie",
         title: null,
@@ -295,7 +299,16 @@ export default {
       },
     };
   },
-  mixins: [Sagas, Categories, reziseListener],
+  mixins: [
+    Sagas,
+    Categories,
+    reziseListener,
+    base64Manager,
+    imageTransform,
+    imageUpload,
+    updateFilm,
+    stringObj,
+  ],
   computed: {
     filmTitle() {
       return this.$route.query.title || " ";
@@ -367,10 +380,6 @@ export default {
       this.space = ` ${n}px`;
     },
     // Logic Operations
-
-    updateFilme(data) {
-      console.log(data);
-    },
     async fileSelected(e) {
       // this.invalidImage = true;
       // this.iconImage.first = true;
@@ -392,6 +401,28 @@ export default {
     addZeros(str, targetLength) {
       return str.padEnd(targetLength, "0");
     },
+    async saveFilme() {
+      console.log(this.filme);
+      this.filme.title = this.toTitleCase(this.filme.title);
+      this.filme.titleOG = this.toTitleCase(this.filme.titleOG);
+      this.filme.note = parseFloat(this.filme.note);
+      if (this.file.name != "") {
+        // resize and optimize the image
+        this.base64 = await this.fileToBase64(this.file);
+        const image = {
+          name: "image",
+          size_x: 467,
+          size_y: 700,
+          type_format: ".webp",
+          base64: this.base64,
+        };
+        await this.transformImage(image);
+        let filename = `${this.filme.titleOG} (${this.filme.year})`;
+        this.filme.poster = await this.uploadImage(filename, this.file);
+      }
+      await this.updateFilm(this.id, this.filme);
+      console.log("Se Guardo");
+    },
   },
   // mounted() {
   //   this.$router.push({
@@ -407,6 +438,7 @@ export default {
         query GetFilmByTitle($filmTitle: String) {
           getFilmByTitle(filmTitle: $filmTitle) {
             data {
+              id
               type
               titleOG
               title
@@ -449,6 +481,8 @@ export default {
             return f;
           }
         });
+        this.id = filmes[0].id;
+        console.log(this.id);
         // I have tried do this with map and inside of filter but it doesn't work
         let filme = {
           type: filmes[0].type,
