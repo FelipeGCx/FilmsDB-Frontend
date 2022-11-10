@@ -7,7 +7,7 @@ export default {
       await this.$apollo
         .mutate({
           mutation: gql`
-            mutation UpdateFilm($filmId: Int, $filmInput: FilmInputUpdate) {
+            mutation UpdateFilm($filmId: Int!, $filmInput: FilmInputUpdate) {
               updateFilm(filmId: $filmId, filmInput: $filmInput) {
                 data {
                   id

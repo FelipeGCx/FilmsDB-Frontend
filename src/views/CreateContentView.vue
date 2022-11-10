@@ -93,7 +93,7 @@
               </div>
               <div class="field">
                 <label for="category">Category</label>
-                <select class="input" id="category">
+                <select class="input" id="category" v-model="filme.category">
                   <option value="0" disabled :selected="filme.category == 0">
                     Select Category
                   </option>
@@ -101,7 +101,6 @@
                     v-for="item in categories.data"
                     :key="item.id"
                     :value="item.id"
-                    @click="categoryClicked(item.id)"
                   >
                     {{ item.category }}
                   </option>
@@ -109,7 +108,7 @@
               </div>
               <div class="field">
                 <label for="saga">Saga</label>
-                <select class="input" id="saga">
+                <select class="input" id="saga" v-model="filme.saga">
                   <option value="0" :selected="filme.saga == 0">
                     Select Saga
                   </option>
@@ -117,7 +116,6 @@
                     v-for="item in sagas.data"
                     :key="item.id"
                     :value="item.id"
-                    @click="sagaClicked(item.id)"
                   >
                     {{ item.saga }}
                   </option>
@@ -253,9 +251,14 @@
 
 <script>
 import TheMainTitle from "@/components/TheMainTitle.vue";
+import film from "@/mixins/mutations/film";
+import imageTransform from "@/mixins/mutations/imageTransform";
+import imageUpload from "@/mixins/mutations/imageUpload";
 import Categories from "@/mixins/queries/categories";
 import Sagas from "@/mixins/queries/sagas";
+import base64Manager from "@/mixins/utils/base64Manager";
 import reziseListener from "@/mixins/utils/reziseListener";
+import stringObj from "@/mixins/utils/stringObj";
 
 export default {
   components: { TheMainTitle },
@@ -293,7 +296,16 @@ export default {
       },
     };
   },
-  mixins: [Sagas, Categories, reziseListener],
+  mixins: [
+    Sagas,
+    Categories,
+    reziseListener,
+    base64Manager,
+    imageTransform,
+    imageUpload,
+    film,
+    stringObj,
+  ],
   computed: {
     seasonOp() {
       return this.seasonVisible ? 1 : 0;
@@ -324,14 +336,8 @@ export default {
     categorySelected(category) {
       return this.filme.category == category;
     },
-    categoryClicked(category) {
-      this.filme.category = category;
-    },
     sagaSelected(saga) {
       return this.filme.saga == saga;
-    },
-    sagaClicked(saga) {
-      this.filme.saga = saga;
     },
     langClass(lang) {
       if (lang == "dubbing") {
@@ -355,9 +361,6 @@ export default {
     },
 
     // Logic Operations
-    saveFilme() {
-      console.log(this.filme);
-    },
     async fileSelected(e) {
       // this.invalidImage = true;
       // this.iconImage.first = true;
@@ -378,6 +381,26 @@ export default {
     },
     addZeros(str, targetLength) {
       return str.padEnd(targetLength, "0");
+    },
+    async saveFilme() {
+      console.log(this.filme);
+      this.filme.title = this.toTitleCase(this.filme.title);
+      this.filme.titleOG = this.toTitleCase(this.filme.titleOG);
+      this.filme.note = parseFloat(this.filme.note);
+      // resize and optimize the image
+      this.base64 = await this.fileToBase64(this.file);
+      const image = {
+        name: "image",
+        size_x: 467,
+        size_y: 700,
+        type_format: ".webp",
+        base64: this.base64,
+      };
+      await this.transformImage(image);
+      let filename = `${this.filme.titleOG} (${this.filme.year})`;
+      this.filme.poster = await this.uploadImage(filename, this.file);
+      await this.createFilm(this.filme);
+      console.log("Se Guardo");
     },
   },
 };
