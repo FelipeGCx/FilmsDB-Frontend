@@ -4,7 +4,7 @@
       <the-main-title :title="'new register'" :padding="space" />
       <!-- form for create  -->
       <div class="register">
-        <form @submit.prevent="saveFilme" ref="formContent">
+        <form @submit.prevent="modalIsOpen = true" ref="formContent">
           <div class="first-container">
             <div class="fields-container">
               <div class="field || multi-select">
@@ -246,11 +246,24 @@
         </form>
       </div>
     </section>
+    <teleport to="body">
+      <the-modal
+        :isOpened="modalIsOpen"
+        :titleMessage="'create content?'"
+        @close="modalIsOpen = false"
+        @accept="saveFilme"
+      />
+    </teleport>
+    <teleport to="body">
+      <the-loading-modal :isOpened="loadIsOpen" />
+    </teleport>
   </main>
 </template>
 
 <script>
 import TheMainTitle from "@/components/TheMainTitle.vue";
+import TheModal from "@/components/TheModal.vue";
+import TheLoadingModal from "@/components/TheLoadingModal.vue";
 import film from "@/mixins/mutations/film";
 import imageTransform from "@/mixins/mutations/imageTransform";
 import imageUpload from "@/mixins/mutations/imageUpload";
@@ -261,7 +274,7 @@ import reziseListener from "@/mixins/utils/reziseListener";
 import stringObj from "@/mixins/utils/stringObj";
 
 export default {
-  components: { TheMainTitle },
+  components: { TheMainTitle, TheModal, TheLoadingModal },
   data() {
     return {
       filme: {
@@ -294,6 +307,8 @@ export default {
         load: "<path  d='M12 4V2.21c0-.45-.54-.67-.85-.35l-2.8 2.79c-.2.2-.2.51 0 .71l2.79 2.79c.32.31.86.09.86-.36V6c3.31 0 6 2.69 6 6 0 .79-.15 1.56-.44 2.25-.15.36-.04.77.23 1.04.51.51 1.37.33 1.64-.34.37-.91.57-1.91.57-2.95 0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-.79.15-1.56.44-2.25.15-.36.04-.77-.23-1.04-.51-.51-1.37-.33-1.64.34C4.2 9.96 4 10.96 4 12c0 4.42 3.58 8 8 8v1.79c0 .45.54.67.85.35l2.79-2.79c.2-.2.2-.51 0-.71l-2.79-2.79c-.31-.31-.85-.09-.85.36V18z'/>",
         done: "<path d='M6 18h12c.55 0 1 .45 1 1s-.45 1-1 1H6c-.55 0-1-.45-1-1s.45-1 1-1zm5.01-4.1c-.78.77-2.04.77-2.82-.01L6 11.7c-.55-.55-.54-1.44.03-1.97.54-.52 1.4-.5 1.92.02L9.6 11.4l6.43-6.43c.54-.54 1.41-.54 1.95 0l.04.04c.54.54.54 1.42-.01 1.96l-7 6.93z'/>",
       },
+      modalIsOpen: false,
+      loadIsOpen: false,
     };
   },
   mixins: [
@@ -383,6 +398,8 @@ export default {
       return str.padEnd(targetLength, "0");
     },
     async saveFilme() {
+      this.loadIsOpen = true;
+      this.modalIsOpen = false;
       console.log(this.filme);
       this.filme.title = this.toTitleCase(this.filme.title);
       this.filme.titleOG = this.toTitleCase(this.filme.titleOG);
@@ -400,7 +417,8 @@ export default {
       let filename = `${this.filme.titleOG} (${this.filme.year})`;
       this.filme.poster = await this.uploadImage(filename, this.file);
       await this.createFilm(this.filme);
-      console.log("Se Guardo");
+      this.loadIsOpen = false;
+      this.$router.push({ name: "Home" });
     },
   },
 };
