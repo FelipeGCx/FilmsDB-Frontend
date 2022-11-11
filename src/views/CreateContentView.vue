@@ -419,6 +419,7 @@ export default {
       await this.createFilm(this.filme);
       this.loadIsOpen = false;
       this.$router.push({ name: "Home" });
+      this.$emit("createdContent");
     },
   },
 };
