@@ -253,6 +253,7 @@
         :isOpened="modalIsOpen"
         :titleMessage="'update content?'"
         @close="modalIsOpen = false"
+        @accept="saveFilme"
       />
     </teleport>
     <teleport to="body">
@@ -416,6 +417,8 @@ export default {
       return str.padEnd(targetLength, "0");
     },
     async saveFilme() {
+      this.loadIsOpen = true;
+      this.modalIsOpen = false;
       console.log(this.filme);
       this.filme.title = this.toTitleCase(this.filme.title);
       this.filme.titleOG = this.toTitleCase(this.filme.titleOG);
@@ -435,7 +438,8 @@ export default {
         this.filme.poster = await this.uploadImage(filename, this.file);
       }
       await this.updateFilm(this.id, this.filme);
-      this.$router.go({ name: "Home" });
+      this.loadIsOpen = false;
+      this.$router.push({ name: "Home" });
     },
   },
   // mounted() {

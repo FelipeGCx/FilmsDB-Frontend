@@ -25,7 +25,7 @@ export default {
 
 <style lang="scss" scoped>
 .modal {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -42,7 +42,9 @@ export default {
     background-color: $base-third-color;
     border: 0.1rem solid $neutral-color;
     border-radius: $border-radius;
-    padding: 2rem 6rem;
+    width: min(34rem, 74vw);
+    height: 14rem;
+    //padding: 1.5rem 11rem;
     h1 {
       text-transform: capitalize;
       font-weight: 200;
