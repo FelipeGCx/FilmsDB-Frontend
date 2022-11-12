@@ -34,6 +34,12 @@ import adminProps from "@/mixins/utils/adminProps";
 
 export default {
   name: "AllView",
+  props: {
+    needRefetch: {
+      type: Boolean,
+      default: false,
+    },
+  },
   components: {
     TheMainTitle,
     TheFilters,
@@ -72,6 +78,16 @@ export default {
     },
     filmsNote() {
       return this.$route.query.note || "none";
+    },
+  },
+  watch: {
+    needRefetch() {
+      console.log("cambio refetch");
+      if (this.needRefetch) {
+        console.log("refetch true");
+        this.reloadTheQuery();
+        this.$emit("refecthDone");
+      }
     },
   },
   methods: {

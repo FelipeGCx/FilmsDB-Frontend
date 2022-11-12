@@ -418,8 +418,8 @@ export default {
         this.filme.poster = await this.uploadImage(filename, this.file);
         await this.createFilm(this.filme);
         this.loadIsOpen = false;
-        this.$router.push({ name: "Home" });
         this.$emit("createdContent");
+        this.$router.push({ name: "Home" });
       } catch {
         this.loadIsOpen = false;
         this.$emit("error");
