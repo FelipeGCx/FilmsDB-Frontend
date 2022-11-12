@@ -400,26 +400,30 @@ export default {
     async saveFilme() {
       this.loadIsOpen = true;
       this.modalIsOpen = false;
-      console.log(this.filme);
       this.filme.title = this.toTitleCase(this.filme.title);
       this.filme.titleOG = this.toTitleCase(this.filme.titleOG);
       this.filme.note = parseFloat(this.filme.note);
-      // resize and optimize the image
-      this.base64 = await this.fileToBase64(this.file);
-      const image = {
-        name: "image",
-        size_x: 467,
-        size_y: 700,
-        type_format: ".webp",
-        base64: this.base64,
-      };
-      await this.transformImage(image);
-      let filename = `${this.filme.titleOG} (${this.filme.year})`;
-      this.filme.poster = await this.uploadImage(filename, this.file);
-      await this.createFilm(this.filme);
-      this.loadIsOpen = false;
-      this.$router.push({ name: "Home" });
-      this.$emit("createdContent");
+      try {
+        // resize and optimize the image
+        this.base64 = await this.fileToBase64(this.file);
+        const image = {
+          name: "image",
+          size_x: 467,
+          size_y: 700,
+          type_format: ".webp",
+          base64: this.base64,
+        };
+        await this.transformImage(image);
+        let filename = `${this.filme.titleOG} (${this.filme.year})`;
+        this.filme.poster = await this.uploadImage(filename, this.file);
+        await this.createFilm(this.filme);
+        this.loadIsOpen = false;
+        this.$router.push({ name: "Home" });
+        this.$emit("createdContent");
+      } catch {
+        this.loadIsOpen = false;
+        this.$emit("error");
+      }
     },
   },
 };

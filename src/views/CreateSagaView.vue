@@ -6,11 +6,14 @@
     </section>
     <teleport to="body">
       <the-modal
-        :isOpened="isOpen"
+        :isOpened="modalIsOpen"
         :titleMessage="'create saga?'"
-        @close="isOpen = false"
+        @close="modalIsOpen = false"
         @accept="addSaga"
       />
+    </teleport>
+    <teleport to="body">
+      <the-loading-modal :isOpened="loadIsOpen" />
     </teleport>
   </main>
 </template>
@@ -20,27 +23,40 @@ import TheMainTitle from "@/components/TheMainTitle.vue";
 import saga from "@/mixins/mutations/saga";
 import sagas from "@/mixins/queries/sagas";
 import TheModal from "@/components/TheModal.vue";
+import TheLoadingModal from "@/components/TheLoadingModal.vue";
+
 export default {
-  components: { TheSvgPicker, TheMainTitle, TheModal },
+  components: { TheSvgPicker, TheMainTitle, TheModal, TheLoadingModal },
   mixins: [saga, sagas],
   data() {
     return {
       data: null,
-      isOpen: false,
+      modalIsOpen: false,
+      loadIsOpen: false,
     };
   },
   methods: {
     openModal(data) {
       this.data = data;
-      this.isOpen = true;
+      this.modalIsOpen = true;
     },
     async addSaga() {
+      this.loadIsOpen = true;
+      this.modalIsOpen = false;
       let item = {
         saga: this.data.name,
         svg: this.data.svg,
       };
-      await this.createSaga(item);
-      this.$apollo.queries.sagas.refetch();
+      try {
+        await this.createSaga(item);
+        this.$apollo.queries.sagas.refetch();
+        this.loadIsOpen = false;
+        this.$router.push({ name: "Home" });
+        this.$emit("createdSaga");
+      } catch {
+        this.loadIsOpen = false;
+        this.$emit("error");
+      }
     },
   },
 };

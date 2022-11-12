@@ -8,6 +8,7 @@
     @updatedContent="updatedContent"
     @createdSaga="createdSaga"
     @createdCategory="createdCategory"
+    @error="error"
   >
     <transition name="fade" mode="out-in">
       <component :class="route" :is="Component" />
@@ -68,7 +69,10 @@ export default {
       this.showPopSlider("Saga Created!", "success");
     },
     createdCategory() {
-      this.showPopSlider("Catefoey Created!", "success");
+      this.showPopSlider("Category Created!", "success");
+    },
+    error() {
+      this.showPopSlider("Something Fail!", "error");
     },
     showPopSlider(title, mod) {
       this.isPopSlider = true;

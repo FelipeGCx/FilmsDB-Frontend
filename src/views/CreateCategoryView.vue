@@ -6,11 +6,14 @@
     </section>
     <teleport to="body">
       <the-modal
-        :isOpened="isOpen"
-        :titleMessage="'create saga?'"
-        @close="isOpen = false"
-        @accept="addSaga"
+        :isOpened="modalIsOpen"
+        :titleMessage="'create category?'"
+        @close="modalIsOpen = false"
+        @accept="addCategory"
       />
+    </teleport>
+    <teleport to="body">
+      <the-loading-modal :isOpened="loadIsOpen" />
     </teleport>
   </main>
 </template>
@@ -20,27 +23,40 @@ import TheMainTitle from "@/components/TheMainTitle.vue";
 import category from "@/mixins/mutations/category";
 import categories from "@/mixins/queries/categories";
 import TheModal from "@/components/TheModal.vue";
+import TheLoadingModal from "@/components/TheLoadingModal.vue";
+
 export default {
-  components: { TheSvgPicker, TheMainTitle, TheModal },
+  components: { TheSvgPicker, TheMainTitle, TheModal, TheLoadingModal },
   mixins: [category, categories],
   data() {
     return {
       data: null,
-      isOpen: false,
+      modalIsOpen: false,
+      loadIsOpen: false,
     };
   },
   methods: {
     openModal(data) {
       this.data = data;
-      this.isOpen = true;
+      this.modalIsOpen = true;
     },
     async addCategory() {
+      this.loadIsOpen = true;
+      this.modalIsOpen = false;
       let item = {
         category: this.data.name,
         svg: this.data.svg,
       };
-      await this.createCategory(item);
-      this.$apollo.queries.categories.refetch();
+      try {
+        await this.createCategory(item);
+        this.$apollo.queries.categories.refetch();
+        this.loadIsOpen = false;
+        this.$router.push({ name: "Home" });
+        this.$emit("createdCategory");
+      } catch {
+        this.loadIsOpen = false;
+        this.$emit("error");
+      }
     },
   },
 };
