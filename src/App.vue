@@ -8,6 +8,9 @@
     @updatedContent="updatedContent"
     @createdSaga="createdSaga"
     @createdCategory="createdCategory"
+    @error="error"
+    @refecthDone="refetch = false"
+    :needRefetch="refetch"
   >
     <transition name="fade" mode="out-in">
       <component :class="route" :is="Component" />
@@ -43,6 +46,7 @@ export default {
       popTitle: "error",
       popMode: "error",
       popSlider: false,
+      refetch: false,
     };
   },
   mixins: [vtoken],
@@ -60,15 +64,21 @@ export default {
     },
     createdContent() {
       this.showPopSlider("Filme Created!", "success");
+      console.log("se creo y refecth");
+      this.refetch = true;
     },
     updatedContent() {
       this.showPopSlider("Filme Updated!", "success");
+      this.refetch = true;
     },
     createdSaga() {
       this.showPopSlider("Saga Created!", "success");
     },
     createdCategory() {
-      this.showPopSlider("Catefoey Created!", "success");
+      this.showPopSlider("Category Created!", "success");
+    },
+    error() {
+      this.showPopSlider("Something Fail!", "error");
     },
     showPopSlider(title, mod) {
       this.isPopSlider = true;

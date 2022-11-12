@@ -423,23 +423,29 @@ export default {
       this.filme.title = this.toTitleCase(this.filme.title);
       this.filme.titleOG = this.toTitleCase(this.filme.titleOG);
       this.filme.note = parseFloat(this.filme.note);
-      if (this.file.name != "") {
-        // resize and optimize the image
-        this.base64 = await this.fileToBase64(this.file);
-        const image = {
-          name: "image",
-          size_x: 467,
-          size_y: 700,
-          type_format: ".webp",
-          base64: this.base64,
-        };
-        await this.transformImage(image);
-        let filename = `${this.filme.titleOG} (${this.filme.year})`;
-        this.filme.poster = await this.uploadImage(filename, this.file);
+      try {
+        if (this.file.name != "") {
+          // resize and optimize the image
+          this.base64 = await this.fileToBase64(this.file);
+          const image = {
+            name: "image",
+            size_x: 467,
+            size_y: 700,
+            type_format: ".webp",
+            base64: this.base64,
+          };
+          await this.transformImage(image);
+          let filename = `${this.filme.titleOG} (${this.filme.year})`;
+          this.filme.poster = await this.uploadImage(filename, this.file);
+        }
+        await this.updateFilm(this.id, this.filme);
+        this.loadIsOpen = false;
+        this.$router.push({ name: "Home" });
+        this.$emit("updatedContent");
+      } catch {
+        this.loadIsOpen = false;
+        this.$emit("error");
       }
-      await this.updateFilm(this.id, this.filme);
-      this.loadIsOpen = false;
-      this.$router.push({ name: "Home" });
     },
   },
   // mounted() {
