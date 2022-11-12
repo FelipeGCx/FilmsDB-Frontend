@@ -1,0 +1,70 @@
+{
+  "short_name": "FilmsDB",
+  "name": "FilmsDB",
+  "manifest_version": 2,
+  "description": "Personal Database by FelipeGCx to save info of multimedia visualized",
+  "version": "1.0.0",
+  "icons": [
+    {
+      "src": "./icons/icon_svg_x150.svg",
+      "type": "image/svg+xml",
+      "sizes": "150x150"
+    },
+    {
+      "src": "./icons/maskable_icon_mb_x128.png",
+      "type": "image/png",
+      "sizes": "128x128",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/maskable_icon_mb_x192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./icons/maskable_icon_mb_x512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./icons/maskable_icon_dk_x128.png",
+      "type": "image/png",
+      "sizes": "128x128",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/maskable_icon_dk_x192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./icons/maskable_icon_dk_x512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
+  ],
+  "start_url": "/home",
+  "background_color": "#1b1b1b",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#e91e63",
+  "color_scheme": "dark",
+  "prymary_icon": "./icons/icon_svg_x150.svg",
+  "prymary_icon_sizes": "150x150",
+  "shortcuts": [
+    {
+      "name": "FilmsDB",
+      "short_name": "FilmsDB",
+      "description": "Inicio",
+      "url": "/home",
+      "icons": [
+        { "src": "./icons/maskable_icon_mb_x512.png", "sizes": "512x512" }
+      ]
+    }
+  ],
+  "lang": "en-US"
+}
