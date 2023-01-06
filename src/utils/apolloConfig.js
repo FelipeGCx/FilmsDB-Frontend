@@ -8,7 +8,7 @@ import { createApolloProvider } from "@vue/apollo-option";
 import { setContext } from "apollo-link-context";
 
 const httpLink = createHttpLink({
-  uri: "https://films-db-apigateway.herokuapp.com/",
+  uri: "https://filmsdb-apigateway-production.up.railway.app/",
 });
 
 const authLink = setContext((_, { headers }) => {
