@@ -3,7 +3,6 @@ import gql from "graphql-tag";
 export default {
   methods: {
     async updateFilm(id, film) {
-      console.log("film", film);
       await this.$apollo
         .mutate({
           mutation: gql`

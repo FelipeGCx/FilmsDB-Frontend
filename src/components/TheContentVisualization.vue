@@ -2,11 +2,11 @@
   <ul class="films" ref="contentVisualization">
     <li
       class="film"
-      v-for="(item, idx) in contentDetails"
+      v-for="item in contentDetails"
       :key="item.id"
       :class="item.type"
       ref="itemVisualization"
-      :tabindex="idx"
+      :tabindex="0"
     >
       <div class="information">
         <div class="main-data">
@@ -59,6 +59,7 @@
               v-show="item.language"
               data-tooltip="original"
               data-flow="left"
+              class="language"
             >
               <svg viewBox="0 0 24 24">
                 <path
@@ -85,14 +86,22 @@
           :to="goToEdit(item)"
           data-tooltip="edit"
           data-flow="top"
-          tabindex="-1"
+          :tabindex="isAdmin ? 0 : -1"
           v-show="isAdmin"
         >
           <img :src="imgEdit" alt="edit" />
         </router-link>
-        <div data-tooltip="favorite" data-flow="top">
-          <img :src="favoriteImage(item.favorite)" alt="favorite" />
-        </div>
+        <a
+          class="favorite"
+          data-tooltip="favorite"
+          data-flow="top"
+          @click="isAdmin ? addToFav(item) : false"
+        >
+          <img
+            :src="item.favorite ? this.imgFav : this.imgNoFav"
+            alt="favorite"
+          />
+        </a>
         <span class="note || pin" data-tooltip="note" data-flow="top"
           >{{ normalizeNote(item.note) }}
         </span>
@@ -104,6 +113,7 @@
 <script>
 import adminProps from "@/mixins/utils/adminProps";
 import reziseListener from "@/mixins/utils/reziseListener";
+import updateFilm from "@/mixins/mutations/updateFilm";
 
 export default {
   name: "FilmsView",
@@ -113,7 +123,7 @@ export default {
       // require: true,
     },
   },
-  mixins: [reziseListener, adminProps],
+  mixins: [reziseListener, adminProps, updateFilm],
   data() {
     return {
       Categories: null,
@@ -178,6 +188,19 @@ export default {
         },
       };
     },
+    async addToFav(item) {
+      const id = item.id;
+      const filme = {
+        favorite: !item.favorite,
+      };
+      console.log(filme);
+      try {
+        await this.updateFilm(id, filme);
+        this.$emit("refetch");
+      } catch {
+        console.error("favorite update failed");
+      }
+    },
     favoriteImage(bool) {
       return bool ? this.imgFav : this.imgNoFav;
     },
@@ -196,12 +219,12 @@ export default {
   flex-wrap: wrap;
   justify-content: center;
   width: 100%;
+
   /* min-height: 70vh; */
   .film {
     border: 0.2em solid transparent;
     border-radius: 1rem;
-    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpolygon style='fill:%23FFFFFF;stroke:%23303030;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:10;' points='6.5,3.5 6.5,20.5 11,15 18,15 '/%3E%3C/svg%3E"),
-      pointer;
+    cursor: $arrow-c, pointer;
     position: relative;
     overflow: hidden !important;
     overflow-y: hidden !important;
@@ -211,40 +234,49 @@ export default {
     display: flex;
     justify-content: center;
     user-select: none;
+
     &.Anime {
       @include tooltip($anime-color);
+
       &:hover,
       &:focus {
         filter: drop-shadow(0 0 1rem $anime-color);
         border-color: $anime-color;
       }
     }
+
     &.Movie {
       @include tooltip($movie-color);
+
       &:hover,
       &:focus {
         filter: drop-shadow(0 0 1rem $movie-color);
         border-color: $movie-color;
       }
     }
+
     &.Serie {
       @include tooltip($serie-color);
+
       &:hover,
       &:focus {
         filter: drop-shadow(0 0 1rem $serie-color);
         border-color: $serie-color;
       }
     }
+
     & > .poster {
       height: 30.5rem;
       width: 20rem;
     }
+
     @include mobilesize {
       & > .poster {
         height: 35rem !important;
         width: 23rem !important;
       }
     }
+
     .information {
       align-items: flex-start;
       color: $secondary-color;
@@ -257,37 +289,46 @@ export default {
       z-index: 1;
       width: 100%;
       padding: 1rem;
+
       p {
         font-weight: 500;
       }
+
       .main-data {
         width: 100%;
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
         padding-bottom: 1rem;
+
         .a-normal {
           color: inherit;
           text-decoration: inherit;
           font-size: 1.1rem;
         }
       }
+
       .more-data {
         display: flex;
         justify-content: space-between;
         width: 100%;
+
         .season {
           height: 100%;
           transform: translateX(-100%);
           transition: all 0.3s linear;
           transition-delay: 0.2s;
+          cursor: $arrow-c, default;
+
           &[data-opacity="0"] {
             opacity: 0;
           }
+
           &[data-opacity="100"] {
             opacity: 1;
           }
         }
+
         .rigth-icons {
           display: flex;
           flex-direction: column;
@@ -299,9 +340,11 @@ export default {
         }
       }
     }
+
     .poster {
       transition: all 0.5s ease-out;
     }
+
     .icons {
       position: absolute;
       display: flex;
@@ -315,43 +358,65 @@ export default {
       // transform: translate3d(-22em, 0, 0);
       transition: all 0.5s ease;
       z-index: 3;
+
+      .favorite {
+        @if v-bind(isAdmin) {
+          cursor: pointer;
+        } @else {
+          cursor: $arrow-c, default;
+        }
+      }
+
       .edit:hover {
         filter: drop-shadow(0 0 1rem $secondary-color);
       }
+
+      .note {
+        cursor: $arrow-c, default;
+      }
+
       a,
       div {
         display: flex;
         align-items: center;
         justify-content: center;
       }
+
       img {
         filter: invert(1);
         width: 2.5rem;
         height: 2.5rem;
       }
     }
+
     svg {
       fill: $secondary-color;
       width: 2.5rem;
     }
+
     &:hover,
     &:focus {
       outline: none;
+
       .information {
         transform: translate3d(0, 0, 0);
+
         .more-data {
           .season {
             transform: translateX(0);
           }
+
           .rigth-icons {
             transform: translate3d(0, 0, 0);
           }
         }
       }
+
       .poster {
         filter: blur(0.2rem) brightness(0.7);
         transform: scale(110%);
       }
+
       .icons {
         transform: translateX(0);
       }
