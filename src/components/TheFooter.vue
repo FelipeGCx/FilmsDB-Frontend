@@ -2,8 +2,8 @@
   <footer>
     <a :href="link" target="blanck">
       <img :src="img" alt="github icon" />
+      Created by FelipeGCx
     </a>
-    <h3>Created by FelipeGCx</h3>
   </footer>
 </template>
 
@@ -34,6 +34,7 @@ footer {
   background-color: $neutral-color;
   width: 100%;
   margin-top: 2rem;
+
   // padding: 6vw 2rem 3vw 2rem;
   @include mobilesize {
     & {
@@ -44,10 +45,20 @@ footer {
       // padding: 7rem 2rem 6rem 2rem !important;
     }
   }
-  img {
-    filter: invert(1);
-    width: 2.5rem;
-    height: 2.5rem;
+
+  a {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    cursor: pointer;
+
+    img {
+      filter: invert(1);
+      width: 2.5rem;
+      height: 2.5rem;
+    }
   }
 }
 </style>

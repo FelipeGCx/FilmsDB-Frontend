@@ -229,7 +229,7 @@ export default {
 <style lang="scss" scoped>
 header {
   background-color: $neutral-color;
-  height: 5.4rem;
+  height: $header-h;
   // height: 8vh;
   display: flex;
   justify-content: space-between;

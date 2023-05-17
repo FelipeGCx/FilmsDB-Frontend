@@ -1,7 +1,7 @@
 main {
   width: 100vw;
   // min-height: 78.7vh;
-  min-height: 57.5rem;
+  min-height: calc(100vmin - $footer-h - $header-h - 2rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
