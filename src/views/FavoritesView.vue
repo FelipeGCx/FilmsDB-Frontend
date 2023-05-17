@@ -8,6 +8,7 @@
         :contentDetails="details.data"
         :isAdmin="isAdmin"
         @filled="toTitle"
+        @refetch="reloadTheQuery"
       />
       <the-pagination @changePage="newPage" :pagination="details.page" />
     </section>

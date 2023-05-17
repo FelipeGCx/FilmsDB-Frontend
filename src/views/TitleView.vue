@@ -12,6 +12,7 @@
           :contentDetails="details.data"
           :isAdmin="isAdmin"
           @filled="toTitle"
+          @refetch="reloadTheQuery"
         />
       </section>
     </div>
