@@ -1,5 +1,5 @@
 <template>
-  <div class="saga">
+  <div class="saga" v-on:blur="clicked">
     <the-button-close @btnClicked="$emit('clicked')" />
     <nav class="sagas | blur">
       <the-loading v-if="loading" />
