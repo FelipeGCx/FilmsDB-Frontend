@@ -360,10 +360,10 @@ export default {
       z-index: 3;
 
       .favorite {
-        @if v-bind(isAdmin) {
-          cursor: pointer;
-        } @else {
+        @if v-bind(!isAdmin) {
           cursor: $arrow-c, default;
+        } @else {
+          cursor: pointer;
         }
       }
 
