@@ -1,7 +1,6 @@
 @mixin tooltip($color: $primary-color) {
   [data-tooltip] {
     position: relative;
-    cursor: pointer;
   }
   [data-tooltip]:before,
   [data-tooltip]:after {
