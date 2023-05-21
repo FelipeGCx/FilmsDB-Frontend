@@ -28,6 +28,7 @@
       class="sagas-c"
       @clicked="hideAll()"
       v-show="sagasVisibility"
+      :isFocus="sagasVisibility"
     />
     <the-categories-selector
       class="categories-c"

@@ -1,5 +1,5 @@
 <template>
-  <div class="saga" v-on:blur="clicked">
+  <div class="saga" v-on:blur="$emit('clicked')" :tabindex="tidx" ref="sagaNav">
     <the-button-close @btnClicked="$emit('clicked')" />
     <nav class="sagas | blur">
       <the-loading v-if="loading" />
@@ -34,12 +34,33 @@ import TheError from "@/components/TheError.vue";
 import queryParams from "@/mixins/queries/queryParams.js";
 
 export default {
+  props: {
+    isFocus: {
+      type: Boolean,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      tidx: -1,
+      sagaNav: null,
+    };
+  },
   components: {
     TheButtonClose,
     TheLoading,
     TheError,
   },
   mixins: [Sagas, queryParams],
+  watch: {
+    isFocus(value) {
+      if (value) {
+        this.focusRef();
+      } else {
+        this.tidx = -1;
+      }
+    },
+  },
   methods: {
     reloadTheQuery() {
       this.error = false;
@@ -52,6 +73,12 @@ export default {
         state: { sagaTitle: item.saga },
         query: { saga: item.saga, page: 1 },
       };
+    },
+    focusRef() {
+      this.$nextTick(() => {
+        this.tidx = 0;
+        this.$refs.sagaNav.focus();
+      });
     },
   },
 };
