@@ -32,7 +32,7 @@
           </div>
           <div class="rigth-icons">
             <router-link
-              class="svg-icon"
+              class="category"
               data-tooltip="category"
               data-flow="left"
               v-show="isVoid(item.category.svg)"
@@ -45,7 +45,7 @@
               >{{ item.year }}
             </span>
             <router-link
-              class="svg-icon"
+              class="saga"
               data-tooltip="saga"
               data-flow="left"
               v-show="isVoid(item.saga.svg)"
@@ -93,6 +93,7 @@
         </router-link>
         <a
           class="favorite"
+          :class="isAdmin ? 'admin' : 'user'"
           data-tooltip="favorite"
           data-flow="top"
           @click="isAdmin ? addToFav(item) : false"
@@ -208,6 +209,9 @@ export default {
       return season == 0 ? 0 : 100;
     },
   },
+  mounted() {
+    console.log("es Admin?", this.isAdmin);
+  },
 };
 </script>
 
@@ -224,7 +228,7 @@ export default {
   .film {
     border: 0.2em solid transparent;
     border-radius: 1rem;
-    cursor: $arrow-c, pointer;
+    cursor: $arrow-c, default;
     position: relative;
     overflow: hidden !important;
     overflow-y: hidden !important;
@@ -337,6 +341,10 @@ export default {
           transform: translate3d(100%, -77%, 0);
           transition: all 0.3s linear;
           transition-delay: 0.2s;
+          .category,
+          .saga {
+            cursor: pointer;
+          }
         }
       }
     }
@@ -360,11 +368,10 @@ export default {
       z-index: 3;
 
       .favorite {
-        @if v-bind(!isAdmin) {
-          cursor: $arrow-c, default;
-        } @else {
+        &.admin {
           cursor: pointer;
         }
+        cursor: $arrow-c, default;
       }
 
       .edit:hover {
