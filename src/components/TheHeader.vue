@@ -34,11 +34,13 @@
       class="categories-c"
       @clicked="hideAll()"
       v-show="categoriesVisibility"
+      :isFocus="categoriesVisibility"
     />
     <the-charts
       class="charts-c"
       @clicked="hideAll()"
       v-show="chartsVisibility"
+      :isFocus="chartsVisibility"
     />
   </header>
 </template>

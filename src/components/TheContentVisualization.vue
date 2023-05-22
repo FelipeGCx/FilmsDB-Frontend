@@ -38,6 +38,7 @@
               v-show="isVoid(item.category.svg)"
               :to="goToCategory(item.category)"
               tabindex="-1"
+              :alt="`go to category ${item.category}`"
             >
               <svg v-html="item.category.svg" viewBox="0 0 24 24"></svg>
             </router-link>
@@ -51,6 +52,7 @@
               v-show="isVoid(item.saga.svg)"
               :to="goToSaga(item.saga)"
               tabindex="-1"
+              :alt="`go to saga ${item.saga}`"
             >
               <svg v-html="item.saga.svg" viewBox="0 0 24 24"></svg>
             </router-link>
@@ -70,16 +72,11 @@
           </div>
         </div>
       </div>
-      <img
-        :src="item.poster"
-        class="poster"
-        loading="lazy"
-        oncontextmenu="return false"
-        oncopy="return false"
-        oncut="return false"
-        draggable="false"
-        :alt="item.title"
-        onerror="this.onerror=null; this.src='https://firebasestorage.googleapis.com/v0/b/films-a2d18.appspot.com/o/assets%2FNot%20Found%20Image.webp?alt=media&token=8bfcfa56-b828-4db9-9c74-82e34324f673'"
+      <img :src="item.poster" class="poster" loading="lazy"
+      oncontextmenu="return false" oncopy="return false" oncut="return false"
+      draggable="false" type=”image/webp” :alt="item.title"
+      onerror="this.onerror=null;
+      this.src='https://firebasestorage.googleapis.com/v0/b/films-a2d18.appspot.com/o/assets%2FNot%20Found%20Image.webp?alt=media&token=8bfcfa56-b828-4db9-9c74-82e34324f673'"
       />
       <div class="icons">
         <router-link
@@ -270,13 +267,13 @@ export default {
     }
 
     & > .poster {
-      height: 30.5rem;
+      // height: 30.5rem;
       width: 20rem;
     }
 
     @include mobilesize {
       & > .poster {
-        height: 35rem !important;
+        // height: 35rem !important;
         width: 23rem !important;
       }
     }

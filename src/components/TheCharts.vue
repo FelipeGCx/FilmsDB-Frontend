@@ -1,5 +1,10 @@
 <template>
-  <div class="type">
+  <div
+    class="type"
+    v-on:blur="$emit('clicked')"
+    :tabindex="tidx"
+    ref="chartNav"
+  >
     <the-button-close @btnClicked="$emit('clicked')" />
 
     <nav class="types | blur">
@@ -30,6 +35,12 @@ import queryParams from "@/mixins/queries/queryParams.js";
 import TheEmpty from "@/components/TheEmpty.vue";
 
 export default {
+  props: {
+    isFocus: {
+      type: Boolean,
+      default: false,
+    },
+  },
   components: {
     TheButtonClose,
     TheLoading,
@@ -41,7 +52,18 @@ export default {
   data() {
     return {
       charts: null,
+      tidx: -1,
+      chartNav: null,
     };
+  },
+  watch: {
+    isFocus(value) {
+      if (value) {
+        this.focusRef();
+      } else {
+        this.tidx = -1;
+      }
+    },
   },
   methods: {
     percentage(elements) {
@@ -67,6 +89,12 @@ export default {
       this.error = false;
       this.charts = null;
       this.$apollo.queries.charts.refetch();
+    },
+    focusRef() {
+      this.$nextTick(() => {
+        this.tidx = 0;
+        this.$refs.chartNav.focus();
+      });
     },
   },
   apollo: {

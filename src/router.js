@@ -73,7 +73,7 @@ const routes = [
     path: "/favorites",
     name: "Favorites",
     component: () => import("@/views/FavoritesView.vue"),
-    meta: { requireAdmin: false, requireLogin: false },
+    meta: { title: "Favorites", requireAdmin: false, requireLogin: false },
   },
   {
     path: "/:catchAll(.*)",
