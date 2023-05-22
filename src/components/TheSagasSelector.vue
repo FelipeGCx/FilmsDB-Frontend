@@ -37,7 +37,7 @@ export default {
   props: {
     isFocus: {
       type: Boolean,
-      required: true,
+      default: false,
     },
   },
   data() {

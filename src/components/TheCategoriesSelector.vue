@@ -1,5 +1,10 @@
 <template>
-  <div class="type" v-on:blur="clicked">
+  <div
+    class="type"
+    v-on:blur="$emit('clicked')"
+    :tabindex="tidx"
+    ref="categoryNav"
+  >
     <the-button-close @btnClicked="$emit('clicked')" />
     <nav class="types | blur">
       <the-loading v-if="loading" />
@@ -35,6 +40,12 @@ import queryParams from "@/mixins/queries/queryParams.js";
 import TheEmpty from "@/components/TheEmpty.vue";
 
 export default {
+  props: {
+    isFocus: {
+      type: Boolean,
+      default: false,
+    },
+  },
   components: {
     TheButtonClose,
     TheLoading,
@@ -42,6 +53,21 @@ export default {
     TheEmpty,
   },
   mixins: [Categories, queryParams],
+  data() {
+    return {
+      tidx: -1,
+      categoryNav: null,
+    };
+  },
+  watch: {
+    isFocus(value) {
+      if (value) {
+        this.focusRef();
+      } else {
+        this.tidx = -1;
+      }
+    },
+  },
   methods: {
     reloadTheQuery() {
       this.error = false;
@@ -55,6 +81,12 @@ export default {
         query: { category: item.category, page: 1 },
       };
     },
+    focusRef() {
+      this.$nextTick(() => {
+        this.tidx = 0;
+        this.$refs.categoryNav.focus();
+      });
+    },
   },
 };
 </script>
@@ -66,6 +98,7 @@ export default {
   top: 5.4rem;
   right: 0;
   bottom: 9.4rem;
+
   .types {
     z-index: 3;
     overflow-y: scroll;
@@ -75,9 +108,11 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+
     &::-webkit-scrollbar {
       width: 0;
     }
+
     ul {
       display: flex;
       flex-direction: column;
@@ -86,6 +121,7 @@ export default {
       height: 100%;
       width: 100%;
       padding-top: 2rem;
+
       li {
         &:last-child {
           padding-bottom: 7rem;
