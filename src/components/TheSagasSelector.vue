@@ -1,5 +1,5 @@
 <template>
-  <div class="saga" v-on:blur="$emit('clicked')" :tabindex="tidx" ref="sagaNav">
+  <div class="saga" v-on:blur="checkFocus" :tabindex="tidx" ref="sagaNav">
     <the-button-close @btnClicked="$emit('clicked')" />
     <nav class="sagas | blur">
       <the-loading v-if="loading" />
@@ -79,6 +79,11 @@ export default {
         this.tidx = 0;
         this.$refs.sagaNav.focus();
       });
+    },
+    checkFocus(e) {
+      if (!e.relatedTarget) {
+        this.$emit("clicked");
+      }
     },
   },
 };

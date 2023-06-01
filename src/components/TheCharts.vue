@@ -1,10 +1,5 @@
 <template>
-  <div
-    class="type"
-    v-on:blur="$emit('clicked')"
-    :tabindex="tidx"
-    ref="chartNav"
-  >
+  <div class="type" v-on:blur="checkFocus" :tabindex="tidx" ref="chartNav">
     <the-button-close @btnClicked="$emit('clicked')" />
 
     <nav class="types | blur">
@@ -95,6 +90,11 @@ export default {
         this.tidx = 0;
         this.$refs.chartNav.focus();
       });
+    },
+    checkFocus(e) {
+      if (!e.relatedTarget) {
+        this.$emit("clicked");
+      }
     },
   },
   apollo: {

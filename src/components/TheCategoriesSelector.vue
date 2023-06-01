@@ -1,10 +1,5 @@
 <template>
-  <div
-    class="type"
-    v-on:blur="$emit('clicked')"
-    :tabindex="tidx"
-    ref="categoryNav"
-  >
+  <div class="type" v-on:blur="checkFocus" :tabindex="tidx" ref="categoryNav">
     <the-button-close @btnClicked="$emit('clicked')" />
     <nav class="types | blur">
       <the-loading v-if="loading" />
@@ -86,6 +81,11 @@ export default {
         this.tidx = 0;
         this.$refs.categoryNav.focus();
       });
+    },
+    checkFocus(e) {
+      if (!e.relatedTarget) {
+        this.$emit("clicked");
+      }
     },
   },
 };
