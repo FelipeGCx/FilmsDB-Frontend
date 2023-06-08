@@ -191,7 +191,6 @@ export default {
       const filme = {
         favorite: !item.favorite,
       };
-      console.log(filme);
       try {
         await this.updateFilm(id, filme);
         this.$emit("refetch");
@@ -205,9 +204,6 @@ export default {
     seasonOpacity(season) {
       return season == 0 ? 0 : 100;
     },
-  },
-  mounted() {
-    console.log("es Admin?", this.isAdmin);
   },
 };
 </script>

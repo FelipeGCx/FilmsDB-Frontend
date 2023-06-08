@@ -1,6 +1,9 @@
 <template>
   <main>
-    <the-loading v-if="loading" />
+    <the-loading
+      v-if="loading"
+      :text="errorGateway ? 'Loading Server Is Sleeping ...' : 'Loading ...'"
+    />
     <the-error v-else-if="error" :refetch="true" @reload="reloadTheQuery()" />
     <div class="sec" v-else-if="details">
       <section v-if="details.page.totalItems > 1" ref="section">
@@ -55,6 +58,7 @@ export default {
     return {
       details: null,
       space: "0vw",
+      errorGateway: false,
     };
   },
   computed: {
@@ -201,11 +205,20 @@ export default {
         };
       },
       update(data) {
+        this.errorGateway = false;
         return data.getFilmsByType;
       },
       error(error) {
+        if (
+          error.graphQLErrors[0].extensions.response.status === 503 ||
+          error.graphQLErrors[0].extensions.response.status === 504
+        ) {
+          this.errorGateway = true;
+          this.reloadTheQuery();
+        } else {
+          this.error = true;
+        }
         this.tt = error;
-        this.error = true;
       },
       watchLoading(isLoading) {
         this.loading = isLoading;
