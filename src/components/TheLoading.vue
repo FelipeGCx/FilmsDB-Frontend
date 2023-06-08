@@ -1,12 +1,18 @@
 <template>
   <div>
     <img :src="img" alt="FilmsDB Logo" draggable="false" />
-    <h3>Loading...</h3>
+    <h3>{{ text }}</h3>
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+    text: {
+      type: String,
+      default: "Loading...",
+    },
+  },
   data() {
     return {
       img: require("@/assets/icons/filmsdb.svg"),
