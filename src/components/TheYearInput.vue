@@ -24,12 +24,17 @@
 export default {
   data() {
     return {
-      nOne: 2022,
+      nOne: new Date().getFullYear(),
       date: new Date().getFullYear(),
       lOne: 1896,
       imgUp: require("@/assets/icons/arrow-up.svg"),
       imgDown: require("@/assets/icons/arrow-down.svg"),
     };
+  },
+  watch: {
+    nOne() {
+      this.$emit("change", this.nOne);
+    },
   },
   methods: {
     adding(n) {

@@ -30,6 +30,11 @@ export default {
       lOne: 0,
     };
   },
+  watch: {
+    nOne() {
+      this.$emit("change", this.nOne);
+    },
+  },
   methods: {
     adding(n) {
       return n + 0.1 > this.date ? this.lOne : n + 0.1;

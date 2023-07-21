@@ -1,10 +1,15 @@
 <template>
   <div class="year">
     <the-button-close @btnClicked="$emit('clicked')" />
-    <form class="year-form | blur">
-      <the-year-input />
-      <button class="main-button">Search</button>
-    </form>
+    <div class="year-form | blur">
+      <the-year-input @change="handlerChange" />
+      <router-link
+        class="main-button"
+        @click="$emit('clicked')"
+        :to="goToHomeFilterYear()"
+        >Search</router-link
+      >
+    </div>
   </div>
 </template>
 
@@ -14,7 +19,23 @@ import TheYearInput from "@/components/TheYearInput.vue";
 export default {
   components: { TheButtonClose, TheYearInput },
   data() {
-    return {};
+    return {
+      year: new Date().getFullYear(),
+    };
+  },
+  methods: {
+    handlerChange(year) {
+      this.year = year;
+    },
+    goToHomeFilterYear() {
+      return {
+        name: "Home",
+        query: {
+          year: this.year,
+          page: 1,
+        },
+      };
+    },
   },
 };
 </script>
