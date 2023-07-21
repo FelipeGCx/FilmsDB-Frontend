@@ -1,10 +1,16 @@
 <template>
   <div class="note">
     <the-button-close @btnClicked="$emit('clicked')" />
-    <form @submit.prevent="false" class="note-form | blur">
-      <the-note-input />
-      <button class="main-button">Search</button>
-    </form>
+    <div class="note-form | blur">
+      <the-note-input @change="handlerChange" />
+      <router-link
+        class="main-button"
+        @click="$emit('clicked')"
+        :to="goToHomeFilterNote()"
+      >
+        Search
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -14,7 +20,23 @@ import TheNoteInput from "@/components/TheNoteInput.vue";
 export default {
   components: { TheButtonClose, TheNoteInput },
   data() {
-    return {};
+    return {
+      note: 10,
+    };
+  },
+  methods: {
+    handlerChange(note) {
+      this.note = note;
+    },
+    goToHomeFilterNote() {
+      return {
+        name: "Home",
+        query: {
+          note: this.note,
+          page: 1,
+        },
+      };
+    },
   },
 };
 </script>

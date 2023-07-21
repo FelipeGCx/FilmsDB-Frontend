@@ -2,7 +2,7 @@
   <div class="year">
     <the-button-close @btnClicked="$emit('clicked')" />
     <div class="year-form | blur">
-      <the-year-input @change="handlerYear" />
+      <the-year-input @change="handlerChange" />
       <router-link
         class="main-button"
         @click="$emit('clicked')"
@@ -24,7 +24,7 @@ export default {
     };
   },
   methods: {
-    handlerYear(year) {
+    handlerChange(year) {
       this.year = year;
     },
     goToHomeFilterYear() {
