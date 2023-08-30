@@ -67,15 +67,15 @@ input {
   padding: 0.7rem 1.6rem;
   border-radius: $border-radius;
 }
-input[type="number"] {
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
   -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  // background-image: url("@/assets/icons/arrow-down.svg");
-  // background-repeat: no-repeat;
-  // background-position-x: right;
-  // background-position-y: center;
-  // background-origin: content-box;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
 }
 select {
   -webkit-appearance: none;
