@@ -1,0 +1,10 @@
+export const ALL = "all";
+export const NONE = "none";
+export const VOID = "";
+export const VOID_SPACE = " ";
+export const FLEX = "flex";
+export const ACTIVE = "active";
+export const INNACTIVE = "";
+export const NO_FAVORITE = "normal";
+export const PASS_TYPE_PASSWORD = "password";
+export const PASS_TYPE_TEXT = "text";

@@ -1,0 +1,11 @@
+export const HOME = "Home";
+export const LOGIN = "Login";
+export const CREATE_CONTENT = "CreateContent";
+export const UPDATE_CONTENT = "UpdateContent";
+export const CREATE_SAGA = "CreateSaga";
+export const CREATE_CATEGORY = "CreateCategory";
+export const SEARCH = "Title";
+export const CATEGORY = "Category";
+export const SAGA = "Saga";
+export const FAVORITES = "Favorites";
+export const NOT_FOUND = "NotFound";
