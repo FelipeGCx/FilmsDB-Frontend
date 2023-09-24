@@ -431,7 +431,7 @@ export default {
             name: "image",
             size_x: 467,
             size_y: 700,
-            type_format: ".webp",
+            type_format: "webp",
             base64: this.base64,
           };
           await this.transformImage(image);
