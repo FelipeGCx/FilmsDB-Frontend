@@ -37,6 +37,15 @@
                       :checked="typeChecked('Serie')"
                       @click="typeClicked('Serie')"
                   /></label>
+                  <label class="check" for="game" :class="typeClass('Game')"
+                    >Game<input
+                      type="radio"
+                      id="game"
+                      name="type_content"
+                      value="Game"
+                      :checked="typeChecked('Game')"
+                      @click="typeClicked('Game')"
+                  /></label>
                 </div>
               </div>
               <div class="field">
@@ -359,8 +368,10 @@ export default {
     },
     typeClicked(type) {
       this.filme.type = type;
-      this.seasonVisible = this.filme.type != "Movie";
-      this.filme.season = this.filme.type != "Movie" ? 1 : 0;
+      this.seasonVisible =
+        this.filme.type != "Movie" && this.filme.type != "Game";
+      this.filme.season =
+        this.filme.type != "Movie" && this.filme.type != "Game" ? 1 : 0;
     },
     categorySelected(category) {
       return this.filme.category == category;
@@ -387,7 +398,7 @@ export default {
       return this.filme.favorite ? "active" : "";
     },
     minSeason() {
-      return this.filme.type != "Movie" ? 1 : 0;
+      return this.filme.type != "Movie" && this.filme.type != "Game" ? 1 : 0;
     },
 
     toTitle(n) {

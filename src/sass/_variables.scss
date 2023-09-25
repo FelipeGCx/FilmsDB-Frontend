@@ -8,13 +8,14 @@ $secondary-color: #f7f7f7;
 $anime-color: #00bcd4;
 $serie-color: #673ab7;
 $movie-color: #e91e63;
+$game-color: #1ee988;
 $border-radius: 12px;
 $footer-h: 4.7rem;
 $header-h: 5.4rem;
 $success-color: #26ff21;
 $error-color: #ff002e;
 $info-color: #0075ff;
-$arrow-c:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpolygon style='fill:%23FFFFFF;stroke:%23303030;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:10;' points='6.5,3.5 6.5,20.5 11,15 18,15 '/%3E%3C/svg%3E");
+$arrow-c: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpolygon style='fill:%23FFFFFF;stroke:%23303030;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:10;' points='6.5,3.5 6.5,20.5 11,15 18,15 '/%3E%3C/svg%3E");
 
 :export {
   anime: $anime-color;
