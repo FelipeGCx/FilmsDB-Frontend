@@ -262,6 +262,16 @@ export default {
       }
     }
 
+    &.Game {
+      @include tooltip($game-color);
+
+      &:hover,
+      &:focus {
+        filter: drop-shadow(0 0 1rem $game-color);
+        border-color: $game-color;
+      }
+    }
+
     & > .poster {
       // height: 30.5rem;
       width: 20rem;
