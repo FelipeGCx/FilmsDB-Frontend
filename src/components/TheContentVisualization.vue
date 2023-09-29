@@ -19,7 +19,7 @@
             >{{ item.titleOG }}</a
           >
           <p v-else>{{ item.titleOG }}</p>
-          <p>{{ item.title }}</p>
+          <p v-show="item.titleOG != item.title">{{ item.title }}</p>
         </div>
         <div class="more-data">
           <div
