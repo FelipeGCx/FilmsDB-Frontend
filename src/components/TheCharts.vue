@@ -141,17 +141,14 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+
     &::-webkit-scrollbar {
       width: 0;
     }
     ul {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
       gap: 1.5rem;
-      height: 100%;
-      width: 100%;
       li {
         display: flex;
         justify-content: center;
