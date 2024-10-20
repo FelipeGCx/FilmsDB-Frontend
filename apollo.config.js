@@ -3,7 +3,7 @@ module.exports = {
     service: {
       name: "my-app",
       // URL to the GraphQL API
-      url: "https://films-db-apigateway.vercel.app/",
+      url: "https://filmsdb-apigateway-production.up.railway.app",
     },
     // Files processed by the extension
     includes: ["src/**/*.vue", "src/**/*.js"],
