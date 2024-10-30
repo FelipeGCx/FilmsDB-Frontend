@@ -112,6 +112,9 @@ body {
 }
 #app {
   width: 100vw;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }
 h1,
 h2,
