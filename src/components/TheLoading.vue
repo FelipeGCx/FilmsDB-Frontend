@@ -30,6 +30,7 @@ div {
   justify-content: center;
   align-items: center;
   gap: 1rem;
+  flex: 1;
   img {
     filter: invert(1);
     width: 7rem;

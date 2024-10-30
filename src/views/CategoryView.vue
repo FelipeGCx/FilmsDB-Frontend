@@ -157,6 +157,7 @@ export default {
   gap: 2rem;
   padding: 2rem 6rem 0 6rem;
   width: 100%;
+  flex: 1;
   section {
     display: flex;
     flex-direction: column;

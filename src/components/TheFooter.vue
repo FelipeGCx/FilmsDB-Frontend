@@ -34,6 +34,7 @@ footer {
   background-color: $neutral-color;
   width: 100%;
   margin-top: 2rem;
+  bottom: 0;
 
   // padding: 6vw 2rem 3vw 2rem;
   @include mobilesize {
