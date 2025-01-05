@@ -1,0 +1,28 @@
+{
+  "name": "filmsdb",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.12.4",
+    "@astrojs/vue": "^5.0.3",
+    "@vue/apollo-components": "^4.0.0",
+    "@vue/apollo-composable": "^4.2.1",
+    "@vue/apollo-option": "^4.2.0",
+    "@vuelidate/core": "^2.0.3",
+    "@vuelidate/validators": "^2.0.4",
+    "astro": "^5.1.1",
+    "dayjs": "^1.11.13",
+    "dotenv": "^16.4.5",
+    "graphql": "^16.10.0",
+    "graphql-tag": "^2.12.6",
+    "sass": "^1.77.1",
+    "typescript": "^5.4.5",
+    "vue": "^3.5.13"
+  }
+}

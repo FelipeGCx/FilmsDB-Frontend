@@ -1,0 +1,50 @@
+---
+const props = Astro.props;
+import { FdbFooter, FdbHeader } from "@/components/globals/layout";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="generator" content={Astro.generator} />
+    <title>
+      {props.pageInfo.title}
+    </title>
+  </head>
+  <body>
+    <FdbHeader />
+    <slot />
+    <FdbFooter />
+  </body>
+</html>
+
+<style is:global lang="scss">
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $color-background;
+  }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat", system-ui, sans-serif;
+  }
+  :root {
+    font-size: 0.625rem;
+  }
+  ul {
+    list-style-type: none;
+  }
+</style>

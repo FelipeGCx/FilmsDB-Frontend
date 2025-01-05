@@ -1,0 +1,25 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Home from "@/components/pages/home/index.vue";
+// Layout variables
+const pageInfo = {
+  title: "FilmsDB - Home",
+  description: "Nueva Factura",
+  image: "/images/logo.png",
+  url: "https://www.example.com",
+  type: "website",
+  keywords: "Nueva Factura",
+  twitter: "@example",
+  card: "summary_large_image",
+  creator: "@example",
+  site: "@example",
+  published: "2022-01-01",
+  modified: "2022-01-01",
+  category: "Nueva Factura",
+  label: "Nueva Factura",
+};
+---
+
+<Layout pageInfo={pageInfo}>
+  <Home client:only />
+</Layout>
