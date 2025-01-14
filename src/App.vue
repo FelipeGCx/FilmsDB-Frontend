@@ -25,7 +25,7 @@
       @showed="hidePopSlider"
     />
   </teleport>
-  <the-footer />
+  <!-- <the-footer  /> -->
   <the-menu-mobile :isAdmin="isAdmin" />
 </template>
 
