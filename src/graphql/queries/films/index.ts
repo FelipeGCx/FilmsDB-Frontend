@@ -1,3 +1,1 @@
-import { getFilmsByType } from "./getFilmsByType";
-
-export { getFilmsByType };
+export * from "./getFilmsByType";

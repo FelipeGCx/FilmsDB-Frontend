@@ -86,7 +86,7 @@
         data-tooltip="edit"
         data-flow="top"
       >
-        <Pen />
+        <fdb-icon icon="pen" />
       </a>
       <!-- <router-link
         :to="goToEdit(payload)"
@@ -104,8 +104,8 @@
         data-flow="top"
         @click="isAdmin ? handlerFavorite(payload) : false"
       >
-        <Heart v-if="payload.favorite" />
-        <HeartOutline v-else />
+        <fdb-icon icon="heart" v-if="payload.favorite" />
+        <fdb-icon icon="heart-outline" v-else />
       </button>
       <span class="note" data-tooltip="note" data-flow="top">
         {{ $plugins.normalizeNote(payload.note || 0) }}
@@ -116,7 +116,6 @@
 
 <script setup lang="ts">
 import { type Film } from "@/types";
-import { Heart, HeartOutline, Pen } from "@/assets/icons";
 
 interface Props {
   payload: Partial<Film>;
@@ -124,11 +123,12 @@ interface Props {
 }
 defineProps<Props>();
 
-const isVoid = (value: string) => {
+const isVoid = (value?: string) => {
+  if (!value) return true;
   return value != " ";
 };
 
-const seasonOpacity = (season: string) => {
+const seasonOpacity = (season?: number) => {
   return season ? 100 : 0;
 };
 
@@ -190,6 +190,7 @@ const handlerFavorite = (item: Partial<Film>) => {
   justify-content: center;
   user-select: none;
   width: 100%;
+  aspect-ratio: 2/3;
 
   &.Anime {
     @include tooltip($anime-color);

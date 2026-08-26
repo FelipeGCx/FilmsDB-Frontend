@@ -180,23 +180,23 @@ const lastIsVisible = () => {
     gap: 0.5rem;
     li {
       display: flex;
-      background-color: $base-second-color;
+      // background-color: $base-second-color;
       align-items: center;
       justify-content: center;
       border-radius: 5rem;
-      color: $secondary-color;
+      // color: $secondary-color;
       cursor: pointer;
       width: 3rem;
       height: 3rem;
       svg {
         width: 2rem;
-        color: $secondary-color;
+        // color: $secondary-color;
       }
       &:hover {
-        background-color: $primary-color;
+        // background-color: $primary-color;
       }
       &.active {
-        background-color: $primary-color;
+        // background-color: $primary-color;
       }
     }
   }

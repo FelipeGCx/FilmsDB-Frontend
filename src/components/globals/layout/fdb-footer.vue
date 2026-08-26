@@ -1,9 +1,9 @@
 <template>
   <footer>
     <p>
-      &copy; 2024
+      &copy; {{ new Date().getFullYear() }}
       <a :href="url" target="blanck" class="enterprise">
-        <Github class="github-icon" /> FelipeGcx.
+        <fdb-icon icon="github" class="github-icon" /> FelipeGcx.
       </a>
       All Rights Reserved
     </p>
@@ -11,7 +11,6 @@
 </template>
 
 <script setup lang="ts">
-import { Github } from "@/assets/icons";
 const url = "https://github.com/FelipeGCx";
 </script>
 
@@ -38,7 +37,7 @@ footer {
       gap: 0.5rem;
       .github-icon {
         width: 1.5rem;
-        color:  $color-light;
+        color: $color-light;
       }
     }
   }

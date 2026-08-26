@@ -1,12 +1,11 @@
 <template>
   <a to="/" draggable="false" class="logo">
-    <logo />
+    <fdb-icon icon="logo" />
     <h1>{{ title }}</h1>
   </a>
 </template>
 
 <script setup lang="ts">
-import { Logo } from "@/assets/icons";
 import { title } from "@/constants";
 </script>
 
