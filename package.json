@@ -6,9 +6,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro",
-    "serve": "serve dist -l $PORT",
-    "start": "serve dist -l $PORT"
+    "astro": "astro"
   },
   "dependencies": {
     "@apollo/client": "^3.12.4",
@@ -26,7 +24,6 @@
     "graphql-tag": "^2.12.6",
     "sass": "^1.77.1",
     "typescript": "^5.4.5",
-    "vue": "^3.5.13",
-    "serve": "^14.2.0"
+    "vue": "^3.5.13"
   }
 }
