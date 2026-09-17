@@ -43,14 +43,19 @@ header {
   z-index: 10;
 
   nav {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-
-    & > :nth-child(n) {
-      width: 3.4rem;
-      height: 3.4rem;
-      color: $color-light;
+    ul {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 1rem;
+      & > :nth-child(n) {
+        width: 3.4rem;
+        height: 3.4rem;
+        color: $color-light;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     }
   }
 }
