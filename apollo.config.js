@@ -4,7 +4,7 @@ module.exports = {
     service: {
       name: "my-app",
       // URL to the GraphQL API
-      url: process.env.PUBLIC_API_GATEWAY_KEY,
+      url: process.env.PUBLIC_API_GATEWAY_URL,
     },
     // Files processed by the extension
     includes: ["src/**/*.vue", "src/**/*.js"],
